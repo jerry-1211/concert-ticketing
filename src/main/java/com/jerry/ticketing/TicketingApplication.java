@@ -1,13 +1,13 @@
-package com.example.concertTicketing;
+package com.jerry.ticketing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ConcertTicketingApplication {
+public class TicketingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConcertTicketingApplication.class, args);
+        SpringApplication.run(TicketingApplication.class, args);
     }
 
 }
