@@ -1,8 +1,11 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: eclipse-temurin:17-jdk-alpine
+    platform: linux/amd64
+    volumes:
+      - ./build/libs:/app
+    working_dir: /app
+    command: sh -c "java -jar *[!plain].jar"
     ports:
       - "8080:8080"
     restart: "no"
