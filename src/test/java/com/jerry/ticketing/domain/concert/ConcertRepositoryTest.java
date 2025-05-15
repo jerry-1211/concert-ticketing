@@ -1,6 +1,6 @@
 package com.jerry.ticketing.domain.concert;
 
-import com.jerry.ticketing.Repository.concert.ConcertRepository;
+import com.jerry.ticketing.repository.concert.ConcertRepository;
 import com.jerry.ticketing.domain.TestFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

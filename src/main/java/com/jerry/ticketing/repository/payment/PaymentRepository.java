@@ -1,4 +1,4 @@
-package com.jerry.ticketing.Repository.payment;
+package com.jerry.ticketing.repository.payment;
 
 import com.jerry.ticketing.domain.payment.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;

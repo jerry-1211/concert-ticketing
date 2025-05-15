@@ -1,4 +1,4 @@
-package com.jerry.ticketing.Repository.member;
+package com.jerry.ticketing.repository.member;
 
 import com.jerry.ticketing.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

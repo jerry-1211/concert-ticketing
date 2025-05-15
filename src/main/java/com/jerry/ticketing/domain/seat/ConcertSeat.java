@@ -7,9 +7,11 @@ import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
-@Table(name = "concert_seat")
+@Table
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,7 +19,7 @@ public class ConcertSeat {
 
     // 콘서트 좌석 id
     @Id
-    @Column(name = "concert_seat_id")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,30 +36,31 @@ public class ConcertSeat {
     // 예약 아이템 id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_item_id")
-    private ReservationItem reservation_item;
+    private ReservationItem reservationItem;
 
     // 콘서트 좌석 가격
     private int price;
 
     // 콘서트 좌석 상태
     @Enumerated(EnumType.STRING)
-    private ConcertSeatStatus concertSeatStatus;
+    @Setter
+    private ConcertSeatStatus status;
 
+    // 좌석 선점 멤버 ID
+    @Setter
+    private Long blockedBy;
 
-    public void updateStatus(ConcertSeatStatus concertSeatStatus){
-        this.concertSeatStatus = concertSeatStatus;
-    }
+    // 좌석 선점 시작 시간
+    @Setter
+    private LocalDateTime blockedAt;
 
+    // 좌석 선점 시작 만료 시간
+    @Setter
+    private LocalDateTime blockedExpireAt;
+
+    // 좌석 예약 가능 여부
     public boolean isAvailable(){
-        return this.concertSeatStatus == ConcertSeatStatus.AVAILABLE;
+        return this.status == ConcertSeatStatus.AVAILABLE;
     }
-
-
-     public void reserve(){
-        if(!isAvailable()){
-            throw new IllegalStateException("예약할 수 없는 좌석입니다.");
-        }
-         this.concertSeatStatus = ConcertSeatStatus.RESERVED;
-     }
 
 }

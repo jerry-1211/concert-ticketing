@@ -1,4 +1,4 @@
-package com.jerry.ticketing.Repository.seat;
+package com.jerry.ticketing.repository.seat;
 
 import com.jerry.ticketing.domain.seat.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;

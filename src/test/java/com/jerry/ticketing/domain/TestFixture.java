@@ -86,7 +86,7 @@ public class TestFixture {
                 .concert(concert)
                 .seat(seat)
                 .price(100_000)
-                .concertSeatStatus(ConcertSeatStatus.BLOCKED)
+                .status(ConcertSeatStatus.BLOCKED)
                 .build();
     }
 

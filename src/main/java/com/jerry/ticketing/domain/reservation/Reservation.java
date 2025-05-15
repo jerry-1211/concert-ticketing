@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Table(name = "reservation")
+@Table
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

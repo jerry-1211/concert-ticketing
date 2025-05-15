@@ -1,6 +1,6 @@
 package com.jerry.ticketing.domain.seat;
 
-import com.jerry.ticketing.Repository.seat.SectionRepository;
+import com.jerry.ticketing.repository.seat.SectionRepository;
 import com.jerry.ticketing.domain.TestFixture;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
