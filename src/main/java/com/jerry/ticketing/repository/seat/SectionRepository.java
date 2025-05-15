@@ -1,0 +1,10 @@
+package com.jerry.ticketing.repository.seat;
+
+import com.jerry.ticketing.domain.seat.Section;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface SectionRepository extends JpaRepository<Section,Long> {
+    Optional<Section> findByZone(String zone);
+}
