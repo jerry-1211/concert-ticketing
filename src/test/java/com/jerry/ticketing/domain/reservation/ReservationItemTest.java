@@ -1,11 +1,11 @@
 package com.jerry.ticketing.domain.reservation;
 
-import com.jerry.ticketing.Repository.concert.ConcertRepository;
-import com.jerry.ticketing.Repository.member.MemberRepository;
-import com.jerry.ticketing.Repository.reservation.ReservationItemRepository;
-import com.jerry.ticketing.Repository.reservation.ReservationRepository;
-import com.jerry.ticketing.Repository.seat.ConcertSeatRepository;
-import com.jerry.ticketing.Repository.seat.SeatRepository;
+import com.jerry.ticketing.repository.concert.ConcertRepository;
+import com.jerry.ticketing.repository.member.MemberRepository;
+import com.jerry.ticketing.repository.reservation.ReservationItemRepository;
+import com.jerry.ticketing.repository.reservation.ReservationRepository;
+import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
+import com.jerry.ticketing.repository.seat.SeatRepository;
 import com.jerry.ticketing.domain.TestFixture;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.member.Member;

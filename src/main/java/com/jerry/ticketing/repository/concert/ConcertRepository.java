@@ -1,4 +1,4 @@
-package com.jerry.ticketing.Repository.concert;
+package com.jerry.ticketing.repository.concert;
 
 import com.jerry.ticketing.domain.concert.Concert;
 import org.springframework.data.jpa.repository.JpaRepository;

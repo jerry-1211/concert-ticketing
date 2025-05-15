@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Getter
 @Builder
-@Table(name = "reservation_item")
+@Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReservationItem {

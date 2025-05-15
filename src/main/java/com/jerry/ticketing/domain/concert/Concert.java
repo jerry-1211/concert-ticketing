@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Table(name = "concert")
+@Table
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
