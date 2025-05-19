@@ -1,6 +1,7 @@
 package com.jerry.ticketing.domain.seat;
 
 
+import com.jerry.ticketing.domain.concert.Concert;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,13 +19,21 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 콘서트 id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "concert_id")
+    private Concert concert;
+
     // 구역별 위치 (ex) A석, B석
+    @Column(nullable = false)
     private String zone;
 
     // 구역별 수용 인원
+    @Column(nullable = false)
     private int capacity;
 
     // 구역별 남은 좌석
+    @Column(nullable = false)
     private int remainingSeats;
 
     public int decreaseRemainingSeats(){

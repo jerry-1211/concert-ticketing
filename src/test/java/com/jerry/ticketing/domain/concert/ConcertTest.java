@@ -38,6 +38,7 @@ class ConcertTest {
         assertThat(saveConcert).isNotNull();
         assertThat(saveConcert.getId()).isNotNull();
         assertThat(saveConcert.getTitle()).isEqualTo("Cold Play");
+        assertThat(saveConcert.getPrice()).isEqualTo(100_000);
         assertThat(saveConcert.getMaxTicketsPerUser()).isEqualTo(2);
         assertThat(saveConcert.getDate()).isEqualTo(LocalDate.now());
 

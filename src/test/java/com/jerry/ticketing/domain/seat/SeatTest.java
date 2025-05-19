@@ -1,5 +1,6 @@
 package com.jerry.ticketing.domain.seat;
 
+import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import com.jerry.ticketing.repository.seat.SectionRepository;
 import com.jerry.ticketing.domain.TestFixture;
@@ -32,7 +33,9 @@ class SeatTest {
     @DisplayName("예약 좌석 생성 및 저장 검증")
     void saveSeat(){
         // Given
-        Seat seat = TestFixture.createSeat();
+        Concert concert = TestFixture.createConcert();
+        Section section = TestFixture.createSection(concert);
+        Seat seat = TestFixture.createSeat(section);
 
         //When
         Seat saveSeat = seatRepository.save(seat);

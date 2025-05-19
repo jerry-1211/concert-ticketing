@@ -38,7 +38,7 @@ public class ConcertSeat {
     @JoinColumn(name = "reservation_item_id")
     private ReservationItem reservationItem;
 
-    // 콘서트 좌석 가격
+    // 콘서트 좌석별 가격
     private int price;
 
     // 콘서트 좌석 상태

@@ -40,8 +40,8 @@ class ConcertSeatTest {
 
     @BeforeEach
     void setUp(){
-        Section section = TestFixture.createSection();
         Concert concert = TestFixture.createConcert();
+        Section section = TestFixture.createSection(concert);
         Seat seat = TestFixture.createSeat(section);
 
         this.saveSection = sectionRepository.save(section);

@@ -31,6 +31,10 @@ public class Concert {
     @Column(nullable = false)
     private String venue;
 
+    // 콘서트 가격
+    @Column(nullable = false)
+    private int price;
+
     // 콘서트 설명
     private String description;
 
