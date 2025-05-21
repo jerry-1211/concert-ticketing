@@ -13,7 +13,9 @@ import java.util.List;
 public class SeatBlockingRequest {
 
     private Long concertId;
+
     private List<Long> seatIds;
+
     private Long memberId;
 
 }

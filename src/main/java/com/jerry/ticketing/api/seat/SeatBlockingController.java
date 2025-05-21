@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 public class SeatBlockingController {
     private final SeatBlockingService seatBlockingService;
 
+    /**
+     * 좌석 선점
+     * */
     @PostMapping("/block")
     public ResponseEntity<SeatBlockingResponse> blockSeats(@RequestBody SeatBlockingRequest request) {
 
