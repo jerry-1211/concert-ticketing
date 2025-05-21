@@ -32,7 +32,7 @@ public class Member {
 
     // 멤버 패스워드
     @Column(nullable = false)
-    private String pw;
+    private String password;
 
     // 멤버 전화번호
     private String phoneNumber;

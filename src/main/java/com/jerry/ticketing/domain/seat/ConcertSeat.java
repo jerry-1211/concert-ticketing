@@ -33,12 +33,17 @@ public class ConcertSeat {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
+    // 구역 id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private Section section;
+
     // 예약 아이템 id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_item_id")
     private ReservationItem reservationItem;
 
-    // 콘서트 좌석 가격
+    // 콘서트 좌석별 가격
     private int price;
 
     // 콘서트 좌석 상태

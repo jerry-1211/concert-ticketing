@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SeatBlockingResponse {
-    private List<Long> blockedSeatIds;
-    private LocalDateTime expireAt;
 
+    private List<Long> blockedSeatIds;
+
+    private LocalDateTime expireAt;
 }

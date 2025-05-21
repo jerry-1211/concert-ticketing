@@ -15,6 +15,8 @@ import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class TestFixture {
 
@@ -34,7 +36,7 @@ public class TestFixture {
                 .address(Address.of("경기도","고양시"))
                 .email("jerry@naver.com")
                 .phoneNumber("010-2304-4302")
-                .pw("password") // pw 필수값 추가
+                .password("password") // pw 필수값 추가
                 .build();
     }
 
@@ -43,8 +45,9 @@ public class TestFixture {
     public static Concert createConcert() {
         return Concert.builder()
                 .title("Cold Play")
-                .date(LocalDate.now())
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                 .venue("일산 고양시 대화동")
+                .price(100_000)
                 .description("Cold Play의 2번째 내한 공연")
                 .maxTicketsPerUser(2)
                 .build();
@@ -52,8 +55,9 @@ public class TestFixture {
 
 
     // 구연 데이터 생성
-    public static Section createSection() {
+    public static Section createSection(Concert concert) {
         return Section.builder()
+                .concert(concert)
                 .zone("A")
                 .capacity(100_000)
                 .remainingSeats(100)
@@ -62,13 +66,8 @@ public class TestFixture {
 
 
     // 좌석 데이터 생성
-    public static Seat createSeat(){
-        return createSeat(createSection());
-    }
-
-    public static Seat createSeat(Section section) {
+    public static Seat createSeat() {
         return Seat.builder()
-                .section(section)
                 .seatRow("A")
                 .number(10)
                 .seatType(SeatType.STANDARD)
@@ -77,10 +76,6 @@ public class TestFixture {
 
 
     // 콘서트 좌석
-    public static ConcertSeat createConcertSeat() {
-        return createConcertSeat(createConcert(), createSeat());
-    }
-
     public static ConcertSeat createConcertSeat(Concert concert, Seat seat) {
         return ConcertSeat.builder()
                 .concert(concert)
@@ -92,10 +87,6 @@ public class TestFixture {
 
 
     // 예약
-    public static Reservation createReservation(){
-        return createReservation(createMember(), createConcert());
-    }
-
     public static Reservation createReservation(Member member, Concert concert){
         return Reservation.builder()
                 .member(member)
@@ -115,7 +106,7 @@ public class TestFixture {
                 .paymentMethod(PaymentMethod.KAKAOPAY)
                 .paymentStatus(PaymentStatus.PENDING)
                 .paymentDate(LocalDate.now())
-                .idempotent("TEST-IDEMPOTENT")
+                .idempotencyKey("TEST-IDEMPOTENT")
                 .amount(3)
                 .build();
     }

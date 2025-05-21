@@ -44,7 +44,7 @@ public class Payment {
 
     // 결제 멱등성
     @Column(nullable = false)
-    private String idempotent;
+    private String idempotencyKey;
 
     // 결제 티켓 숫자
     @Column(nullable = false)

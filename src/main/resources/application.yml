@@ -17,4 +17,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          batch_size: 30
 

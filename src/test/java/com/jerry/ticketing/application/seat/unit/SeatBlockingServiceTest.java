@@ -1,5 +1,6 @@
-package com.jerry.ticketing.application.seat;
+package com.jerry.ticketing.application.seat.unit;
 
+import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.exception.BusinessException;

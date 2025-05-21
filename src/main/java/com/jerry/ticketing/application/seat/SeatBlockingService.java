@@ -6,7 +6,7 @@ import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.exception.BusinessException;
 import com.jerry.ticketing.exception.SeatErrorCode;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

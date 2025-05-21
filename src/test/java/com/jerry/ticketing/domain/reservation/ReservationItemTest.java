@@ -1,5 +1,6 @@
 package com.jerry.ticketing.domain.reservation;
 
+import com.jerry.ticketing.domain.seat.Section;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import com.jerry.ticketing.repository.member.MemberRepository;
 import com.jerry.ticketing.repository.reservation.ReservationItemRepository;
@@ -11,6 +12,7 @@ import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.member.Member;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.Seat;
+import com.jerry.ticketing.repository.seat.SectionRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +35,10 @@ class ReservationItemTest {
     private ConcertRepository concertRepository;
 
     @Autowired
+    private SectionRepository sectionRepository;
+
+
+    @Autowired
     private SeatRepository seatRepository;
 
     @Autowired
@@ -53,6 +59,7 @@ class ReservationItemTest {
 
         Member member = memberRepository.save(TestFixture.createMember());
         Concert concert = concertRepository.save(TestFixture.createConcert());
+        Section section = sectionRepository.save(TestFixture.createSection(concert));
         Seat seat = seatRepository.save(TestFixture.createSeat());
 
 
