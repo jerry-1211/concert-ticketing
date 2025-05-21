@@ -15,6 +15,8 @@ import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class TestFixture {
 
@@ -43,7 +45,7 @@ public class TestFixture {
     public static Concert createConcert() {
         return Concert.builder()
                 .title("Cold Play")
-                .date(LocalDate.now())
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                 .venue("일산 고양시 대화동")
                 .price(100_000)
                 .description("Cold Play의 2번째 내한 공연")
@@ -64,9 +66,8 @@ public class TestFixture {
 
 
     // 좌석 데이터 생성
-    public static Seat createSeat(Section section) {
+    public static Seat createSeat() {
         return Seat.builder()
-                .section(section)
                 .seatRow("A")
                 .number(10)
                 .seatType(SeatType.STANDARD)
