@@ -8,7 +8,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 30
+        show_sql: false
 
   h2:
     console:
