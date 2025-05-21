@@ -10,6 +10,8 @@ import java.util.List;
 public interface ConcertSeatRepository extends JpaRepository<ConcertSeat,Long> {
     List<ConcertSeat> findBySeatId(Long id);
 
+    List<ConcertSeat> findByConcertId(Long id);
+
     List<ConcertSeat> findByConcertIdAndSeatIdIn(Long concertId, List<Long> seatIds);
 
     List<ConcertSeat> findByBlockedExpireAtBeforeAndStatus(LocalDateTime expireTime, ConcertSeatStatus status);

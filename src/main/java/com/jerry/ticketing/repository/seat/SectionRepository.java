@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface SectionRepository extends JpaRepository<Section,Long> {
     Optional<Section> findByZone(String zone);
+
+    Optional<Section> findByConcertId(Long ConcertId);
+
+    boolean existsByConcertId(Long concertId);
 }
