@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.dto.request.SeatBlockingRequest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,10 +27,14 @@ class SeatBlockingControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockitoBean
     private SeatBlockingService seatBlockingService;
 
     @Test
+    @DisplayName("좌석 점유 성공 테스트")
     void blockSeats_Success() throws Exception {
         // Given
         SeatBlockingRequest request = new SeatBlockingRequest(1L, Arrays.asList(1L, 2L), 100L);
@@ -44,7 +49,7 @@ class SeatBlockingControllerTest {
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/seats/block")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.blockedSeatIds.length()").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.blockedSeatIds[0]").value(1))
