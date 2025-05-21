@@ -12,6 +12,12 @@ services:
       SPRING_DATASOURCE_URL:  jdbc:h2:tcp://h2:1521/test
       SPRING_DATASOURCE_USERNAME: sa
       SPRING_DATASOURCE_PASSWORD: 1234
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
   h2:
     image: oscarfonts/h2:latest
     container_name: h2-database
