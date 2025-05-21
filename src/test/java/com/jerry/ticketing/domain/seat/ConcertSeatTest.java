@@ -42,7 +42,7 @@ class ConcertSeatTest {
     void setUp(){
         Concert concert = TestFixture.createConcert();
         Section section = TestFixture.createSection(concert);
-        Seat seat = TestFixture.createSeat(section);
+        Seat seat = TestFixture.createSeat();
 
         this.saveSection = sectionRepository.save(section);
         this.saveConcert = concertRepository.save(concert);

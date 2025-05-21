@@ -19,11 +19,6 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 구역 id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "section_id")
-    private Section section;
-
     // 좌석 열
     @Column(name = "seat_row")
     private String seatRow;
@@ -34,9 +29,5 @@ public class Seat {
     // 좌석 타입
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
-
-    public String getFullSeatName(){
-        return String.format("%s-%s-%번", section.getZone(), seatRow, String.valueOf(number));
-    }
 
 }

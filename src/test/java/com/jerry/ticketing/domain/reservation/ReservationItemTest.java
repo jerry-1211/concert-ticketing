@@ -60,7 +60,7 @@ class ReservationItemTest {
         Member member = memberRepository.save(TestFixture.createMember());
         Concert concert = concertRepository.save(TestFixture.createConcert());
         Section section = sectionRepository.save(TestFixture.createSection(concert));
-        Seat seat = seatRepository.save(TestFixture.createSeat(section));
+        Seat seat = seatRepository.save(TestFixture.createSeat());
 
 
         ConcertSeat concertSeat = TestFixture.createConcertSeat(concert, seat);
