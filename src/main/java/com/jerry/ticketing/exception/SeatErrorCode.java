@@ -11,7 +11,7 @@ public enum SeatErrorCode implements ErrorCode{
     }
 
     @Override
-    public String message() {
+    public String getMessage() {
         return message;
     }
 }
