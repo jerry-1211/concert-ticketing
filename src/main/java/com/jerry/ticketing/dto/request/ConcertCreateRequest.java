@@ -1,20 +1,15 @@
 package com.jerry.ticketing.dto.request;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 import java.time.LocalDateTime;
 
 
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Builder
+@NoArgsConstructor
 public class ConcertCreateRequest {
 
 

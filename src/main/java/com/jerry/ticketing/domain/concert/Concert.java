@@ -7,10 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Concert {
 
     // 콘서트 id
@@ -40,7 +37,19 @@ public class Concert {
 
     // 콘서트 최대 티켓 예약 가능 숫자
     @Column(nullable = false)
-    @Builder.Default
     private int maxTicketsPerUser = 3;
 
+    private Concert(String title, LocalDateTime dateTime, String venue, int price, String description, int maxTicketsPerUser) {
+        this.title = title;
+        this.dateTime = dateTime;
+        this.venue = venue;
+        this.price = price;
+        this.description = description;
+        this.maxTicketsPerUser = maxTicketsPerUser;
+    }
+
+    public static Concert createConcert(String title, LocalDateTime dateTime, String venue, int price, String description, int maxTicketsPerUser) {
+        return new Concert(title, dateTime, venue, price, description, maxTicketsPerUser);
+    }
 }
+

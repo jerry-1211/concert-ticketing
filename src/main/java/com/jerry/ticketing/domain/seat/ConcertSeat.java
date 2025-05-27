@@ -6,20 +6,18 @@ import com.jerry.ticketing.domain.reservation.ReservationItem;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-@Table
-@Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConcertSeat {
+public class ConcertSeat extends  BaseEntity{
 
     // 콘서트 좌석 id
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -48,19 +46,15 @@ public class ConcertSeat {
 
     // 콘서트 좌석 상태
     @Enumerated(EnumType.STRING)
-    @Setter
     private ConcertSeatStatus status;
 
     // 좌석 선점 멤버 ID
-    @Setter
     private Long blockedBy;
 
     // 좌석 선점 시작 시간
-    @Setter
     private LocalDateTime blockedAt;
 
     // 좌석 선점 시작 만료 시간
-    @Setter
     private LocalDateTime blockedExpireAt;
 
     // 좌석 예약 가능 여부
@@ -68,4 +62,26 @@ public class ConcertSeat {
         return this.status == ConcertSeatStatus.AVAILABLE;
     }
 
+    public boolean isNotAvailable() {
+        return !isAvailable();
+    }
+
+    public void blockSeat(Long memberId) {
+
+         final int BLOCKING_TIMEOUT_MINUTES = 15;
+
+        this.status = ConcertSeatStatus.BLOCKED;
+        this.blockedBy = memberId;
+        this.blockedAt = LocalDateTime.now();
+        this.blockedExpireAt = LocalDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
+    }
+
+    public void initSeat() {
+        this.status = ConcertSeatStatus.AVAILABLE;
+        this.blockedBy = null;
+        this.blockedAt = null;
+        this.blockedExpireAt = null;
+    }
 }
+
+¡

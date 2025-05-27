@@ -36,6 +36,17 @@ public class Section {
     @Column(nullable = false)
     private int remainingSeats;
 
+    private Section(Concert concert, String zone, int capacity, int remainingSeats) {
+        this.concert = concert;
+        this.zone = zone;
+        this.capacity = capacity;
+        this.remainingSeats = remainingSeats;
+    }
+
+    public static Section initSection(Concert concert, String zone, int capacity) {
+        return new Section(concert, zone, capacity, capacity);
+    }
+
     public int decreaseRemainingSeats(){
         if(this.remainingSeats<=0){
             throw new IllegalStateException("남은 좌석이 없습니다.");

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -73,17 +74,11 @@ public class ConcertSeatInitializer {
 
                     for (SectionConfig config : configs) {
                         for (char zone = config.getStartZone(); zone <= config.getEndZone(); zone++) {
-                            Section section = Section.builder()
-                                    .concert(concert)
-                                    .zone(String.valueOf(zone))
-                                    .capacity(config.getCapacity())
-                                    .remainingSeats(config.getCapacity())
-                                    .build();
-
+                            Section section = Section.initSection(concert,String.valueOf(zone), config.getCapacity());
                             createdSections.add(sectionRepository.save(section));
                         }
                     }
-                    return createdSections.isEmpty() ? null : createdSections.get(0);
+                    return createdSections.isEmpty() ? Collections.emptyList() : createdSections.get(0);
                 });
     }
 
@@ -112,9 +107,6 @@ public class ConcertSeatInitializer {
                                 .section(section)
                                 .price((concert != null ? concert.getPrice() : 0) * config.getPremium())
                                 .status(ConcertSeatStatus.AVAILABLE)
-                                .blockedBy(null)
-                                .blockedAt(null)
-                                .blockedExpireAt(null)
                                 .build();
 
                         concertSeatBatch.add(concertSeat);
