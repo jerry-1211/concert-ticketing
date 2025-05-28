@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -44,8 +44,8 @@ public class SeatBlockingService {
 
             concertSeat.setStatus(ConcertSeatStatus.BLOCKED);
             concertSeat.setBlockedBy(memberId);
-            concertSeat.setBlockedAt(LocalDateTime.now());
-            concertSeat.setBlockedExpireAt(LocalDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES));
+            concertSeat.setBlockedAt(OffsetDateTime.now());
+            concertSeat.setBlockedExpireAt(OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES));
         }
 
         return concertSeatRepository.saveAll(concertSeats);
@@ -58,7 +58,7 @@ public class SeatBlockingService {
      * */
     @Transactional
     public void releaseExpiredBlockedSeats(){
-        LocalDateTime now = LocalDateTime.now();
+        OffsetDateTime now = OffsetDateTime.now();
         List<ConcertSeat> expiredConcertSeats = concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED);
 
         for (ConcertSeat expiredConcertSeat : expiredConcertSeats) {

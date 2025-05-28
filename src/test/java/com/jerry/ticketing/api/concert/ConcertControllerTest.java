@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +40,7 @@ class ConcertControllerTest {
         // Given
         ConcertCreateRequest request = ConcertCreateRequest.builder()
                 .title("Test-Title")
-                .dateTime(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
+                .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
                 .venue("Test-Venue")
                 .price(100_000)
                 .description("Test-Description")
@@ -50,7 +50,7 @@ class ConcertControllerTest {
         ConcertResponse response = ConcertResponse.builder()
                 .id(1L)
                 .title("Test-Title")
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .dateTime(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                 .venue("Test-Venue")
                 .price(100_000)
                 .description("Test-Description")

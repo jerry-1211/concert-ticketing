@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +45,7 @@ class ConcertServiceTest {
         savedConcert = Concert.builder()
                 .id(1L)
                 .title("Test-Title")
-                .dateTime(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
+                .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
                 .venue("Test-Venue")
                 .price(100_000)
                 .description("Test-Description")
@@ -54,7 +54,7 @@ class ConcertServiceTest {
 
         request= ConcertCreateRequest.builder()
                     .title("Test-Title")
-                    .dateTime(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
+                    .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
                     .venue("Test-Venue")
                     .price(100_000)
                     .description("Test-Description")

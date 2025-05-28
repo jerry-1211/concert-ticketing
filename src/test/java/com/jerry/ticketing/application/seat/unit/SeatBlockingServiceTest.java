@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,8 +79,8 @@ class SeatBlockingServiceTest {
         for (ConcertSeat concertSeat : concertSeats) {
             verify(concertSeat).setStatus(ConcertSeatStatus.BLOCKED);
             verify(concertSeat).setBlockedBy(memberId);
-            verify(concertSeat).setBlockedAt(any(LocalDateTime.class));
-            verify(concertSeat).setBlockedExpireAt(any(LocalDateTime.class));
+            verify(concertSeat).setBlockedAt(any(OffsetDateTime.class));
+            verify(concertSeat).setBlockedExpireAt(any(OffsetDateTime.class));
         }
     }
 
@@ -128,14 +128,14 @@ class SeatBlockingServiceTest {
     @DisplayName("만료된 좌석 선점 자동 해제 확인 테스트")
     void releaseExpiredBlockedSeats_Success(){
         // Given
-        LocalDateTime now = LocalDateTime.now();
+        OffsetDateTime now = OffsetDateTime.now();
 
         ConcertSeat expiredConcertSeat1 = mock(ConcertSeat.class);
         ConcertSeat expiredConcertSeat2 = mock(ConcertSeat.class);
         List<ConcertSeat> expiredSeats = Arrays.asList(expiredConcertSeat1, expiredConcertSeat2);
 
         when(concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(
-                any(LocalDateTime.class), eq(ConcertSeatStatus.BLOCKED)))
+                any(OffsetDateTime.class), eq(ConcertSeatStatus.BLOCKED)))
                 .thenReturn(expiredSeats);
 
         when(concertSeatRepository.saveAll(expiredSeats)).thenReturn(expiredSeats);
@@ -145,7 +145,7 @@ class SeatBlockingServiceTest {
 
         //Then
         verify(concertSeatRepository).findByBlockedExpireAtBeforeAndStatus(
-                any(LocalDateTime.class), eq(ConcertSeatStatus.BLOCKED));
+                any(OffsetDateTime.class), eq(ConcertSeatStatus.BLOCKED));
 
         for (ConcertSeat expiredSeat : expiredSeats) {
             verify(expiredSeat).setStatus(ConcertSeatStatus.AVAILABLE);

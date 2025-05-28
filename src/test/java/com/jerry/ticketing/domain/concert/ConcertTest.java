@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +41,7 @@ class ConcertTest {
         assertThat(saveConcert.getTitle()).isEqualTo("Cold Play");
         assertThat(saveConcert.getPrice()).isEqualTo(100_000);
         assertThat(saveConcert.getMaxTicketsPerUser()).isEqualTo(2);
-        assertThat(saveConcert.getDateTime()).isEqualTo(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+        assertThat(saveConcert.getDateTime()).isEqualTo(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES));
 
     }
 }

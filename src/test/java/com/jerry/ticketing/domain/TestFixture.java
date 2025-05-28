@@ -14,8 +14,7 @@ import com.jerry.ticketing.domain.seat.Section;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class TestFixture {
@@ -45,7 +44,7 @@ public class TestFixture {
     public static Concert createConcert() {
         return Concert.builder()
                 .title("Cold Play")
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .dateTime(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                 .venue("일산 고양시 대화동")
                 .price(100_000)
                 .description("Cold Play의 2번째 내한 공연")
@@ -93,8 +92,8 @@ public class TestFixture {
                 .concert(concert)
                 .totalPrice(1000)
                 .reservationStatus(ReservationStatus.PENDING)
-                .createdAt(LocalDate.now())
-                .expiresAt(LocalDate.now())
+                .createdAt(OffsetDateTime.now())
+                .expiresAt(OffsetDateTime.now())
                 .build();
     }
 
@@ -105,7 +104,7 @@ public class TestFixture {
                 .reservation(reservation)
                 .paymentMethod(PaymentMethod.KAKAOPAY)
                 .paymentStatus(PaymentStatus.PENDING)
-                .paymentDate(LocalDate.now())
+                .paymentDate(OffsetDateTime.now())
                 .idempotencyKey("TEST-IDEMPOTENT")
                 .amount(3)
                 .build();
