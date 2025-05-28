@@ -19,4 +19,18 @@ spring:
         format_sql: true
         jdbc:
           batch_size: 30
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+
+toss:
+  payments:
+    test-client-api-key: "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6"
+    success-url: "http://localhost:8080/api/payment/toss/success"
+    fail-url: "http://localhost:8080/api/payment/toss/fail"
+    base-url: "https://api.tosspayments.com/v1/payments"
+
+
 

@@ -14,6 +14,11 @@ spring:
         jdbc:
           batch_size: 30
         show_sql: false
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: never
+#      data-locations: classpath:data.sql
 
   h2:
     console:
