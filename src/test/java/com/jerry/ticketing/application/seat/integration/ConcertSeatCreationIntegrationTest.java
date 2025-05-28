@@ -2,7 +2,7 @@ package com.jerry.ticketing.application.seat.integration;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.application.seat.SeatInitializer;
-import com.jerry.ticketing.config.section.SectionConfig;
+import com.jerry.ticketing.global.config.section.SectionConfig;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.seat.Section;
 import com.jerry.ticketing.repository.concert.ConcertRepository;

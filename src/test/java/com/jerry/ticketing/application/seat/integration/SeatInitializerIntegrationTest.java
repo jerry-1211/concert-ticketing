@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.integration;
 
 import com.jerry.ticketing.application.seat.SeatInitializer;
-import com.jerry.ticketing.config.section.SectionConfig;
+import com.jerry.ticketing.global.config.section.SectionConfig;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

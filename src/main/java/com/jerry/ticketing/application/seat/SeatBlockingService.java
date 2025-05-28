@@ -3,8 +3,8 @@ package com.jerry.ticketing.application.seat;
 
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
-import com.jerry.ticketing.exception.BusinessException;
-import com.jerry.ticketing.exception.SeatErrorCode;
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.SeatErrorCode;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;

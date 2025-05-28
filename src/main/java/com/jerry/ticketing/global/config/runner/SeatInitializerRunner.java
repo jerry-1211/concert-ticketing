@@ -1,4 +1,4 @@
-package com.jerry.ticketing.config.runner;
+package com.jerry.ticketing.global.config.runner;
 
 import com.jerry.ticketing.application.seat.SeatInitializer;
 import lombok.RequiredArgsConstructor;

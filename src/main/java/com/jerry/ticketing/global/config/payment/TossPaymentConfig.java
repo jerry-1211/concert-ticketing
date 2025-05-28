@@ -1,4 +1,4 @@
-package com.jerry.ticketing.config.payment;
+package com.jerry.ticketing.global.config.payment;
 
 
 import lombok.Getter;

@@ -2,7 +2,7 @@ package com.jerry.ticketing.api.payment;
 
 
 import com.jerry.ticketing.application.payment.PaymentService;
-import com.jerry.ticketing.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import com.jerry.ticketing.dto.CreatePayment;
 import jakarta.servlet.http.HttpServletRequest;

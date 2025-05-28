@@ -3,8 +3,8 @@ package com.jerry.ticketing.application.concert;
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.dto.CreateConcert;
-import com.jerry.ticketing.exception.BusinessException;
-import com.jerry.ticketing.exception.ConcertErrorCode;
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.ConcertErrorCode;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -93,7 +93,7 @@ class ConcertServiceTest {
 
         // Given
         when(concertRepository.save(any(Concert.class)))
-                .thenThrow(new RuntimeException("콘서트 저장 실패"));
+                .thenThrow(new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED));
 
 
         // When & Then

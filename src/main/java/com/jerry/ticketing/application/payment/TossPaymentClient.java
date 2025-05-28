@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.payment;
 
-import com.jerry.ticketing.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
