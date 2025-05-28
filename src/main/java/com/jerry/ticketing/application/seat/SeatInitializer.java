@@ -1,6 +1,7 @@
 package com.jerry.ticketing.application.seat;
 
 
+import com.jerry.ticketing.config.section.SectionConfig;
 import com.jerry.ticketing.domain.seat.Seat;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import lombok.RequiredArgsConstructor;

@@ -13,7 +13,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.anyList;
@@ -43,7 +43,7 @@ class SeatBlockingControllerTest {
 
         when(concertSeat1.getId()).thenReturn(1L);
         when(concertSeat2.getId()).thenReturn(2L);
-        when(concertSeat1.getBlockedExpireAt()).thenReturn(LocalDateTime.now().plusMinutes(10));
+        when(concertSeat1.getBlockedExpireAt()).thenReturn(OffsetDateTime.now().plusMinutes(10));
         when(seatBlockingService.blockSeats(anyLong(), anyList(), anyLong())).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
 
         // When & Then

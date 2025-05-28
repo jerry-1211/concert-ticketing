@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Builder
@@ -14,7 +14,7 @@ public class ConcertResponse {
 
     private Long id;
     private String title;
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
     private String venue;
     private int price;
     private String description;

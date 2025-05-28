@@ -2,7 +2,7 @@ package com.jerry.ticketing.application.seat.integration;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.application.seat.SeatInitializer;
-import com.jerry.ticketing.application.seat.SectionConfig;
+import com.jerry.ticketing.config.section.SectionConfig;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.seat.Section;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -61,7 +61,7 @@ public class ConcertSeatCreationIntegrationTest {
 
         Concert concert = Concert.builder()
                 .title("Cold Play")
-                .dateTime(LocalDateTime.now())
+                .dateTime(OffsetDateTime.now())
                 .venue("일산 고양시 대화동")
                 .price(100_000)
                 .description("Cold Play의 2번째 내한 공연")
@@ -109,7 +109,7 @@ public class ConcertSeatCreationIntegrationTest {
 
         Concert concert1 = Concert.builder()
                 .title("Cold Play")
-                .dateTime(LocalDateTime.now())
+                .dateTime(OffsetDateTime.now())
                 .venue("일산 고양시 대화동")
                 .price(100_000)
                 .description("Cold Play의 2번째 내한 공연")
@@ -118,7 +118,7 @@ public class ConcertSeatCreationIntegrationTest {
 
         Concert concert2 = Concert.builder()
                 .title("아이유")
-                .dateTime(LocalDateTime.now())
+                .dateTime(OffsetDateTime.now())
                 .venue("일산 고양시 마두동")
                 .price(200_000)
                 .description("아이유의 신곡 발표 콘서트")

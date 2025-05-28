@@ -7,7 +7,7 @@ import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -57,11 +57,11 @@ public class ConcertSeat {
 
     // 좌석 선점 시작 시간
     @Setter
-    private LocalDateTime blockedAt;
+    private OffsetDateTime blockedAt;
 
     // 좌석 선점 시작 만료 시간
     @Setter
-    private LocalDateTime blockedExpireAt;
+    private OffsetDateTime blockedExpireAt;
 
     // 좌석 예약 가능 여부
     public boolean isAvailable(){

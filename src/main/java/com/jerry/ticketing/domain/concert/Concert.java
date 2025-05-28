@@ -3,7 +3,7 @@ package com.jerry.ticketing.domain.concert;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -25,7 +25,7 @@ public class Concert {
 
     // 콘서트 예약 날짜
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
 
     // 콘서트 장소
     @Column(nullable = false)

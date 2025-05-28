@@ -1,4 +1,4 @@
-package com.jerry.ticketing.application.seat;
+package com.jerry.ticketing.config.section;
 
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 import lombok.AllArgsConstructor;

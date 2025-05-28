@@ -7,7 +7,7 @@ import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -44,9 +44,14 @@ public class Reservation {
 
     //예약 만들어진 시점
     @Column(nullable = false)
-    private LocalDate createdAt;
+    private OffsetDateTime createdAt;
 
     //예약 만료 기한
     @Column(nullable = false)
-    private LocalDate expiresAt;
+    private OffsetDateTime expiresAt;
+
+
+    public void confirmReservation(){
+        reservationStatus = ReservationStatus.CONFIRMED;
+    }
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 
 
@@ -24,7 +24,7 @@ public class ConcertCreateRequest {
 
     @NotNull(message = "공연 날짜는 필수입니다.")
     @FutureOrPresent(message = "공연 날짜가 현재 또는 미래여야 합니다.")
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
 
     @NotBlank(message = "공연 장소는 필수입니다.")
     @Size(max = 100, message = "공연 장소는 100자를 초과할 수 없습니다.")
