@@ -60,7 +60,7 @@ class ConcertControllerTest {
         when(concertService.createConcert(any(ConcertCreateRequest.class))).thenReturn(response);
 
         // When & Then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/concert")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/concerts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andDo(MockMvcResultHandlers.print())

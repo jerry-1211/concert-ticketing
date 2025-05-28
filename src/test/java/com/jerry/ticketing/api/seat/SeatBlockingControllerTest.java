@@ -47,7 +47,7 @@ class SeatBlockingControllerTest {
         when(seatBlockingService.blockSeats(anyLong(), anyList(), anyLong())).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
 
         // When & Then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/seats/block")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/seats/blocks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isOk())

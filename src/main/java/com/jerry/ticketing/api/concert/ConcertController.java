@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/concert")
+@RequestMapping("/api/concerts")
 @RequiredArgsConstructor
 public class ConcertController {
 
