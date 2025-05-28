@@ -49,4 +49,11 @@ public class Payment {
     @Column(nullable = false)
     private int amount;
 
+    public void updateStatus(PaymentStatus status){
+        paymentStatus = status;
+    }
+
+    public void updatePaymentDate(OffsetDateTime time){
+        paymentDate = time;
+    }
 }

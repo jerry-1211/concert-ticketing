@@ -48,5 +48,10 @@ public class Reservation {
 
     //예약 만료 기한
     @Column(nullable = false)
-    private LocalDate expiresAt;
+    private OffsetDateTime expiresAt;
+
+
+    public void confirmReservation(){
+        reservationStatus = ReservationStatus.CONFIRMED;
+    }
 }
