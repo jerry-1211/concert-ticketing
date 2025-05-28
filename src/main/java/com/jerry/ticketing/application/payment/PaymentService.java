@@ -4,9 +4,8 @@ import com.jerry.ticketing.domain.payment.Payment;
 import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
 import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
 import com.jerry.ticketing.domain.reservation.Reservation;
-import com.jerry.ticketing.dto.request.PaymentRequest;
-import com.jerry.ticketing.dto.response.PaymentResponse;
-import com.jerry.ticketing.dto.response.TossPaymentResponse;
+import com.jerry.ticketing.dto.ConfirmTossPayment;
+import com.jerry.ticketing.dto.CreatePayment;
 import com.jerry.ticketing.exception.BusinessException;
 import com.jerry.ticketing.exception.PaymentErrorCode;
 import com.jerry.ticketing.exception.ReservationErrorCode;
@@ -33,7 +32,7 @@ public class PaymentService {
     /**
      * 결제 요청 생성
      * */
-    public PaymentResponse createPayment(PaymentRequest request){
+    public CreatePayment.Response createPayment(CreatePayment.Request request){
         Reservation reservation = reservationRepository.findById(request.getReservationId())
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
@@ -50,7 +49,7 @@ public class PaymentService {
 
         Payment savedPayment = paymentRepository.save(payment);
 
-        return PaymentResponse.from(savedPayment);
+        return CreatePayment.Response.from(savedPayment);
     }
 
 
@@ -59,8 +58,8 @@ public class PaymentService {
     }
 
 
-    public PaymentResponse confirmTossPayment(String paymentKey, String orderId, String amount) {
-        TossPaymentResponse tossPaymentResponse = tossPaymentClient.confirmPayment(paymentKey, orderId, amount);
+    public CreatePayment.Response confirmTossPayment(String paymentKey, String orderId, String amount) {
+        ConfirmTossPayment.Response response = tossPaymentClient.confirmPayment(paymentKey, orderId, amount);
 
         Payment payment = paymentRepository.findByIdempotencyKey(orderId)
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
@@ -72,6 +71,7 @@ public class PaymentService {
         reservation.confirmReservation();
 
         log.info("결제 승인 완료 - PaymentKey: {}, OrderID: {}", paymentKey,orderId);
-        return PaymentResponse.from(payment, tossPaymentResponse);
+        return CreatePayment.Response.from(payment, response);
     }
+
 }

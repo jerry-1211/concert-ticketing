@@ -2,8 +2,7 @@ package com.jerry.ticketing.application.concert;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.dto.request.ConcertCreateRequest;
-import com.jerry.ticketing.dto.response.ConcertResponse;
+import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.exception.BusinessException;
 import com.jerry.ticketing.exception.ConcertErrorCode;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
@@ -19,7 +18,7 @@ public class ConcertService {
     private final ConcertSeatInitializer concertSeatInitializer;
 
     @Transactional
-    public ConcertResponse createConcert(ConcertCreateRequest request){
+    public CreateConcert.Response createConcert(CreateConcert.Request request){
 
         try{
             Concert concert = Concert.builder()
@@ -36,7 +35,7 @@ public class ConcertService {
             // 좌석 & 섹션 초기화
             concertSeatInitializer.initializeSectionAndConcertSeats(saveConcert.getId());
 
-            return ConcertResponse.from(saveConcert);
+            return CreateConcert.Response.from(saveConcert);
 
         }catch (Exception e){
             throw new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED);

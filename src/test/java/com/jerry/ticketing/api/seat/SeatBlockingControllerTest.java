@@ -3,7 +3,7 @@ package com.jerry.ticketing.api.seat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
-import com.jerry.ticketing.dto.request.SeatBlockingRequest;
+import com.jerry.ticketing.dto.BlockingSeat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class SeatBlockingControllerTest {
     @DisplayName("좌석 점유 성공 테스트")
     void blockSeats_Success() throws Exception {
         // Given
-        SeatBlockingRequest request = new SeatBlockingRequest(1L, Arrays.asList(1L, 2L), 100L);
+        BlockingSeat.Request request = new BlockingSeat.Request(1L, Arrays.asList(1L, 2L), 100L);
         ConcertSeat concertSeat1 = mock(ConcertSeat.class);
         ConcertSeat concertSeat2 = mock(ConcertSeat.class);
 

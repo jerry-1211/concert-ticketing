@@ -2,8 +2,7 @@ package com.jerry.ticketing.application.concert;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.dto.request.ConcertCreateRequest;
-import com.jerry.ticketing.dto.response.ConcertResponse;
+import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.exception.BusinessException;
 import com.jerry.ticketing.exception.ConcertErrorCode;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
@@ -37,7 +36,7 @@ class ConcertServiceTest {
     private ConcertService concertService;
 
     private Concert savedConcert;
-    private ConcertCreateRequest request;
+    private CreateConcert.Request request;
 
 
     @BeforeEach
@@ -52,7 +51,7 @@ class ConcertServiceTest {
                 .maxTicketsPerUser(3)
                 .build();
 
-        request= ConcertCreateRequest.builder()
+        request= CreateConcert.Request.builder()
                     .title("Test-Title")
                     .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
                     .venue("Test-Venue")
@@ -72,7 +71,7 @@ class ConcertServiceTest {
 
 
         // When
-        ConcertResponse response = concertService.createConcert(request);
+        CreateConcert.Response response = concertService.createConcert(request);
 
 
         // Then

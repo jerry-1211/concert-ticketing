@@ -3,8 +3,7 @@ package com.jerry.ticketing.api.concert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerry.ticketing.application.concert.ConcertService;
-import com.jerry.ticketing.dto.request.ConcertCreateRequest;
-import com.jerry.ticketing.dto.response.ConcertResponse;
+import com.jerry.ticketing.dto.CreateConcert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ class ConcertControllerTest {
     @DisplayName("콘서트 생성 성공 테스트")
     void createConcert_Success() throws Exception {
         // Given
-        ConcertCreateRequest request = ConcertCreateRequest.builder()
+        CreateConcert.Request request = CreateConcert.Request.builder()
                 .title("Test-Title")
                 .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
                 .venue("Test-Venue")
@@ -47,7 +46,7 @@ class ConcertControllerTest {
                 .maxTicketsPerUser(3)
                 .build();
 
-        ConcertResponse response = ConcertResponse.builder()
+        CreateConcert.Response response = CreateConcert.Response.builder()
                 .id(1L)
                 .title("Test-Title")
                 .dateTime(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES))
@@ -57,7 +56,7 @@ class ConcertControllerTest {
                 .maxTicketsPerUser(3)
                 .build();
 
-        when(concertService.createConcert(any(ConcertCreateRequest.class))).thenReturn(response);
+        when(concertService.createConcert(any(CreateConcert.Request.class))).thenReturn(response);
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/concerts")

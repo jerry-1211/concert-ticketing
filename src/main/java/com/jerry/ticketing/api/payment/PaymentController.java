@@ -3,9 +3,8 @@ package com.jerry.ticketing.api.payment;
 
 import com.jerry.ticketing.application.payment.PaymentService;
 import com.jerry.ticketing.config.payment.TossPaymentConfig;
-import com.jerry.ticketing.dto.request.PaymentRequest;
-import com.jerry.ticketing.dto.request.TossPaymentConfirmRequest;
-import com.jerry.ticketing.dto.response.PaymentResponse;
+import com.jerry.ticketing.dto.ConfirmTossPayment;
+import com.jerry.ticketing.dto.CreatePayment;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +36,8 @@ public class PaymentController {
      */
     @PostMapping("/request")
     @ResponseBody
-    public ResponseEntity<PaymentResponse> createPayment(@Valid @RequestBody PaymentRequest request) {
-        PaymentResponse response = paymentService.createPayment(request);
+    public ResponseEntity<CreatePayment.Response> createPayment(@Valid @RequestBody CreatePayment.Request request) {
+        CreatePayment.Response response = paymentService.createPayment(request);
 
         response.setClientKey(tossPaymentConfig.getTestClientApiKey());
         response.setSuccessUrl(tossPaymentConfig.getSuccessUrl());
@@ -60,10 +59,10 @@ public class PaymentController {
 
     @PostMapping("/toss/success")
     @ResponseBody
-    public ResponseEntity<PaymentResponse> tossPaymentSuccess(
-            @RequestBody TossPaymentConfirmRequest request){
+    public ResponseEntity<CreatePayment.Response> tossPaymentSuccess(
+            @RequestBody ConfirmTossPayment.Request request){
 
-        PaymentResponse response = paymentService.confirmTossPayment(request.getPaymentKey(),request.getOrderId(),request.getAmount());
+        CreatePayment.Response response = paymentService.confirmTossPayment(request.getPaymentKey(),request.getOrderId(),request.getAmount());
         return ResponseEntity.ok(response);
     }
 
