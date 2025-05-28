@@ -15,7 +15,7 @@ public class SeatInitializerRunner implements CommandLineRunner {
 
     @Override
     public void run(String ...args){
-            seatInitializer.initializeSeats();
+//             seatInitializer.initializeSeats();
     }
 
 }
