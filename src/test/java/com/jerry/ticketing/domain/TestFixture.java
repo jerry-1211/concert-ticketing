@@ -11,7 +11,6 @@ import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.Seat;
 import com.jerry.ticketing.domain.seat.Section;
-import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 
 import java.time.OffsetDateTime;
@@ -58,12 +57,7 @@ public class TestFixture {
 
     // 콘서트 좌석
     public static ConcertSeat createConcertSeat(Concert concert, Seat seat, Section section) {
-        return ConcertSeat.createConcertSeat(
-                concert, seat, section,
-                100_000, ConcertSeatStatus.BLOCKED,
-                1L,
-                OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES));
+        return ConcertSeat.creatConcertSeat(concert, seat, section, 1000);
     }
 
 

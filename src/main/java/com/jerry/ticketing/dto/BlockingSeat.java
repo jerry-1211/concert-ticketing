@@ -17,7 +17,7 @@ public class BlockingSeat {
 
         private Long concertId;
 
-        private List<Long> seatIds;
+        private List<Long> concertSeatIds;
 
         private Long memberId;
 

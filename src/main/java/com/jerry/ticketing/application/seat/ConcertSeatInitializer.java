@@ -6,7 +6,6 @@ import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.Seat;
 import com.jerry.ticketing.domain.seat.Section;
-import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
 import com.jerry.ticketing.repository.seat.SeatRepository;
@@ -104,8 +103,7 @@ public class ConcertSeatInitializer {
 
                         int price = (concert != null ? concert.getPrice() : 0) * config.getPremium();
 
-                        ConcertSeat concertSeat = ConcertSeat.createConcertSeat(concert, seat, section, price,
-                                ConcertSeatStatus.AVAILABLE, null, null, null);
+                        ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert, seat, section, price);
 
 
                         concertSeatBatch.add(concertSeat);
