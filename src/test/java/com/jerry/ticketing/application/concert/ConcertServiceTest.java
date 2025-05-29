@@ -2,6 +2,7 @@ package com.jerry.ticketing.application.concert;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.domain.concert.Concert;
+import com.jerry.ticketing.domain.concert.ConcertMapper;
 import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ConcertErrorCode;
@@ -32,6 +33,9 @@ class ConcertServiceTest {
     @Mock
     private ConcertSeatInitializer concertSeatInitializer;
 
+    @Mock
+    private ConcertMapper concertMapper;
+
     @InjectMocks
     private ConcertService concertService;
 
@@ -41,24 +45,14 @@ class ConcertServiceTest {
 
     @BeforeEach
     void setUp(){
-        savedConcert = Concert.builder()
-                .id(1L)
-                .title("Test-Title")
-                .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
-                .venue("Test-Venue")
-                .price(100_000)
-                .description("Test-Description")
-                .maxTicketsPerUser(3)
-                .build();
 
-        request= CreateConcert.Request.builder()
-                    .title("Test-Title")
-                    .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
-                    .venue("Test-Venue")
-                    .price(100_000)
-                    .description("Test-Description")
-                    .maxTicketsPerUser(3)
-                    .build();
+        request = CreateConcert.Request.of(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
+                "Test-Venue", 100_000, "Test-Description", 3);
+
+        savedConcert = Concert.createConcert(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue", 100_000, "Test-Description", 3);
     }
 
     @Test
@@ -66,6 +60,7 @@ class ConcertServiceTest {
     void shouldCreateConcert() {
 
         // Given
+        when(concertMapper.buildConcert(any(CreateConcert.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class))).thenReturn(savedConcert);
         doNothing().when(concertSeatInitializer).initializeSectionAndConcertSeats(savedConcert.getId());
 
@@ -77,12 +72,11 @@ class ConcertServiceTest {
         // Then
         assertThat(response).isNotNull();
         assertThat(response.getDateTime()).isNotNull();
-        assertThat(response.getId()).isEqualTo(1L);
         assertThat(response.getPrice()).isEqualTo(100_000);
 
         // 메서드 호출 검증
         verify(concertRepository, times(1)).save(any(Concert.class));
-        verify(concertSeatInitializer, times(1)).initializeSectionAndConcertSeats(anyLong());
+        verify(concertSeatInitializer, times(1)).initializeSectionAndConcertSeats(savedConcert.getId());
 
     }
 
@@ -92,8 +86,10 @@ class ConcertServiceTest {
     void shouldThrowConcertErrorCodeWhenSaveFails(){
 
         // Given
+        when(concertMapper.buildConcert(any(CreateConcert.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class)))
                 .thenThrow(new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED));
+
 
 
         // When & Then

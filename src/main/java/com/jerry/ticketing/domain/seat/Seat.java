@@ -7,10 +7,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Seat {
 
     // 좌석 id
@@ -29,5 +26,15 @@ public class Seat {
     // 좌석 타입
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
+
+    private Seat(String seatRow, int number, SeatType seatType) {
+        this.seatRow = seatRow;
+        this.number = number;
+        this.seatType = seatType;
+    }
+
+    public static Seat createSeat(String seatRow, int number, SeatType seatType){
+        return new Seat(seatRow, number, seatType);
+    }
 
 }

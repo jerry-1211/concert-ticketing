@@ -34,11 +34,11 @@ class ConcertRepositoryTest {
     @DisplayName("제목으로 콘서트 조회")
     void findByTitle(){
         // When
-        List<Concert> concerts = concertRepository.findByTitle("Cold Play");
+        List<Concert> concerts = concertRepository.findByTitle("Test-Title");
 
         // Then
         assertThat(concerts).hasSize(1);
-        assertThat(concerts.get(0).getTitle()).isEqualTo("Cold Play");
+        assertThat(concerts.get(0).getTitle()).isEqualTo("Test-Title");
 
     }
 }

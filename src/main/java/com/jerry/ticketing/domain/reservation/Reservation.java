@@ -11,10 +11,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Reservation {
 
     // 예약 id
@@ -50,6 +47,27 @@ public class Reservation {
     @Column(nullable = false)
     private OffsetDateTime expiresAt;
 
+    // 결제 티켓 숫자
+    @Column(nullable = false)
+    private int amount;
+
+    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+        this.member = member;
+        this.concert = concert;
+        this.totalPrice = totalPrice;
+        this.reservationStatus = reservationStatus;
+        this.createdAt = createdAt;
+        this.expiresAt = expiresAt;
+        this.amount = amount;
+    }
+
+    public static Reservation createReservation (Member member, Concert concert,
+                        int totalPrice, ReservationStatus reservationStatus,
+                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+
+        return new Reservation(member, concert, totalPrice, reservationStatus, createdAt, expiresAt,amount);
+
+    }
 
     public void confirmReservation(){
         reservationStatus = ReservationStatus.CONFIRMED;

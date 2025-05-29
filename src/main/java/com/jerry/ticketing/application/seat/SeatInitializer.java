@@ -66,12 +66,7 @@ public class SeatInitializer {
         for (char rowChar = config.getStartRow(); rowChar <= config.getEndRow(); rowChar++) {
             String row = String.valueOf(rowChar);
             for (int number = config.getStartNumber(); number <= config.getEndNumber(); number++) {
-                Seat seat = Seat.builder()
-                        .seatRow(row)
-                        .number(number)
-                        .seatType(config.getSeatType())
-                        .build();
-
+                Seat seat = Seat.createSeat(row, number, config.getSeatType());
                 seatBatch.add(seat);
 
                 if (seatBatch.size() >= BATCH_SIZE){

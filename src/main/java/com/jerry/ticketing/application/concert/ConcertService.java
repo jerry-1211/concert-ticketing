@@ -2,6 +2,7 @@ package com.jerry.ticketing.application.concert;
 
 import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
 import com.jerry.ticketing.domain.concert.Concert;
+import com.jerry.ticketing.domain.concert.ConcertMapper;
 import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,18 +15,12 @@ public class ConcertService {
 
     private final ConcertRepository concertRepository;
     private final ConcertSeatInitializer concertSeatInitializer;
+    private final ConcertMapper concertMapper;
 
     @Transactional
     public CreateConcert.Response createConcert(CreateConcert.Request request){
 
-        Concert concert = Concert.builder()
-                .title(request.getTitle())
-                .dateTime(request.getDateTime())
-                .venue(request.getVenue())
-                .price(request.getPrice())
-                .description(request.getDescription())
-                .maxTicketsPerUser(request.getMaxTicketsPerUser())
-                .build();
+        Concert concert = concertMapper.buildConcert(request);
 
         Concert saveConcert = concertRepository.save(concert);
 

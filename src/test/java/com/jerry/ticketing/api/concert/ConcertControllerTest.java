@@ -37,14 +37,9 @@ class ConcertControllerTest {
     @DisplayName("콘서트 생성 성공 테스트")
     void createConcert_Success() throws Exception {
         // Given
-        CreateConcert.Request request = CreateConcert.Request.builder()
-                .title("Test-Title")
-                .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
-                .venue("Test-Venue")
-                .price(100_000)
-                .description("Test-Description")
-                .maxTicketsPerUser(3)
-                .build();
+        CreateConcert.Request request = CreateConcert.Request.of(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
+                "Test-Venue", 100_000, "Test-Description", 3);
 
         CreateConcert.Response response = CreateConcert.Response.builder()
                 .id(1L)

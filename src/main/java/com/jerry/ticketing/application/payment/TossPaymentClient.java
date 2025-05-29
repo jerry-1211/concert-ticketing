@@ -26,11 +26,8 @@ public class TossPaymentClient {
         String encodeAuth = Base64.getEncoder()
                 .encodeToString((tossPaymentConfig.getTestClientApiKey() + ":").getBytes(StandardCharsets.UTF_8));
 
-        ConfirmTossPayment.Request request = ConfirmTossPayment.Request.builder()
-                .paymentKey(paymentKey)
-                .orderId(orderId)
-                .amount(amount)
-                .build();
+        ConfirmTossPayment.Request request = ConfirmTossPayment.Request.of(paymentKey, orderId, amount);
+
 
         return webClient.post()
                 .uri(tossPaymentConfig.getBaseUrl() + "/confirm")

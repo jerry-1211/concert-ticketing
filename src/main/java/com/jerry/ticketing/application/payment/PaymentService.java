@@ -38,14 +38,8 @@ public class PaymentService {
 
         String idempotentKey = generateIdempotentKey(reservation.getId());
 
-        Payment payment = Payment.builder()
-                .reservation(reservation)
-                .paymentMethod(PaymentMethod.TOSSPAY)
-                .paymentStatus(PaymentStatus.PENDING)
-                .paymentDate(OffsetDateTime.now())
-                .amount(reservation.getTotalPrice())
-                .idempotencyKey(idempotentKey)
-                .build();
+        Payment payment = Payment.createPayment(reservation, PaymentMethod.TOSSPAY,
+                PaymentStatus.PENDING, OffsetDateTime.now(), idempotentKey);
 
         Payment savedPayment = paymentRepository.save(payment);
 

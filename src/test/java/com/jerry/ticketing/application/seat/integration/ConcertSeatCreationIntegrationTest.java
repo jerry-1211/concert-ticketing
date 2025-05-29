@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,14 +60,9 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert = Concert.builder()
-                .title("Cold Play")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 대화동")
-                .price(100_000)
-                .description("Cold Play의 2번째 내한 공연")
-                .maxTicketsPerUser(2)
-                .build();
+        Concert concert = Concert.createConcert(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue", 100_000, "Test-Description", 3);
 
         Concert saveConcert = concertRepository.save(concert);
 
@@ -107,23 +103,13 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert1 = Concert.builder()
-                .title("Cold Play")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 대화동")
-                .price(100_000)
-                .description("Cold Play의 2번째 내한 공연")
-                .maxTicketsPerUser(2)
-                .build();
+        Concert concert1 = Concert.createConcert(
+                "Test-Title1", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue1", 100_000, "Test-Description1", 3);
 
-        Concert concert2 = Concert.builder()
-                .title("아이유")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 마두동")
-                .price(200_000)
-                .description("아이유의 신곡 발표 콘서트")
-                .maxTicketsPerUser(3)
-                .build();
+        Concert concert2 = Concert.createConcert(
+                "Test-Title2", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue2", 200_000, "Test-Description2", 3);
 
         Concert saveConcert1 = concertRepository.save(concert1);
         Concert saveConcert2 = concertRepository.save(concert2);

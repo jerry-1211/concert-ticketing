@@ -13,9 +13,7 @@ public class CreateConcert {
 
 
     @NoArgsConstructor
-    @AllArgsConstructor
     @Getter
-    @Builder
     public static class Request {
         @NotBlank(message = "콘서트 제목은 필수입니다.")
         @Size(max = 100, message = "제목은 100자를 초과할 수 없습니다")
@@ -41,6 +39,22 @@ public class CreateConcert {
         @Min(value = 1, message = "사용자당 최대 티켓 수는 1개 이상이여야 합니다.")
         @Max(value = 5, message = "사용자당 최대 티켓 수는 5개 이하이여야 합니다.")
         private int maxTicketsPerUser;
+
+        public Request(String title, OffsetDateTime dateTime, String venue, int price, String description, int maxTicketsPerUser) {
+            this.title = title;
+            this.dateTime = dateTime;
+            this.venue = venue;
+            this.price = price;
+            this.description = description;
+            this.maxTicketsPerUser = maxTicketsPerUser;
+        }
+
+        public static CreateConcert.Request of(String title, OffsetDateTime dateTime,
+                                               String venue, int price, String description, int maxTicketsPerUser) {
+
+            return new CreateConcert.Request(title, dateTime, venue, price, description, maxTicketsPerUser);
+
+        }
     }
 
 

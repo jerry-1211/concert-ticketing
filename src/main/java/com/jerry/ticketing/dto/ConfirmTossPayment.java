@@ -9,7 +9,6 @@ import java.time.OffsetDateTime;
 
 public class ConfirmTossPayment {
     @Getter
-    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request {
@@ -18,6 +17,9 @@ public class ConfirmTossPayment {
         private String orderId;
         private String amount;
 
+        public static ConfirmTossPayment.Request of(String paymentKey,String orderId, String amount){
+            return new ConfirmTossPayment.Request(paymentKey, orderId, amount);
+        }
     }
 
 

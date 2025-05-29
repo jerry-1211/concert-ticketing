@@ -38,10 +38,10 @@ class ConcertTest {
         // Then
         assertThat(saveConcert).isNotNull();
         assertThat(saveConcert.getId()).isNotNull();
-        assertThat(saveConcert.getTitle()).isEqualTo("Cold Play");
+        assertThat(saveConcert.getTitle()).isEqualTo("Test-Title");
         assertThat(saveConcert.getPrice()).isEqualTo(100_000);
-        assertThat(saveConcert.getMaxTicketsPerUser()).isEqualTo(2);
-        assertThat(saveConcert.getDateTime()).isEqualTo(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+        assertThat(saveConcert.getMaxTicketsPerUser()).isEqualTo(3);
+        assertThat(saveConcert.getDateTime()).isEqualTo(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES));
 
     }
 }

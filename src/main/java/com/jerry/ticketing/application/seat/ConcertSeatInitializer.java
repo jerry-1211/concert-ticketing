@@ -74,12 +74,8 @@ public class ConcertSeatInitializer {
 
                     for (SectionConfig config : configs) {
                         for (char zone = config.getStartZone(); zone <= config.getEndZone(); zone++) {
-                            Section section = Section.builder()
-                                    .concert(concert)
-                                    .zone(String.valueOf(zone))
-                                    .capacity(config.getCapacity())
-                                    .remainingSeats(config.getCapacity())
-                                    .build();
+                            Section section = Section.createSection(concert,
+                                    String.valueOf(zone), config.getCapacity(), config.getCapacity());
 
                             createdSections.add(sectionRepository.save(section));
                         }
@@ -107,16 +103,11 @@ public class ConcertSeatInitializer {
                     for (int number = config.getStartNumber(); number <= config.getEndNumber(); number++) {
                         Seat seat = seatRepository.findById(currentCreatedCount++).orElse(null);
 
-                        ConcertSeat concertSeat = ConcertSeat.builder()
-                                .concert(concert)
-                                .seat(seat)
-                                .section(section)
-                                .price((concert != null ? concert.getPrice() : 0) * config.getPremium())
-                                .status(ConcertSeatStatus.AVAILABLE)
-                                .blockedBy(null)
-                                .blockedAt(null)
-                                .blockedExpireAt(null)
-                                .build();
+                        int price = (concert != null ? concert.getPrice() : 0) * config.getPremium();
+
+                        ConcertSeat concertSeat = ConcertSeat.createConcertSeat(concert, seat, section, price,
+                                ConcertSeatStatus.AVAILABLE, null, null, null);
+
 
                         concertSeatBatch.add(concertSeat);
                         if (concertSeatBatch.size() >= BATCH_SIZE){

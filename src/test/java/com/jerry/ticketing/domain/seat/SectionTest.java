@@ -34,6 +34,6 @@ class SectionTest {
         assertThat(saveSection.getId()).isNotNull();
         assertThat(saveSection.getZone()).isEqualTo("A");
         assertThat(saveSection.getCapacity()).isEqualTo(100_000);
-        assertThat(saveSection.getConcert().getTitle()).isEqualTo("Cold Play");
+        assertThat(saveSection.getConcert().getTitle()).isEqualTo("Test-Title");
     }
 }

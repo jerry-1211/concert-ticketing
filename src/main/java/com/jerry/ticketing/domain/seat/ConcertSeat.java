@@ -11,10 +11,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConcertSeat {
 
     // 콘서트 좌석 id
@@ -62,6 +59,27 @@ public class ConcertSeat {
     // 좌석 선점 시작 만료 시간
     @Setter
     private OffsetDateTime blockedExpireAt;
+
+    private ConcertSeat(Concert concert, Seat seat, Section section,
+                        int price, ConcertSeatStatus status,
+                       Long blockedBy, OffsetDateTime blockedAt, OffsetDateTime blockedExpireAt) {
+        this.concert = concert;
+        this.seat = seat;
+        this.section = section;
+        this.price = price;
+        this.status = status;
+        this.blockedBy = blockedBy;
+        this.blockedAt = blockedAt;
+        this.blockedExpireAt = blockedExpireAt;
+    }
+
+    public static ConcertSeat createConcertSeat(Concert concert, Seat seat, Section section,
+                            int price, ConcertSeatStatus status, Long blockedBy,
+                            OffsetDateTime blockedAt, OffsetDateTime blockedExpireAt) {
+
+        return new ConcertSeat(concert, seat, section, price, status, blockedBy, blockedAt, blockedExpireAt);
+    }
+
 
     // 좌석 예약 가능 여부
     public boolean isAvailable(){

@@ -24,7 +24,6 @@ public class CreatePayment {
     public static class Response {
         private Long paymentId;
         private String orderId;
-        private Integer amount;
         private String orderName;
         private String customEmail;
         private String customName;
@@ -39,7 +38,6 @@ public class CreatePayment {
             return CreatePayment.Response.builder()
                     .paymentId(payment.getId())
                     .orderId(payment.getIdempotencyKey())
-                    .amount(payment.getAmount())
                     .orderName(payment.getReservation().getConcert().getTitle() + "공연 티켓")
                     .customEmail(payment.getReservation().getMember().getEmail())
                     .customName(payment.getReservation().getMember().getName())
