@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +43,7 @@ class SeatBlockingControllerTest {
         when(concertSeat1.getId()).thenReturn(1L);
         when(concertSeat2.getId()).thenReturn(2L);
         when(concertSeat1.getBlockedExpireAt()).thenReturn(OffsetDateTime.now().plusMinutes(10));
-        when(seatBlockingService.blockSeats(anyLong(), anyList(), anyLong())).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
+        when(seatBlockingService.blockSeats(any(BlockingSeat.Request.class))).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/seats/blocks")

@@ -26,16 +26,9 @@ public class SeatBlockingController {
     @PostMapping("/blocks")
     public ResponseEntity<BlockingSeat.Response> blockSeats(@RequestBody BlockingSeat.Request request) {
 
-        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(
-                request.getConcertId(),
-                request.getSeatIds(),
-                request.getMemberId()
-        );
+        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(request);
 
-        BlockingSeat.Response response = new BlockingSeat.Response(
-                blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
-                blockedConcertSeats.get(0).getBlockedExpireAt()
-        );
+        BlockingSeat.Response response =  BlockingSeat.Response.toResponse(blockedConcertSeats);
 
         return ResponseEntity.ok(response);
 

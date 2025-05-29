@@ -3,6 +3,8 @@ package com.jerry.ticketing.application.seat.unit;
 import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
+import com.jerry.ticketing.dto.BlockingSeat;
+import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
@@ -35,18 +37,13 @@ class SeatBlockingServiceTest {
     private SeatBlockingService seatBlockingService;
 
     private List<ConcertSeat> concertSeats;
-    private Long memberId;
-    private List<Long> seatIds;
-    private Long concertId;
-
+    private BlockingSeat.Request request;
 
     @BeforeEach
     void setup() {
 
         // 테스트 데이터 설정
-        concertId = 1L;
-        seatIds = Arrays.asList(1L, 2L);
-        memberId = 100L;
+        this.request = new BlockingSeat.Request(1L, Arrays.asList(1L, 2L),100L);
 
 
         // Mock ConcertSeat 객체 생성
@@ -64,21 +61,22 @@ class SeatBlockingServiceTest {
     void blockSeat_Success() {
 
         // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
+        when(concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getSeatIds()))
                 .thenReturn(concertSeats);
 
         when(concertSeatRepository.saveAll(concertSeats))
                 .thenReturn(concertSeats);
 
+
         // When
-        List<ConcertSeat> result = seatBlockingService.blockSeats(concertId, seatIds, memberId);
+        List<ConcertSeat> result = seatBlockingService.blockSeats(request);
 
         // Then
         assertThat(result).isEqualTo(concertSeats);
 
         for (ConcertSeat concertSeat : concertSeats) {
             verify(concertSeat).setStatus(ConcertSeatStatus.BLOCKED);
-            verify(concertSeat).setBlockedBy(memberId);
+            verify(concertSeat).setBlockedBy(request.getMemberId());
             verify(concertSeat).setBlockedAt(any(OffsetDateTime.class));
             verify(concertSeat).setBlockedExpireAt(any(OffsetDateTime.class));
         }
@@ -89,11 +87,12 @@ class SeatBlockingServiceTest {
     @DisplayName("요청 좌석 중 일부 찾을 수 없을 때 Seat Error 코드 검증")
     void block_SeatNotFound() {
         // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
+        when(concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(),request.getSeatIds()))
                 .thenReturn(List.of(concertSeats.get(0)));
 
+
         // When & Then
-        assertThatThrownBy(() -> seatBlockingService.blockSeats(concertId, seatIds, memberId))
+        assertThatThrownBy(() -> seatBlockingService.blockSeats(request))
                 .isInstanceOf(BusinessException.class)
                 .hasFieldOrPropertyWithValue("errorCode", SeatErrorCode.SEAT_NOT_FOUND);
 
@@ -106,7 +105,7 @@ class SeatBlockingServiceTest {
     @DisplayName("이미 선점된 좌석이 포함되어 있을 경우 Seat Error 코드 검증")
     void block_SeatAlreadyBlocked() {
         // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
+        when(concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(),request.getSeatIds()))
                 .thenReturn(concertSeats);
 
         // When
@@ -114,7 +113,7 @@ class SeatBlockingServiceTest {
 
 
         // Then
-        assertThatThrownBy(() -> seatBlockingService.blockSeats(concertId, seatIds, memberId))
+        assertThatThrownBy(() -> seatBlockingService.blockSeats(request))
                 .isInstanceOf(BusinessException.class)
                 .hasFieldOrPropertyWithValue("errorCode", SeatErrorCode.SEAT_ALREADY_BLOCKED);
 
