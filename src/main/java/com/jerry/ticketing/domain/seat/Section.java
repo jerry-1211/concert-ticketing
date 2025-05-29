@@ -33,15 +33,15 @@ public class Section {
     @Column(nullable = false)
     private int remainingSeats;
 
-    private Section(Concert concert, String zone, int capacity, int remainingSeats) {
+    private Section(Concert concert, String zone, int capacity) {
         this.concert = concert;
         this.zone = zone;
         this.capacity = capacity;
-        this.remainingSeats = remainingSeats;
+        this.remainingSeats = capacity;
     }
 
-    public static Section createSection(Concert concert, String zone, int capacity, int remainingSeats) {
-        return new Section(concert, zone, capacity, remainingSeats);
+    public static Section initSection(Concert concert, String zone, int capacity) {
+        return new Section(concert, zone, capacity);
     }
 
     public int decreaseRemainingSeats(){

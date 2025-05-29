@@ -40,7 +40,6 @@ public class SeatBlockingService {
             if(!concertSeat.isAvailable()){
                 throw new BusinessException(SeatErrorCode.SEAT_ALREADY_BLOCKED);
             }
-
             concertSeat.setStatus(ConcertSeatStatus.BLOCKED);
             concertSeat.setBlockedBy(request.getMemberId());
             concertSeat.setBlockedAt(OffsetDateTime.now());

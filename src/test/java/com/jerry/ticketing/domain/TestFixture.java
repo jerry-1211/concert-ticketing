@@ -7,7 +7,6 @@ import com.jerry.ticketing.domain.payment.Payment;
 import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
 import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
 import com.jerry.ticketing.domain.reservation.Reservation;
-import com.jerry.ticketing.domain.reservation.ReservationItem;
 import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.Seat;
@@ -45,9 +44,9 @@ public class TestFixture {
     }
 
 
-    // 구연 데이터 생성
+    // 구역 데이터 생성
     public static Section createSection(Concert concert) {
-        return Section.createSection(concert, "A", 100_000, 100);
+        return Section.initSection(concert, "A", 100_000);
     }
 
 

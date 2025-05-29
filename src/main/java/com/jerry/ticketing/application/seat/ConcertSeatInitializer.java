@@ -74,8 +74,7 @@ public class ConcertSeatInitializer {
 
                     for (SectionConfig config : configs) {
                         for (char zone = config.getStartZone(); zone <= config.getEndZone(); zone++) {
-                            Section section = Section.createSection(concert,
-                                    String.valueOf(zone), config.getCapacity(), config.getCapacity());
+                            Section section = Section.initSection(concert, String.valueOf(zone), config.getCapacity());
 
                             createdSections.add(sectionRepository.save(section));
                         }
