@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.concert;
 
-import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
+import com.jerry.ticketing.application.seat.ConcertInitializationService;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.concert.ConcertMapper;
 import com.jerry.ticketing.dto.CreateConcert;
@@ -31,7 +31,7 @@ class ConcertServiceTest {
     private ConcertRepository concertRepository;
 
     @Mock
-    private ConcertSeatInitializer concertSeatInitializer;
+    private ConcertInitializationService concertSeatInitializer;
 
     @Mock
     private ConcertMapper concertMapper;

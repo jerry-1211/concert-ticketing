@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.application.seat.SeatInitializer;
-import com.jerry.ticketing.global.config.section.SectionConfig;
+import com.jerry.ticketing.application.seat.factory.SeatFactory;
+import com.jerry.ticketing.application.seat.enums.SectionType;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SeatInitializerIntegrationTest {
 
     @Autowired
-    private SeatInitializer seatInitializer;
+    private SeatFactory seatInitializer;
 
     @Autowired
     private SeatRepository seatRepository;
@@ -39,9 +39,9 @@ public class SeatInitializerIntegrationTest {
 
         // Then
         // A-F까지 VIP 구역 설정 (a-e열, 1-100 좌석)
-        int seatFromAtoF = SectionConfig.calculateSeats(SectionConfig.vipSection()) * 6;
-        int seatFromGtoL = SectionConfig.calculateSeats(SectionConfig.standardSection()) * 6;
-        int seatFromMtoZ = SectionConfig.calculateSeats(SectionConfig.economySection()) * 14;
+        int seatFromAtoF = SectionType.calculateSeats(SectionType.VIP) * 6;
+        int seatFromGtoL = SectionType.calculateSeats(SectionType.STANDARD) * 6;
+        int seatFromMtoZ = SectionType.calculateSeats(SectionType.ECONOMY) * 14;
         int seatTotal = seatFromAtoF + seatFromGtoL + seatFromMtoZ;
 
         assertThat(seatRepository.count()).isEqualTo(seatTotal);

@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.application.seat.SeatInitializer;
+import com.jerry.ticketing.application.seat.factory.SeatFactory;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ class SeatInitializerTest {
     private SeatRepository seatRepository;
 
     @InjectMocks
-    private SeatInitializer seatInitializer;
+    private SeatFactory seatInitializer;
 
     @BeforeEach
     void setUp(){

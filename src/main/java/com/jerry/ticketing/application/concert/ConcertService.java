@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.concert;
 
-import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
+import com.jerry.ticketing.application.seat.ConcertInitializationService;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.concert.ConcertMapper;
 import com.jerry.ticketing.dto.CreateConcert;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConcertService {
 
     private final ConcertRepository concertRepository;
-    private final ConcertSeatInitializer concertSeatInitializer;
+    private final ConcertInitializationService concertSeatInitializer;
     private final ConcertMapper concertMapper;
 
     @Transactional

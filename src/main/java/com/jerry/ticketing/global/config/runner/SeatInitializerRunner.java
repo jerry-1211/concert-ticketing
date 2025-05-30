@@ -1,6 +1,6 @@
 package com.jerry.ticketing.global.config.runner;
 
-import com.jerry.ticketing.application.seat.SeatInitializer;
+import com.jerry.ticketing.application.seat.factory.SeatFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SeatInitializerRunner implements CommandLineRunner {
-    private final SeatInitializer seatInitializer;
+    private final SeatFactory seatInitializer;
 
     @Override
     public void run(String ...args){
