@@ -5,8 +5,6 @@ import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.ConcertSeats;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.dto.BlockingSeat;
-import com.jerry.ticketing.global.exception.BusinessException;
-import com.jerry.ticketing.global.exception.SeatErrorCode;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
 import org.springframework.transaction.annotation.Transactional;

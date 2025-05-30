@@ -45,13 +45,13 @@ public class TestFixture {
 
     // 구역 데이터 생성
     public static Section createSection(Concert concert) {
-        return Section.initSection(concert, "A", 100_000);
+        return Section.initSection(concert, 'A', 100_000);
     }
 
 
     // 좌석 데이터 생성
     public static Seat createSeat() {
-        return Seat.createSeat("A", 10, SeatType.STANDARD);
+        return Seat.createSeat('A', 10, SeatType.STANDARD);
     }
 
 

@@ -74,9 +74,9 @@ public class ConcertSeatCreationIntegrationTest {
         assertThat(sectionRepository.count()).isEqualTo(26);
 
         // 각 주요 구역이 ConcertId와 잘 매핑 되었는지 확인
-        Section sectionA = sectionRepository.findByZone("A").orElseThrow();
-        Section sectionG = sectionRepository.findByZone("G").orElseThrow();
-        Section sectionM = sectionRepository.findByZone("M").orElseThrow();
+        Section sectionA = sectionRepository.findByZone('A').orElseThrow();
+        Section sectionG = sectionRepository.findByZone('G').orElseThrow();
+        Section sectionM = sectionRepository.findByZone('M').orElseThrow();
 
         assertThat(sectionA.getConcert().getId()).isEqualTo(saveConcert.getId());
         assertThat(sectionG.getConcert().getId()).isEqualTo(saveConcert.getId());
@@ -134,9 +134,9 @@ public class ConcertSeatCreationIntegrationTest {
 
 
     private static int calculateTotalSeats() {
-        int totalVipSeats = SectionConfig.vipSection().getCapacity() * 6;
-        int totalStandardSeats = SectionConfig.standardSection().getCapacity() * 6;
-        int totalEconomySeats = SectionConfig.economySection().getCapacity() * 14;
+        int totalVipSeats = SectionType.VIP.getCapacity() * 6;
+        int totalStandardSeats = SectionType.STANDARD.getCapacity() * 6;
+        int totalEconomySeats = SectionType.ECONOMY.getCapacity() * 14;
         return totalVipSeats + totalStandardSeats + totalEconomySeats;
     }
 

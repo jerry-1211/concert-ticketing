@@ -61,7 +61,7 @@ class ConcertSeatTest {
 
         // Then
         assertThat(concertSeats).hasSize(1);
-        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo("A");
+        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo('A');
 
     }
 

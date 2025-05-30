@@ -81,7 +81,7 @@ class ReservationItemTest {
 
         // Then
         assertThat(savedReservationItem).isNotNull();
-        assertThat(savedReservationItem.getConcertSeat().getSeat().getSeatRow()).isEqualTo("A");
+        assertThat(savedReservationItem.getConcertSeat().getSeat().getSeatRow()).isEqualTo('A');
         assertThat(savedReservationItem.getReservation().getMember().getEmail()).isEqualTo("jerry@naver.com");
         assertThat(savedReservationItem.getConcertSeat().getPrice()).isEqualTo(1_000);
         assertThat(savedReservationItem.getConcertSeat().getConcert().getVenue()).isEqualTo("Test-Venue");

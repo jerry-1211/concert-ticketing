@@ -1,7 +1,7 @@
-package com.jerry.ticketing.application.seat;
+package com.jerry.ticketing.application.seat.factory;
 
 
-import com.jerry.ticketing.global.config.section.SectionConfig;
+import com.jerry.ticketing.application.seat.enums.SectionType;
 import com.jerry.ticketing.domain.seat.Seat;
 import com.jerry.ticketing.repository.seat.SeatRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +14,11 @@ import java.util.List;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class SeatInitializer {
+public class SeatFactory {
 
 
     // 좌석 생성 배치 크기
     private static final int BATCH_SIZE = 1000;
-
     private final SeatRepository seatRepository;
 
     /**
@@ -42,15 +41,15 @@ public class SeatInitializer {
      * */
     protected void initializeAllSeats(){
         for(char zone = 'A'; zone<= 'F'; zone ++){
-            createSeats(SectionConfig.vipSection());
+            createSeats(SectionType.VIP);
         }
 
         for(char zone = 'G'; zone<= 'L'; zone ++){
-            createSeats(SectionConfig.standardSection());
+            createSeats(SectionType.STANDARD);
         }
 
         for(char zone = 'M'; zone<= 'Z'; zone ++){
-            createSeats(SectionConfig.economySection());
+            createSeats(SectionType.ECONOMY);
         }
 
     }
@@ -59,14 +58,14 @@ public class SeatInitializer {
     /**
      * Section Config를 기반으로 실제 Seat 객체를 생성합니다.
      * */
-    private void createSeats(SectionConfig config) {
+    private void createSeats(SectionType type) {
         List<Seat> seatBatch = new ArrayList<>(BATCH_SIZE);
         int totalCreated = 0;
 
-        for (char rowChar = config.getStartRow(); rowChar <= config.getEndRow(); rowChar++) {
-            String row = String.valueOf(rowChar);
-            for (int number = config.getStartNumber(); number <= config.getEndNumber(); number++) {
-                Seat seat = Seat.createSeat(row, number, config.getSeatType());
+        for (char rowChar = type.getStartRow(); rowChar <= type.getEndRow(); rowChar++) {
+            char row = rowChar;
+            for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
+                Seat seat = Seat.createSeat(row, number, type.getSeatType());
                 seatBatch.add(seat);
 
                 if (seatBatch.size() >= BATCH_SIZE){

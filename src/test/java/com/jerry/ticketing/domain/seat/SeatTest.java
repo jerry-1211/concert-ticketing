@@ -43,7 +43,7 @@ class SeatTest {
         // Then
         assertThat(saveSeat).isNotNull();
         assertThat(saveSeat.getId()).isNotNull();
-        assertThat(saveSeat.getSeatRow()).isEqualTo("A");
+        assertThat(saveSeat.getSeatRow()).isEqualTo('A');
         assertThat(saveSeat.getNumber()).isEqualTo(10);
 
     }
