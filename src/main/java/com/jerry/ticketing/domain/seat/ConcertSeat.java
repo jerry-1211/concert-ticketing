@@ -56,8 +56,7 @@ public class ConcertSeat {
     // 좌석 선점 시작 만료 시간
     private OffsetDateTime blockedExpireAt;
 
-    private ConcertSeat(Concert concert, Seat seat, Section section,
-                        int price) {
+    private ConcertSeat(Concert concert, Seat seat, Section section, int price) {
         this.concert = concert;
         this.seat = seat;
         this.section = section;
