@@ -53,16 +53,15 @@ public class Payment {
         this.idempotencyKey = idempotencyKey;
     }
 
-    public static Payment createPayment(Reservation reservation, PaymentMethod paymentMethod,
-                                PaymentStatus paymentStatus, OffsetDateTime paymentDate, String idempotencyKey){
-        return new Payment(reservation, paymentMethod, paymentStatus, paymentDate, idempotencyKey);
+    public static Payment createTossPayment(Reservation reservation, String idempotencyKey){
+        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), idempotencyKey);
     }
 
     public void updateStatus(PaymentStatus status){
         paymentStatus = status;
     }
 
-    public void updatePaymentDate(OffsetDateTime time){
-        paymentDate = time;
+    public void updatePaymentDate(){
+        paymentDate = OffsetDateTime.now();
     }
 }

@@ -1,35 +1,24 @@
 package com.jerry.ticketing.api.payment;
 
-
 import com.jerry.ticketing.application.payment.PaymentService;
-import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import com.jerry.ticketing.dto.CreatePayment;
-import jakarta.servlet.http.HttpServletRequest;
+import com.jerry.ticketing.dto.TossPaymentWebhook;
+import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/api/payment")
 @RequiredArgsConstructor
-public class PaymentController {
+public class PaymentApiController {
 
     private final PaymentService paymentService;
     private final TossPaymentConfig tossPaymentConfig;
-
-    /**
-     * 결제 페이지
-     * */
-    @GetMapping(value = "/")
-    public String index(){
-        return "widget/checkout";
-    }
 
     /**
      * 결제 요청 생성
@@ -38,31 +27,22 @@ public class PaymentController {
     @ResponseBody
     public ResponseEntity<CreatePayment.Response> createPayment(@Valid @RequestBody CreatePayment.Request request) {
         CreatePayment.Response response = paymentService.createPayment(request);
-
-        response.setClientKey(tossPaymentConfig.getTestClientApiKey());
-        response.setSuccessUrl(tossPaymentConfig.getSuccessUrl());
-        response.setFailUrl(tossPaymentConfig.getFailUrl());
-
+        response.setPaymentUrls(tossPaymentConfig);
         return ResponseEntity.ok(response);
     }
 
 
 
     /**
-     * 토스페이먼츠 결제 성공 콜백
+     * Toss 결제 승인
      */
-    @GetMapping("/toss/success")
-    public String tossPaymentSuccessPage(){
-
-        return "widget/success";
-    }
-
-    @PostMapping("/toss/success")
+    @PostMapping("/toss/confirm")
     @ResponseBody
     public ResponseEntity<CreatePayment.Response> tossPaymentSuccess(
             @RequestBody ConfirmTossPayment.Request request){
 
-        CreatePayment.Response response = paymentService.confirmTossPayment(request.getPaymentKey(),request.getOrderId(),request.getAmount());
+        CreatePayment.Response response = paymentService.confirmPayment(request);
+        response.setPaymentUrls(tossPaymentConfig);
         return ResponseEntity.ok(response);
     }
 

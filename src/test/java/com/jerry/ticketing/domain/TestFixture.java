@@ -4,8 +4,6 @@ import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.member.Address;
 import com.jerry.ticketing.domain.member.Member;
 import com.jerry.ticketing.domain.payment.Payment;
-import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
-import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
 import com.jerry.ticketing.domain.reservation.Reservation;
 import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
@@ -70,7 +68,7 @@ public class TestFixture {
 
     // 결제
     public static Payment createPayment(Reservation reservation){
-        return Payment.createPayment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), "TEST-IDEMPOTENT");
+        return Payment.createTossPayment(reservation, "TEST-IDEMPOTENT");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jerry.ticketing.dto;
 
 import com.jerry.ticketing.domain.payment.Payment;
+import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -34,6 +35,13 @@ public class CreatePayment {
         private String failUrl;
 
 
+        public void setPaymentUrls(TossPaymentConfig tossPaymentConfig) {
+            this.secreteKey = tossPaymentConfig.getTestSecreteApiKey();
+            this.successUrl = tossPaymentConfig.getSuccessUrl();
+            this.failUrl = tossPaymentConfig.getFailUrl();
+        }
+
+
         public static CreatePayment.Response from(Payment payment){
             return CreatePayment.Response.builder()
                     .paymentId(payment.getId())
@@ -45,14 +53,14 @@ public class CreatePayment {
                     .build();
         }
 
+        public static CreatePayment.Response from(ConfirmTossPayment.Response response, Payment payment) {
 
-        public static CreatePayment.Response from(Payment payment,ConfirmTossPayment.Response confirmTossPaymentResponse){
-            CreatePayment.Response response = from(payment);
+            CreatePayment.Response createResponse = from(payment);
 
-            // TODO 추후 필요하면 tossPaymentResponse 정보 사용
+            // TODO 추후 필요하면 response 정보 사용
             // 에를 들어 paymentKey, OrderID 등등
 
-            return response;
+            return createResponse;
         }
     }
 

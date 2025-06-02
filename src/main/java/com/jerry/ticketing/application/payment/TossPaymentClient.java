@@ -1,5 +1,6 @@
 package com.jerry.ticketing.application.payment;
 
+import com.jerry.ticketing.application.payment.util.AuthUtils;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,10 @@ public class TossPaymentClient {
 
     private final TossPaymentConfig tossPaymentConfig;
 
-    public ConfirmTossPayment.Response confirmPayment(String paymentKey, String orderId, String amount) {
+    public ConfirmTossPayment.Response confirmPayment(ConfirmTossPayment.Request request) {
 
         WebClient webClient = WebClient.create();
-
-        String encodeAuth = Base64.getEncoder()
-                .encodeToString((tossPaymentConfig.getTestClientApiKey() + ":").getBytes(StandardCharsets.UTF_8));
-
-        ConfirmTossPayment.Request request = ConfirmTossPayment.Request.of(paymentKey, orderId, amount);
-
+        String encodeAuth = AuthUtils.encodeBasicAuth(tossPaymentConfig);
 
         return webClient.post()
                 .uri(tossPaymentConfig.getBaseUrl() + "/confirm")
