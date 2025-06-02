@@ -7,10 +7,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Section {
 
     // 구역 id
@@ -26,7 +23,7 @@ public class Section {
 
     // 구역별 위치 (ex) A석, B석
     @Column(nullable = false)
-    private String zone;
+    private char zone;
 
     // 구역별 수용 인원
     @Column(nullable = false)
@@ -35,6 +32,17 @@ public class Section {
     // 구역별 남은 좌석
     @Column(nullable = false)
     private int remainingSeats;
+
+    private Section(Concert concert, char zone, int capacity) {
+        this.concert = concert;
+        this.zone = zone;
+        this.capacity = capacity;
+        this.remainingSeats = capacity;
+    }
+
+    public static Section initSection(Concert concert, char zone, int capacity) {
+        return new Section(concert, zone, capacity);
+    }
 
     public int decreaseRemainingSeats(){
         if(this.remainingSeats<=0){

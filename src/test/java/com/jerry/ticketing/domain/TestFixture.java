@@ -4,14 +4,11 @@ import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.member.Address;
 import com.jerry.ticketing.domain.member.Member;
 import com.jerry.ticketing.domain.payment.Payment;
-import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
-import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
 import com.jerry.ticketing.domain.reservation.Reservation;
 import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
 import com.jerry.ticketing.domain.seat.Seat;
 import com.jerry.ticketing.domain.seat.Section;
-import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
 import com.jerry.ticketing.domain.seat.enums.SeatType;
 
 import java.time.OffsetDateTime;
@@ -30,84 +27,48 @@ public class TestFixture {
     }
 
     public static Member createMember(String name) {
-        return Member.builder()
-                .name(name) // name 필수값 추가
-                .address(Address.of("경기도","고양시"))
-                .email("jerry@naver.com")
-                .phoneNumber("010-2304-4302")
-                .password("password") // pw 필수값 추가
-                .build();
+        return Member.createMember(
+                name, Address.of("경기도", "고양시"),
+                "jerry@naver.com", "password","010-2304-4302");
     }
 
 
     // 콘서트 데이터 생성
     public static Concert createConcert() {
-        return Concert.builder()
-                .title("Cold Play")
-                .dateTime(OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES))
-                .venue("일산 고양시 대화동")
-                .price(100_000)
-                .description("Cold Play의 2번째 내한 공연")
-                .maxTicketsPerUser(2)
-                .build();
+        return Concert.createConcert(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue", 100_000, "Test-Description", 3);
     }
 
 
-    // 구연 데이터 생성
+    // 구역 데이터 생성
     public static Section createSection(Concert concert) {
-        return Section.builder()
-                .concert(concert)
-                .zone("A")
-                .capacity(100_000)
-                .remainingSeats(100)
-                .build();
+        return Section.initSection(concert, 'A', 100_000);
     }
 
 
     // 좌석 데이터 생성
     public static Seat createSeat() {
-        return Seat.builder()
-                .seatRow("A")
-                .number(10)
-                .seatType(SeatType.STANDARD)
-                .build();
+        return Seat.createSeat('A', 10, SeatType.STANDARD);
     }
 
 
     // 콘서트 좌석
-    public static ConcertSeat createConcertSeat(Concert concert, Seat seat) {
-        return ConcertSeat.builder()
-                .concert(concert)
-                .seat(seat)
-                .price(100_000)
-                .status(ConcertSeatStatus.BLOCKED)
-                .build();
+    public static ConcertSeat createConcertSeat(Concert concert, Seat seat, Section section) {
+        return ConcertSeat.creatConcertSeat(concert, seat, section, 1000);
     }
 
 
     // 예약
     public static Reservation createReservation(Member member, Concert concert){
-        return Reservation.builder()
-                .member(member)
-                .concert(concert)
-                .totalPrice(1000)
-                .reservationStatus(ReservationStatus.PENDING)
-                .createdAt(OffsetDateTime.now())
-                .expiresAt(OffsetDateTime.now())
-                .build();
+        return Reservation.createReservation(member, concert, 1000,
+                ReservationStatus.PENDING, OffsetDateTime.now(), OffsetDateTime.now(), 3);
     }
 
 
     // 결제
     public static Payment createPayment(Reservation reservation){
-        return Payment.builder()
-                .reservation(reservation)
-                .paymentMethod(PaymentMethod.KAKAOPAY)
-                .paymentStatus(PaymentStatus.PENDING)
-                .paymentDate(OffsetDateTime.now())
-                .idempotencyKey("TEST-IDEMPOTENT")
-                .amount(3)
-                .build();
+        return Payment.createTossPayment(reservation, "TEST-IDEMPOTENT");
     }
 
 }

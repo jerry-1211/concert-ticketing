@@ -1,8 +1,8 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
-import com.jerry.ticketing.application.seat.SeatInitializer;
-import com.jerry.ticketing.config.section.SectionConfig;
+import com.jerry.ticketing.application.seat.ConcertInitializationService;
+import com.jerry.ticketing.application.seat.factory.SeatFactory;
+import com.jerry.ticketing.application.seat.enums.SectionType;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.seat.Section;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,7 +29,7 @@ public class ConcertSeatCreationIntegrationTest {
     private SeatRepository seatRepository;
 
     @Autowired
-    private SeatInitializer seatInitializer;
+    private SeatFactory seatInitializer;
 
     @Autowired
     private SectionRepository sectionRepository;
@@ -37,7 +38,7 @@ public class ConcertSeatCreationIntegrationTest {
     private ConcertRepository concertRepository;
 
     @Autowired
-    private ConcertSeatInitializer concertSeatInitializer;
+    private ConcertInitializationService concertSeatInitializer;
 
     @Autowired
     private ConcertSeatRepository concertSeatRepository;
@@ -59,14 +60,9 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert = Concert.builder()
-                .title("Cold Play")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 대화동")
-                .price(100_000)
-                .description("Cold Play의 2번째 내한 공연")
-                .maxTicketsPerUser(2)
-                .build();
+        Concert concert = Concert.createConcert(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue", 100_000, "Test-Description", 3);
 
         Concert saveConcert = concertRepository.save(concert);
 
@@ -78,9 +74,9 @@ public class ConcertSeatCreationIntegrationTest {
         assertThat(sectionRepository.count()).isEqualTo(26);
 
         // 각 주요 구역이 ConcertId와 잘 매핑 되었는지 확인
-        Section sectionA = sectionRepository.findByZone("A").orElseThrow();
-        Section sectionG = sectionRepository.findByZone("G").orElseThrow();
-        Section sectionM = sectionRepository.findByZone("M").orElseThrow();
+        Section sectionA = sectionRepository.findByZone('A').orElseThrow();
+        Section sectionG = sectionRepository.findByZone('G').orElseThrow();
+        Section sectionM = sectionRepository.findByZone('M').orElseThrow();
 
         assertThat(sectionA.getConcert().getId()).isEqualTo(saveConcert.getId());
         assertThat(sectionG.getConcert().getId()).isEqualTo(saveConcert.getId());
@@ -107,23 +103,13 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert1 = Concert.builder()
-                .title("Cold Play")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 대화동")
-                .price(100_000)
-                .description("Cold Play의 2번째 내한 공연")
-                .maxTicketsPerUser(2)
-                .build();
+        Concert concert1 = Concert.createConcert(
+                "Test-Title1", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue1", 100_000, "Test-Description1", 3);
 
-        Concert concert2 = Concert.builder()
-                .title("아이유")
-                .dateTime(OffsetDateTime.now())
-                .venue("일산 고양시 마두동")
-                .price(200_000)
-                .description("아이유의 신곡 발표 콘서트")
-                .maxTicketsPerUser(3)
-                .build();
+        Concert concert2 = Concert.createConcert(
+                "Test-Title2", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue2", 200_000, "Test-Description2", 3);
 
         Concert saveConcert1 = concertRepository.save(concert1);
         Concert saveConcert2 = concertRepository.save(concert2);
@@ -148,9 +134,9 @@ public class ConcertSeatCreationIntegrationTest {
 
 
     private static int calculateTotalSeats() {
-        int totalVipSeats = SectionConfig.vipSection().getCapacity() * 6;
-        int totalStandardSeats = SectionConfig.standardSection().getCapacity() * 6;
-        int totalEconomySeats = SectionConfig.economySection().getCapacity() * 14;
+        int totalVipSeats = SectionType.VIP.getCapacity() * 6;
+        int totalStandardSeats = SectionType.STANDARD.getCapacity() * 6;
+        int totalEconomySeats = SectionType.ECONOMY.getCapacity() * 14;
         return totalVipSeats + totalStandardSeats + totalEconomySeats;
     }
 

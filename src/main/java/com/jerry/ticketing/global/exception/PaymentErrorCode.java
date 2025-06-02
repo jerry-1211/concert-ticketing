@@ -1,4 +1,4 @@
-package com.jerry.ticketing.exception;
+package com.jerry.ticketing.global.exception;
 
 
 public enum PaymentErrorCode implements ErrorCode {

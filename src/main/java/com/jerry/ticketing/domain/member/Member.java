@@ -8,8 +8,6 @@ import lombok.*;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 public class Member {
 
     // 멤버 id
@@ -36,4 +34,18 @@ public class Member {
 
     // 멤버 전화번호
     private String phoneNumber;
+
+
+    private Member(String name, Address address, String email, String password, String phoneNumber) {
+        this.address = address;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public static Member createMember(String name, Address address,
+                                      String email, String password, String phoneNumber) {
+        return new Member(name, address, email, password, phoneNumber);
+    }
 }

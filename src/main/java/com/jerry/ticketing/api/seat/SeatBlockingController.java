@@ -3,8 +3,7 @@ package com.jerry.ticketing.api.seat;
 
 import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
-import com.jerry.ticketing.dto.request.SeatBlockingRequest;
-import com.jerry.ticketing.dto.response.SeatBlockingResponse;
+import com.jerry.ticketing.dto.BlockingSeat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,21 +23,12 @@ public class SeatBlockingController {
     /**
      * 좌석 선점
      * */
-    @PostMapping("/block")
-    public ResponseEntity<SeatBlockingResponse> blockSeats(@RequestBody SeatBlockingRequest request) {
+    @PostMapping("/blocks")
+    public ResponseEntity<BlockingSeat.Response> blockSeats(@RequestBody BlockingSeat.Request request) {
 
-        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(
-                request.getConcertId(),
-                request.getSeatIds(),
-                request.getMemberId()
-        );
+        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(request);
 
-        SeatBlockingResponse response = new SeatBlockingResponse(
-                blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
-                blockedConcertSeats.get(0).getBlockedExpireAt()
-        );
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(BlockingSeat.Response.toResponse(blockedConcertSeats));
 
     }
 }

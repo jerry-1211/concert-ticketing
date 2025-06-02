@@ -63,7 +63,7 @@ class ReservationItemTest {
         Seat seat = seatRepository.save(TestFixture.createSeat());
 
 
-        ConcertSeat concertSeat = TestFixture.createConcertSeat(concert, seat);
+        ConcertSeat concertSeat = TestFixture.createConcertSeat(concert, seat, section);
         Reservation reservation = TestFixture.createReservation(member, concert);
 
         savedConcertSeat = concertSeatRepository.save(concertSeat);
@@ -74,20 +74,17 @@ class ReservationItemTest {
     @DisplayName("예약 아이템 생성 및 저장 검증")
     void saveReservation(){
         // Given
-        ReservationItem reservationItem = ReservationItem.builder()
-                .concertSeat(savedConcertSeat)
-                .reservation(savedReservation)
-                .build();
+        ReservationItem reservationItem = ReservationItem.createReservationItem(savedReservation, savedConcertSeat);
 
         // When
         ReservationItem savedReservationItem = reservationItemRepository.save(reservationItem);
 
         // Then
         assertThat(savedReservationItem).isNotNull();
-        assertThat(savedReservationItem.getConcertSeat().getSeat().getSeatRow()).isEqualTo("A");
+        assertThat(savedReservationItem.getConcertSeat().getSeat().getSeatRow()).isEqualTo('A');
         assertThat(savedReservationItem.getReservation().getMember().getEmail()).isEqualTo("jerry@naver.com");
-        assertThat(savedReservationItem.getConcertSeat().getPrice()).isEqualTo(100_000);
-        assertThat(savedReservationItem.getConcertSeat().getConcert().getVenue()).isEqualTo("일산 고양시 대화동");
+        assertThat(savedReservationItem.getConcertSeat().getPrice()).isEqualTo(1_000);
+        assertThat(savedReservationItem.getConcertSeat().getConcert().getVenue()).isEqualTo("Test-Venue");
     }
 
     @Test
@@ -95,11 +92,7 @@ class ReservationItemTest {
     void shouldAccessRelatedConcertSeatInfo(){
 
         // Given
-        ReservationItem reservationItem = ReservationItem.builder()
-                .concertSeat(savedConcertSeat)
-                .reservation(savedReservation)
-                .build();
-
+        ReservationItem reservationItem = ReservationItem.createReservationItem(savedReservation, savedConcertSeat);
         ReservationItem savedReservationItem = reservationItemRepository.save(reservationItem);
 
         // When

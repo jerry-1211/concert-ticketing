@@ -53,7 +53,7 @@ class ConcertSeatTest {
     @DisplayName("콘서트 예약 생성 및 저장 검증")
     void saveSeat(){
         // Given
-        ConcertSeat concertSeat = TestFixture.createConcertSeat(saveConcert, saveSeat);
+        ConcertSeat concertSeat = TestFixture.createConcertSeat(saveConcert, saveSeat, saveSection);
         concertSeatRepository.save(concertSeat);
 
         //When
@@ -61,7 +61,7 @@ class ConcertSeatTest {
 
         // Then
         assertThat(concertSeats).hasSize(1);
-        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo("A");
+        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo('A');
 
     }
 

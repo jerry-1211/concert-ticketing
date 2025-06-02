@@ -1,4 +1,4 @@
-package com.jerry.ticketing.exception;
+package com.jerry.ticketing.global.exception;
 
 public enum SeatErrorCode implements ErrorCode{
     SEAT_NOT_FOUND("요청 좌석 중 일부를 찾을 수 없습니다."),

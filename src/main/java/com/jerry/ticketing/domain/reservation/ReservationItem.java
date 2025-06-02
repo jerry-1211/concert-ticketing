@@ -7,10 +7,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Builder
-@Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReservationItem {
 
     // 예약 아이템 id
@@ -30,5 +27,13 @@ public class ReservationItem {
     @JoinColumn(name = "concert_seat_id")
     private ConcertSeat concertSeat;
 
+    private ReservationItem(Reservation reservation, ConcertSeat concertSeat) {
+        this.reservation = reservation;
+        this.concertSeat = concertSeat;
+    }
+
+    public static ReservationItem createReservationItem(Reservation reservation, ConcertSeat concertSeat){
+        return new ReservationItem(reservation, concertSeat);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.jerry.ticketing.config.payment;
+package com.jerry.ticketing.global.config.payment;
 
 
 import lombok.Getter;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "toss.payments")
 public class TossPaymentConfig {
-    private String testClientApiKey;
+    private String testSecreteApiKey;
     private String successUrl;
     private String failUrl;
     private String baseUrl;

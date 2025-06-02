@@ -1,11 +1,11 @@
 package com.jerry.ticketing.application.concert;
 
-import com.jerry.ticketing.application.seat.ConcertSeatInitializer;
+import com.jerry.ticketing.application.seat.ConcertInitializationService;
 import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.dto.request.ConcertCreateRequest;
-import com.jerry.ticketing.dto.response.ConcertResponse;
-import com.jerry.ticketing.exception.BusinessException;
-import com.jerry.ticketing.exception.ConcertErrorCode;
+import com.jerry.ticketing.domain.concert.ConcertMapper;
+import com.jerry.ticketing.dto.CreateConcert;
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.ConcertErrorCode;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,35 +31,28 @@ class ConcertServiceTest {
     private ConcertRepository concertRepository;
 
     @Mock
-    private ConcertSeatInitializer concertSeatInitializer;
+    private ConcertInitializationService concertSeatInitializer;
+
+    @Mock
+    private ConcertMapper concertMapper;
 
     @InjectMocks
     private ConcertService concertService;
 
     private Concert savedConcert;
-    private ConcertCreateRequest request;
+    private CreateConcert.Request request;
 
 
     @BeforeEach
     void setUp(){
-        savedConcert = Concert.builder()
-                .id(1L)
-                .title("Test-Title")
-                .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
-                .venue("Test-Venue")
-                .price(100_000)
-                .description("Test-Description")
-                .maxTicketsPerUser(3)
-                .build();
 
-        request= ConcertCreateRequest.builder()
-                    .title("Test-Title")
-                    .dateTime(OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES))
-                    .venue("Test-Venue")
-                    .price(100_000)
-                    .description("Test-Description")
-                    .maxTicketsPerUser(3)
-                    .build();
+        request = CreateConcert.Request.of(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
+                "Test-Venue", 100_000, "Test-Description", 3);
+
+        savedConcert = Concert.createConcert(
+                "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
+                , "Test-Venue", 100_000, "Test-Description", 3);
     }
 
     @Test
@@ -67,23 +60,23 @@ class ConcertServiceTest {
     void shouldCreateConcert() {
 
         // Given
+        when(concertMapper.buildConcert(any(CreateConcert.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class))).thenReturn(savedConcert);
         doNothing().when(concertSeatInitializer).initializeSectionAndConcertSeats(savedConcert.getId());
 
 
         // When
-        ConcertResponse response = concertService.createConcert(request);
+        CreateConcert.Response response = concertService.createConcert(request);
 
 
         // Then
         assertThat(response).isNotNull();
         assertThat(response.getDateTime()).isNotNull();
-        assertThat(response.getId()).isEqualTo(1L);
         assertThat(response.getPrice()).isEqualTo(100_000);
 
         // 메서드 호출 검증
         verify(concertRepository, times(1)).save(any(Concert.class));
-        verify(concertSeatInitializer, times(1)).initializeSectionAndConcertSeats(anyLong());
+        verify(concertSeatInitializer, times(1)).initializeSectionAndConcertSeats(savedConcert.getId());
 
     }
 
@@ -93,8 +86,10 @@ class ConcertServiceTest {
     void shouldThrowConcertErrorCodeWhenSaveFails(){
 
         // Given
+        when(concertMapper.buildConcert(any(CreateConcert.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class)))
-                .thenThrow(new RuntimeException("콘서트 저장 실패"));
+                .thenThrow(new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED));
+
 
 
         // When & Then

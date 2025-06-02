@@ -1,8 +1,8 @@
 package com.jerry.ticketing.application.payment;
 
-import com.jerry.ticketing.config.payment.TossPaymentConfig;
-import com.jerry.ticketing.dto.request.TossPaymentConfirmRequest;
-import com.jerry.ticketing.dto.response.TossPaymentResponse;
+import com.jerry.ticketing.application.payment.util.AuthUtils;
+import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.dto.ConfirmTossPayment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -20,18 +20,10 @@ public class TossPaymentClient {
 
     private final TossPaymentConfig tossPaymentConfig;
 
-    public TossPaymentResponse confirmPayment(String paymentKey, String orderId, String amount) {
+    public ConfirmTossPayment.Response confirmPayment(ConfirmTossPayment.Request request) {
 
         WebClient webClient = WebClient.create();
-
-        String encodeAuth = Base64.getEncoder()
-                .encodeToString((tossPaymentConfig.getTestClientApiKey() + ":").getBytes(StandardCharsets.UTF_8));
-
-        TossPaymentConfirmRequest request = TossPaymentConfirmRequest.builder()
-                .paymentKey(paymentKey)
-                .orderId(orderId)
-                .amount(amount)
-                .build();
+        String encodeAuth = AuthUtils.encodeBasicAuth(tossPaymentConfig);
 
         return webClient.post()
                 .uri(tossPaymentConfig.getBaseUrl() + "/confirm")
@@ -39,7 +31,7 @@ public class TossPaymentClient {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .bodyValue(request)
                 .retrieve()
-                .bodyToMono(TossPaymentResponse.class)
+                .bodyToMono(ConfirmTossPayment.Response.class)
                 .block();
     }
 }

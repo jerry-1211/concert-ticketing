@@ -2,9 +2,12 @@ package com.jerry.ticketing.application.seat.unit;
 
 import com.jerry.ticketing.application.seat.SeatBlockingService;
 import com.jerry.ticketing.domain.seat.ConcertSeat;
+import com.jerry.ticketing.domain.seat.ConcertSeats;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
-import com.jerry.ticketing.exception.BusinessException;
-import com.jerry.ticketing.exception.SeatErrorCode;
+import com.jerry.ticketing.dto.BlockingSeat;
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.SeatErrorCode;
+import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,22 +34,21 @@ class SeatBlockingServiceTest {
     @Mock
     private ConcertSeatRepository concertSeatRepository;
 
+    @Mock
+    private ConcertSeatBlockValidator concertSeatBlockValidator;
+
+
     @InjectMocks
     private SeatBlockingService seatBlockingService;
 
     private List<ConcertSeat> concertSeats;
-    private Long memberId;
-    private List<Long> seatIds;
-    private Long concertId;
-
+    private BlockingSeat.Request request;
 
     @BeforeEach
     void setup() {
 
         // 테스트 데이터 설정
-        concertId = 1L;
-        seatIds = Arrays.asList(1L, 2L);
-        memberId = 100L;
+        this.request = new BlockingSeat.Request(1L, Arrays.asList(1L, 2L),100L);
 
 
         // Mock ConcertSeat 객체 생성
@@ -64,97 +66,20 @@ class SeatBlockingServiceTest {
     void blockSeat_Success() {
 
         // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
+        when(concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()))
                 .thenReturn(concertSeats);
 
-        when(concertSeatRepository.saveAll(concertSeats))
-                .thenReturn(concertSeats);
+        ConcertSeats BlockConcertSeats = new ConcertSeats(concertSeats);
+        doNothing().when(concertSeatBlockValidator).validator(BlockConcertSeats, request.getConcertSeatIds());
+
 
         // When
-        List<ConcertSeat> result = seatBlockingService.blockSeats(concertId, seatIds, memberId);
+        List<ConcertSeat> result = seatBlockingService.blockSeats(request);
 
         // Then
         assertThat(result).isEqualTo(concertSeats);
 
-        for (ConcertSeat concertSeat : concertSeats) {
-            verify(concertSeat).setStatus(ConcertSeatStatus.BLOCKED);
-            verify(concertSeat).setBlockedBy(memberId);
-            verify(concertSeat).setBlockedAt(any(OffsetDateTime.class));
-            verify(concertSeat).setBlockedExpireAt(any(OffsetDateTime.class));
-        }
-    }
 
-
-    @Test
-    @DisplayName("요청 좌석 중 일부 찾을 수 없을 때 Seat Error 코드 검증")
-    void block_SeatNotFound() {
-        // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
-                .thenReturn(List.of(concertSeats.get(0)));
-
-        // When & Then
-        assertThatThrownBy(() -> seatBlockingService.blockSeats(concertId, seatIds, memberId))
-                .isInstanceOf(BusinessException.class)
-                .hasFieldOrPropertyWithValue("errorCode", SeatErrorCode.SEAT_NOT_FOUND);
-
-                //hasFieldOrPropertyWithValue("errorCode.message", "요청 좌석 중 일부를 찾을 수 없습니다.");  -> 이렇게 해도 테스트 케이스 통과
-
-        verify(concertSeatRepository, never()).saveAll(any());
-    }
-
-    @Test
-    @DisplayName("이미 선점된 좌석이 포함되어 있을 경우 Seat Error 코드 검증")
-    void block_SeatAlreadyBlocked() {
-        // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds))
-                .thenReturn(concertSeats);
-
-        // When
-        when(concertSeats.get(0).isAvailable()).thenReturn(false);
-
-
-        // Then
-        assertThatThrownBy(() -> seatBlockingService.blockSeats(concertId, seatIds, memberId))
-                .isInstanceOf(BusinessException.class)
-                .hasFieldOrPropertyWithValue("errorCode", SeatErrorCode.SEAT_ALREADY_BLOCKED);
-
-
-        verify(concertSeats.get(0),never()).setStatus(any());
-        verify(concertSeatRepository, never()).saveAll(any());
-    }
-
-
-    @Test
-    @DisplayName("만료된 좌석 선점 자동 해제 확인 테스트")
-    void releaseExpiredBlockedSeats_Success(){
-        // Given
-        OffsetDateTime now = OffsetDateTime.now();
-
-        ConcertSeat expiredConcertSeat1 = mock(ConcertSeat.class);
-        ConcertSeat expiredConcertSeat2 = mock(ConcertSeat.class);
-        List<ConcertSeat> expiredSeats = Arrays.asList(expiredConcertSeat1, expiredConcertSeat2);
-
-        when(concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(
-                any(OffsetDateTime.class), eq(ConcertSeatStatus.BLOCKED)))
-                .thenReturn(expiredSeats);
-
-        when(concertSeatRepository.saveAll(expiredSeats)).thenReturn(expiredSeats);
-
-        // When
-        seatBlockingService.releaseExpiredBlockedSeats();
-
-        //Then
-        verify(concertSeatRepository).findByBlockedExpireAtBeforeAndStatus(
-                any(OffsetDateTime.class), eq(ConcertSeatStatus.BLOCKED));
-
-        for (ConcertSeat expiredSeat : expiredSeats) {
-            verify(expiredSeat).setStatus(ConcertSeatStatus.AVAILABLE);
-            verify(expiredSeat).setBlockedBy(null);
-            verify(expiredSeat).setBlockedAt(null);
-            verify(expiredSeat).setBlockedExpireAt(null);
-        }
-
-        verify(concertSeatRepository).saveAll(expiredSeats);
     }
 
 }

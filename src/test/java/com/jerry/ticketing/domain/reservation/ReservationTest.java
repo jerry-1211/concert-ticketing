@@ -43,7 +43,7 @@ class ReservationTest {
     void saveReservation(){
         // Given
         Member member = memberRepository.findByEmail("jerry@naver.com").get(0);
-        Concert concert = concertRepository.findByTitle("Cold Play").get(0);
+        Concert concert = concertRepository.findByTitle("Test-Title").get(0);
 
         Reservation reservation = TestFixture.createReservation(member, concert);
         reservationRepository.save(reservation);

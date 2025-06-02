@@ -2,9 +2,10 @@ package com.jerry.ticketing.application.seat;
 
 
 import com.jerry.ticketing.domain.seat.ConcertSeat;
+import com.jerry.ticketing.domain.seat.ConcertSeats;
 import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
-import com.jerry.ticketing.exception.BusinessException;
-import com.jerry.ticketing.exception.SeatErrorCode;
+import com.jerry.ticketing.dto.BlockingSeat;
+import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,38 +18,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeatBlockingService {
 
+    private final ConcertSeatBlockValidator concertSeatBlockValidator;
     private final ConcertSeatRepository concertSeatRepository;
-    private static final int BLOCKING_TIMEOUT_MINUTES = 15;
 
 
     /**
      * 좌석을 선택하고, 일시적으로 선점(Blocked)상태로 변경합니다.
-     * @param concertId 콘서스 Id
-     * @param seatIds 선택한 좌석 ID 목록
-     * @param memberId 멤버 ID
-     * @return 선정된 좌석 목록
-     * */
+     *
+     * @param request 클라이언트로 부터 block 요청을 받은 요청
+     */
     @Transactional
-    public List<ConcertSeat> blockSeats(Long concertId, List<Long> seatIds, Long memberId){
-        List<ConcertSeat> concertSeats = concertSeatRepository.findByConcertIdAndSeatIdIn(concertId, seatIds);
+    public List<ConcertSeat> blockSeats(BlockingSeat.Request request){
 
-        if(concertSeats.size() != seatIds.size()){
-            throw new BusinessException(SeatErrorCode.SEAT_NOT_FOUND);
-        }
+        ConcertSeats concertSeats = ConcertSeats.from(
+                concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()));
 
-        //  좌석 상태 확인 및 변경
-        for (ConcertSeat concertSeat : concertSeats) {
-            if(!concertSeat.isAvailable()){
-                throw new BusinessException(SeatErrorCode.SEAT_ALREADY_BLOCKED);
-            }
+        concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
 
-            concertSeat.setStatus(ConcertSeatStatus.BLOCKED);
-            concertSeat.setBlockedBy(memberId);
-            concertSeat.setBlockedAt(OffsetDateTime.now());
-            concertSeat.setBlockedExpireAt(OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES));
-        }
+        concertSeats.block(request.getMemberId());
 
-        return concertSeatRepository.saveAll(concertSeats);
+        return concertSeats.item();
     }
 
 
@@ -59,15 +48,11 @@ public class SeatBlockingService {
     @Transactional
     public void releaseExpiredBlockedSeats(){
         OffsetDateTime now = OffsetDateTime.now();
-        List<ConcertSeat> expiredConcertSeats = concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED);
+        ConcertSeats concertSeats = ConcertSeats.from(
+                concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED));
 
-        for (ConcertSeat expiredConcertSeat : expiredConcertSeats) {
-            expiredConcertSeat.setStatus(ConcertSeatStatus.AVAILABLE);
-            expiredConcertSeat.setBlockedBy(null);
-            expiredConcertSeat.setBlockedAt(null);
-            expiredConcertSeat.setBlockedExpireAt(null);
-        }
-        concertSeatRepository.saveAll(expiredConcertSeats);
+        concertSeats.available();
+
     }
 
 

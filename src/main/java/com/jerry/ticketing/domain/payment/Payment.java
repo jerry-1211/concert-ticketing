@@ -10,10 +10,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Getter
-@Table
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Payment {
 
     // 결제 id
@@ -45,15 +42,26 @@ public class Payment {
     @Column(nullable = false)
     private String idempotencyKey;
 
-    // 결제 티켓 숫자
-    @Column(nullable = false)
-    private int amount;
+
+
+    private Payment(Reservation reservation, PaymentMethod paymentMethod,
+                   PaymentStatus paymentStatus, OffsetDateTime paymentDate, String idempotencyKey) {
+        this.reservation = reservation;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.paymentDate = paymentDate;
+        this.idempotencyKey = idempotencyKey;
+    }
+
+    public static Payment createTossPayment(Reservation reservation, String idempotencyKey){
+        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), idempotencyKey);
+    }
 
     public void updateStatus(PaymentStatus status){
         paymentStatus = status;
     }
 
-    public void updatePaymentDate(OffsetDateTime time){
-        paymentDate = time;
+    public void updatePaymentDate(){
+        paymentDate = OffsetDateTime.now();
     }
 }
