@@ -1,6 +1,8 @@
 package com.jerry.ticketing.domain.seat;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import org.springframework.util.CollectionUtils;
 
 public class ConcertSeats {
     private final List<ConcertSeat> concertSeats;
@@ -18,8 +20,7 @@ public class ConcertSeats {
     }
 
     public void block(Long memberId){
-        this.concertSeats.forEach(v->{
-            v.blockConcertSeat(memberId);});
+        this.concertSeats.forEach(v->v.blockConcertSeat(memberId));
     }
 
     public void available(){
@@ -31,6 +32,19 @@ public class ConcertSeats {
     }
 
 
+    public List<Long> ids() {
+        return this.concertSeats.stream()
+           .map(ConcertSeat::getId)
+           .toList();
+    }
 
+    public OffsetDateTime expiredAt() {
+
+        if(CollectionUtils.isEmpty(concertSeats)) {
+            return null;
+        }
+
+        return this.concertSeats.get(0).getBlockedExpireAt();
+    }
 }
 

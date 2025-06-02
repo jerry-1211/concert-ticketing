@@ -18,7 +18,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 4G0
         reservations:
           memory: 2G
   h2:

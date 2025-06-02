@@ -44,4 +44,8 @@ public enum SectionType {
     public static List<SectionType> getSectionTypes() {
         return Arrays.asList(SectionType.values());
     }
+
+    public int seatPrice(int price) {
+        return this.premium * price;
+    }
 }

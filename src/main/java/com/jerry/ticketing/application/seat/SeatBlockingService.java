@@ -28,16 +28,19 @@ public class SeatBlockingService {
      * @param request 클라이언트로 부터 block 요청을 받은 요청
      */
     @Transactional
-    public List<ConcertSeat> blockSeats(BlockingSeat.Request request){
+    public BlockingSeat.Response blockSeats(BlockingSeat.Request request){
 
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()));
-
         concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
+
+        // 값이 제대로 들어왓어 ?! 있어 ?
 
         concertSeats.block(request.getMemberId());
 
-        return concertSeats.item();
+        // A라면 B는 1개밖에올수 없고, C라면 B는 2개이상이어야해.
+
+        return BlockingSeat.toResponse(concertSeats.ids(), concertSeats.expiredAt());
     }
 
 

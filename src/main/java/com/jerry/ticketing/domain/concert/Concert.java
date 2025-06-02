@@ -1,5 +1,6 @@
 package com.jerry.ticketing.domain.concert;
 
+import com.jerry.ticketing.application.seat.enums.SectionType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -54,5 +55,4 @@ public class Concert {
                                         String venue, int price, String description, int maxTicketsPerUser) {
         return new Concert(title, dateTime, venue, price, description,maxTicketsPerUser);
     }
-
 }

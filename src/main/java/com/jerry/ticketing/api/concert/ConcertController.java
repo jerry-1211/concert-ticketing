@@ -27,6 +27,4 @@ public class ConcertController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
-
-
 }

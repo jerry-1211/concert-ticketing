@@ -32,15 +32,10 @@ public class BlockingSeat {
         private List<Long> blockedSeatIds;
 
         private OffsetDateTime expireAt;
-
-        public static BlockingSeat.Response toResponse(List<ConcertSeat> blockedConcertSeats){
-            return new BlockingSeat.Response(
-                    blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
-                    blockedConcertSeats.get(0).getBlockedExpireAt()
-            );
-        }
     }
 
-
+    public static BlockingSeat.Response toResponse(List<Long> blockedSeatIds, OffsetDateTime expireAt){
+        return new BlockingSeat.Response(blockedSeatIds, expireAt);
+    }
 
 }

@@ -5,9 +5,13 @@ import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.member.Member;
 import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import org.springframework.util.CollectionUtils;
 
 @Entity
 @Getter
@@ -20,10 +24,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 멤버 id
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "member_id", nullable = false)
-    Member member;
+    private Long memberId;
 
     // 콘서트 id
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -47,12 +48,15 @@ public class Reservation {
     @Column(nullable = false)
     private OffsetDateTime expiresAt;
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<ReservationItem> reservationItems = new ArrayList<>();
+
     // 결제 티켓 숫자
     @Column(nullable = false)
     private int amount;
 
-    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
-        this.member = member;
+    private Reservation(Long memberId, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+        this.memberId = memberId;
         this.concert = concert;
         this.totalPrice = totalPrice;
         this.reservationStatus = reservationStatus;
@@ -61,15 +65,25 @@ public class Reservation {
         this.amount = amount;
     }
 
-    public static Reservation createReservation (Member member, Concert concert,
-                        int totalPrice, ReservationStatus reservationStatus,
-                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+    public static Reservation createReservation (Long memberId, Concert concert){
 
-        return new Reservation(member, concert, totalPrice, reservationStatus, createdAt, expiresAt,amount);
+        return new Reservation(memberId, concert, 1000, ReservationStatus.PENDING, OffsetDateTime.now(), OffsetDateTime.now(),3);
 
     }
 
     public void confirmReservation(){
         reservationStatus = ReservationStatus.CONFIRMED;
+    }
+
+    public void addReservationItem(ReservationItem reservationItem){
+
+        reservationItems.add(reservationItem);
+
+    }
+
+    public void owner(Member member) {
+        if(!Objects.equals(this.memberId, member.getId())) {
+             throw new IllegalArgumentException("너꺼아니야");
+        }
     }
 }

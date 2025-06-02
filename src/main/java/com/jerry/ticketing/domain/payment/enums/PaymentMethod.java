@@ -1,5 +1,5 @@
 package com.jerry.ticketing.domain.payment.enums;
 
 public enum PaymentMethod {
-    KAKAOPAY, TOSSPAY, NAVERPAY
+    KAKAO_PAY, TOSS_PAY, NAVER_PAY
 }

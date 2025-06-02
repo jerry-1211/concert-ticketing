@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.springframework.util.CollectionUtils;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +36,8 @@ public class ConcertSeatFactory {
      * @param
      */
     public void createIfNotExists(Long concertId) {
-        if(concertSeatRepository.findByConcertId(concertId).isEmpty()){
+
+        if(CollectionUtils.isEmpty(concertSeatRepository.findByConcertId(concertId))) {
             createAllConcertSeats(concertId);
         }
     }
@@ -64,9 +66,7 @@ public class ConcertSeatFactory {
         for (char rowChar = type.getStartRow(); rowChar <= type.getEndRow(); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
                 Seat seat = seatRepository.findById(seatId++).orElse(null);
-                int price = concert.getPrice() * type.getPremium();
-
-                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert, seat, section, price);
+                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert, seat, section, type.seatPrice(concert.getPrice()));
                 concertSeatBatch.add(concertSeat);
 
                 totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated,concertSeatRepository);

@@ -26,9 +26,7 @@ public class SeatBlockingController {
     @PostMapping("/blocks")
     public ResponseEntity<BlockingSeat.Response> blockSeats(@RequestBody BlockingSeat.Request request) {
 
-        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(request);
-
-        return ResponseEntity.ok(BlockingSeat.Response.toResponse(blockedConcertSeats));
+        return ResponseEntity.ok(seatBlockingService.blockSeats(request));
 
     }
 }

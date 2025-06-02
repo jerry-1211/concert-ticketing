@@ -60,9 +60,8 @@ public class TestFixture {
 
 
     // 예약
-    public static Reservation createReservation(Member member, Concert concert){
-        return Reservation.createReservation(member, concert, 1000,
-                ReservationStatus.PENDING, OffsetDateTime.now(), OffsetDateTime.now(), 3);
+    public static Reservation createReservation(Long memberId, Concert concert){
+        return Reservation.createReservation(memberId, concert);
     }
 
 

@@ -54,14 +54,29 @@ public class Payment {
     }
 
     public static Payment createTossPayment(Reservation reservation, String idempotencyKey){
-        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), idempotencyKey);
+        return new Payment(reservation, PaymentMethod.TOSS_PAY, PaymentStatus.PENDING, OffsetDateTime.now(), idempotencyKey);
     }
 
-    public void updateStatus(PaymentStatus status){
-        paymentStatus = status;
+
+    public void completed() {
+        this.paymentStatus = PaymentStatus.COMPLETED ;
+        paymentDate = OffsetDateTime.now();
     }
 
-    public void updatePaymentDate(){
+    public void pending() {
+        this.paymentStatus = PaymentStatus.PENDING ;
+        paymentDate = OffsetDateTime.now();
+    }
+
+    public void failed() {
+        this.paymentStatus = PaymentStatus.FAILED ;
+        paymentDate = OffsetDateTime.now();
+    }
+
+    public void cancelled(){
+        this.paymentStatus = PaymentStatus.CANCELLED ;
         paymentDate = OffsetDateTime.now();
     }
 }
+
+
