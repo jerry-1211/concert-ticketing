@@ -16,10 +16,6 @@ public class ConfirmTossPayment {
         private String paymentKey;
         private String orderId;
         private String amount;
-
-        public static ConfirmTossPayment.Request of(String paymentKey,String orderId, String amount){
-            return new ConfirmTossPayment.Request(paymentKey, orderId, amount);
-        }
     }
 
 

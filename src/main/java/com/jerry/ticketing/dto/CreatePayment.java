@@ -29,7 +29,7 @@ public class CreatePayment {
         private String customName;
         private String status;
 
-        private String clientKey;
+        private String secreteKey;
         private String successUrl;
         private String failUrl;
 
