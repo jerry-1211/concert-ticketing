@@ -3,12 +3,13 @@ package com.jerry.ticketing.api.payment;
 import com.jerry.ticketing.application.payment.PaymentService;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import com.jerry.ticketing.dto.CreatePayment;
-import com.jerry.ticketing.dto.TossPaymentWebhook;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j

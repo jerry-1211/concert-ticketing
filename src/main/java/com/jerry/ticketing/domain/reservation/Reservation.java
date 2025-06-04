@@ -74,5 +74,10 @@ public class Reservation {
 
     public void confirmReservation(){
         reservationStatus = ReservationStatus.CONFIRMED;
+        this.expiresAt = OffsetDateTime.now().plusMonths(3);
+    }
+
+    public void updateOrderId(String orderId){
+        this.orderId = orderId;
     }
 }
