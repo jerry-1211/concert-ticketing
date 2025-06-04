@@ -45,7 +45,7 @@ public class CreatePayment {
         public static CreatePayment.Response from(Payment payment){
             return CreatePayment.Response.builder()
                     .paymentId(payment.getId())
-                    .orderId(payment.getIdempotencyKey())
+                    .orderId(payment.getOrderId())
                     .orderName(payment.getReservation().getConcert().getTitle() + "공연 티켓")
                     .customEmail(payment.getReservation().getMember().getEmail())
                     .customName(payment.getReservation().getMember().getName())

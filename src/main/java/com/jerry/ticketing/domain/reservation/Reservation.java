@@ -51,6 +51,9 @@ public class Reservation {
     @Column(nullable = false)
     private int amount;
 
+    @Column
+    private String orderId;
+
     private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
         this.member = member;
         this.concert = concert;
