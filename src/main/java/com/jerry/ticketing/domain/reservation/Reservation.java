@@ -37,7 +37,7 @@ public class Reservation {
     //예약 상태
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ReservationStatus reservationStatus;
+    private ReservationStatus status;
 
     //예약 만들어진 시점
     @Column(nullable = false)
@@ -54,26 +54,26 @@ public class Reservation {
     @Column
     private String orderId;
 
-    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
         this.member = member;
         this.concert = concert;
         this.totalPrice = totalPrice;
-        this.reservationStatus = reservationStatus;
+        this.status = status;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.amount = amount;
     }
 
     public static Reservation createReservation (Member member, Concert concert,
-                        int totalPrice, ReservationStatus reservationStatus,
+                        int totalPrice, ReservationStatus status,
                                                 OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
 
-        return new Reservation(member, concert, totalPrice, reservationStatus, createdAt, expiresAt,amount);
+        return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt,amount);
 
     }
 
     public void confirmReservation(){
-        reservationStatus = ReservationStatus.CONFIRMED;
+        status = ReservationStatus.CONFIRMED;
         this.expiresAt = OffsetDateTime.now().plusMonths(3);
     }
 
