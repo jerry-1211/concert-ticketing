@@ -1,4 +1,4 @@
-package com.jerry.ticketing.api.reservation;
+package com.jerry.ticketing.application.reservation;
 
 
 import com.jerry.ticketing.domain.reservation.Reservation;
