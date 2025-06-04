@@ -41,10 +41,4 @@ public class PaymentViewController {
         model.addAttribute("message", request.getParameter("message"));
         return "widget/fail";
     }
-
-    @GetMapping("/sample")
-    public String samplePage(){
-        return "widget/sample";
-    }
-
 }
