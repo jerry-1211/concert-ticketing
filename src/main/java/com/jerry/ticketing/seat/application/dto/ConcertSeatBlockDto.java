@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlockingSeat {
+public class ConcertSeatBlockDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
@@ -37,8 +37,8 @@ public class BlockingSeat {
 
 
 
-        public static BlockingSeat.Response toResponse(List<ConcertSeat> blockedConcertSeats){
-            return new BlockingSeat.Response(
+        public static ConcertSeatBlockDto.Response toResponse(List<ConcertSeat> blockedConcertSeats){
+            return new ConcertSeatBlockDto.Response(
                     blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
                     blockedConcertSeats.get(0).getBlockedExpireAt(),
                     ConcertSeat.calculateTotalPrice(blockedConcertSeats)

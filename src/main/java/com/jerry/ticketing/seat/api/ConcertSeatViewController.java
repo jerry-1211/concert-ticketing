@@ -3,7 +3,7 @@ package com.jerry.ticketing.seat.api;
 
 import com.jerry.ticketing.seat.application.ConcertSeatService;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatSelect;
+import com.jerry.ticketing.seat.application.dto.ConcertSeatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,9 +39,9 @@ public class ConcertSeatViewController {
 
 
     @GetMapping("/api/seats")
-    public ResponseEntity<List<ConcertSeatSelect.Response>> getSeats(@RequestParam Long concertId,
-                                                                     @RequestParam String zone,
-                                                                     @RequestParam String row){
+    public ResponseEntity<List<ConcertSeatDto.Response>> getSeats(@RequestParam Long concertId,
+                                                                  @RequestParam String zone,
+                                                                  @RequestParam String row){
 
         return ResponseEntity.ok(concertSeatService.getSeats(concertId, zone, row));
     }

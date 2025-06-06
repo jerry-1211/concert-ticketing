@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-public class CreateConcert {
+public class CreateConcertDto {
 
 
     @NoArgsConstructor
@@ -49,10 +49,10 @@ public class CreateConcert {
             this.maxTicketsPerUser = maxTicketsPerUser;
         }
 
-        public static CreateConcert.Request of(String title, OffsetDateTime dateTime,
-                                               String venue, int price, String description, int maxTicketsPerUser) {
+        public static CreateConcertDto.Request of(String title, OffsetDateTime dateTime,
+                                                  String venue, int price, String description, int maxTicketsPerUser) {
 
-            return new CreateConcert.Request(title, dateTime, venue, price, description, maxTicketsPerUser);
+            return new CreateConcertDto.Request(title, dateTime, venue, price, description, maxTicketsPerUser);
 
         }
     }
@@ -71,8 +71,8 @@ public class CreateConcert {
         private String description;
         private int maxTicketsPerUser;
 
-        public static CreateConcert.Response from (Concert concert){
-            return CreateConcert.Response.builder()
+        public static CreateConcertDto.Response from (Concert concert){
+            return CreateConcertDto.Response.builder()
                     .id(concert.getId())
                     .title(concert.getTitle())
                     .dateTime(concert.getDateTime())

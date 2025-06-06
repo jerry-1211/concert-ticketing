@@ -4,7 +4,7 @@ package com.jerry.ticketing.reservation.application;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.reservation.domain.Reservation;
-import com.jerry.ticketing.reservation.application.dto.CreateReservation;
+import com.jerry.ticketing.reservation.application.dto.CreateReservationDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
@@ -36,7 +36,7 @@ public class ReservationService {
 
 
     @Transactional
-    public CreateReservation.Response  createReservation(CreateReservation.Request request){
+    public CreateReservationDto.Response  createReservation(CreateReservationDto.Request request){
         // 나중에 MemberService 로 옮기기
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new RuntimeException());
@@ -50,7 +50,7 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
 
-        return CreateReservation.Response.from(reservation);
+        return CreateReservationDto.Response.from(reservation);
 
     }
 

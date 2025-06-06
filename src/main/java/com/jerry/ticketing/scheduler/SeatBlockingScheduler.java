@@ -1,6 +1,7 @@
-package com.jerry.ticketing.seat.application;
+package com.jerry.ticketing.scheduler;
 
 
+import com.jerry.ticketing.seat.application.SeatBlockingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

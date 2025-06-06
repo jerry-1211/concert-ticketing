@@ -3,7 +3,7 @@ package com.jerry.ticketing.application.seat.unit;
 import com.jerry.ticketing.seat.application.SeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.ConcertSeats;
-import com.jerry.ticketing.seat.application.dto.BlockingSeat;
+import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,13 +38,13 @@ class SeatBlockingServiceTest {
     private SeatBlockingService seatBlockingService;
 
     private List<ConcertSeat> concertSeats;
-    private BlockingSeat.Request request;
+    private ConcertSeatBlockDto.Request request;
 
     @BeforeEach
     void setup() {
 
         // 테스트 데이터 설정
-        this.request = new BlockingSeat.Request(1L, Arrays.asList(1L, 2L),100L);
+        this.request = new ConcertSeatBlockDto.Request(1L, Arrays.asList(1L, 2L),100L);
 
 
         // Mock ConcertSeat 객체 생성

@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.seat.application.SeatBlockingScheduler;
+import com.jerry.ticketing.scheduler.SeatBlockingScheduler;
 import com.jerry.ticketing.seat.application.SeatBlockingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

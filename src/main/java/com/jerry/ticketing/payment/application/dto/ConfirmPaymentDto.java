@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-public class ConfirmTossPayment {
+public class ConfirmPaymentDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor

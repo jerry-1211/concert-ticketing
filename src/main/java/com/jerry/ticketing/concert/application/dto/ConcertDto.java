@@ -7,7 +7,7 @@ import lombok.Getter;
 
 import java.time.OffsetDateTime;
 
-public class ConcertList {
+public class ConcertDto {
 
 
     @Getter
@@ -23,8 +23,8 @@ public class ConcertList {
         private String description;
         private int maxTicketsPerUser;
 
-        public static ConcertList.Response from (Concert concert){
-            return ConcertList.Response.builder()
+        public static ConcertDto.Response from (Concert concert){
+            return ConcertDto.Response.builder()
                     .id(concert.getId())
                     .title(concert.getTitle())
                     .dateTime(concert.getDateTime())

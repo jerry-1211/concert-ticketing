@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-public class ConcertSeatSelect {
+public class ConcertSeatDto {
 
     @Getter
     @AllArgsConstructor
@@ -26,7 +26,7 @@ public class ConcertSeatSelect {
         private int price;
         private ConcertSeatStatus status;
 
-        public static ConcertSeatSelect.Response from (ConcertSeat concertSeat){
+        public static ConcertSeatDto.Response from (ConcertSeat concertSeat){
            return Response.builder()
                         .seatId(concertSeat.getId())
                         .zone(String.valueOf(concertSeat.getSection().getZone()))

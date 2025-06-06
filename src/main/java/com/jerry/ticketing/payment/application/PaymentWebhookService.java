@@ -2,7 +2,7 @@ package com.jerry.ticketing.payment.application;
 
 
 import com.jerry.ticketing.reservation.application.ReservationService;
-import com.jerry.ticketing.payment.application.dto.TossPaymentWebhook;
+import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class PaymentWebhookService {
 
 
 
-    public void handleWebhook(TossPaymentWebhook.Request request){
-        TossPaymentWebhook.Request.PaymentData data = request.getData();
+    public void handleWebhook(PaymentWebhookDto.Request request){
+        PaymentWebhookDto.Request.PaymentData data = request.getData();
 
         if(data.getStatus().equals("DONE")){
             finalizeOrder(data);
@@ -33,7 +33,7 @@ public class PaymentWebhookService {
     /**
      * Web hook 결제 후 처리
      * */
-    private void finalizeOrder(TossPaymentWebhook.Request.PaymentData data) {
+    private void finalizeOrder(PaymentWebhookDto.Request.PaymentData data) {
 
         paymentService.updatePaymentOnCompleted(data);
         reservationService.confirmReservation(data.getOrderId());

@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
-public class CreateReservation {
+public class CreateReservationDto {
 
     @Getter
     @NoArgsConstructor
@@ -45,7 +45,7 @@ public class CreateReservation {
 
         private Long reservationId;
 
-        public static CreateReservation.Response from(Reservation reservation){
+        public static CreateReservationDto.Response from(Reservation reservation){
             return Response.builder()
                         .orderName(reservation.getOrderName())
                         .totalPrice(reservation.getTotalPrice())

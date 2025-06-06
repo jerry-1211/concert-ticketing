@@ -3,8 +3,8 @@ package com.jerry.ticketing.concert.application;
 import com.jerry.ticketing.seat.application.ConcertInitializationService;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.concert.domain.ConcertMapper;
-import com.jerry.ticketing.concert.application.dto.ConcertList;
-import com.jerry.ticketing.concert.application.dto.CreateConcert;
+import com.jerry.ticketing.concert.application.dto.ConcertDto;
+import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ConcertService {
     private final ConcertMapper concertMapper;
 
     @Transactional
-    public CreateConcert.Response createConcert(CreateConcert.Request request){
+    public CreateConcertDto.Response createConcert(CreateConcertDto.Request request){
 
         Concert concert = concertMapper.buildConcert(request);
 
@@ -30,13 +30,13 @@ public class ConcertService {
         // 좌석 & 섹션 초기화
         concertSeatInitializer.initializeSectionAndConcertSeats(saveConcert.getId());
 
-        return CreateConcert.Response.from(saveConcert);
+        return CreateConcertDto.Response.from(saveConcert);
 
     }
 
     @Transactional(readOnly = true)
-    public List<ConcertList.Response> getAllConcerts(){
-        return  concertRepository.findAll().stream().map(ConcertList.Response::from).toList();
+    public List<ConcertDto.Response> getAllConcerts(){
+        return  concertRepository.findAll().stream().map(ConcertDto.Response::from).toList();
     }
 
 

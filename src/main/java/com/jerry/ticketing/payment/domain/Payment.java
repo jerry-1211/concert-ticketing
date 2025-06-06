@@ -4,7 +4,7 @@ package com.jerry.ticketing.payment.domain;
 import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
 import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
 import com.jerry.ticketing.reservation.domain.Reservation;
-import com.jerry.ticketing.payment.application.dto.TossPaymentWebhook;
+import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.OffsetDateTime;
@@ -86,7 +86,7 @@ public class Payment {
 
 
 
-    public void completed(TossPaymentWebhook.Request.PaymentData data) {
+    public void completed(PaymentWebhookDto.Request.PaymentData data) {
         this.lastTransactionKey = data.getLastTransactionKey();
         this.orderName = data.getOrderName();
         this.method = data.getMethod();

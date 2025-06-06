@@ -2,8 +2,8 @@ package com.jerry.ticketing.concert.api;
 
 
 import com.jerry.ticketing.concert.application.ConcertService;
-import com.jerry.ticketing.concert.application.dto.ConcertList;
-import com.jerry.ticketing.concert.application.dto.CreateConcert;
+import com.jerry.ticketing.concert.application.dto.ConcertDto;
+import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class ConcertViewController {
 
     @GetMapping
     public String showAllConcerts(Model model){
-        List<ConcertList.Response> concerts = concertService.getAllConcerts();
+        List<ConcertDto.Response> concerts = concertService.getAllConcerts();
         model.addAttribute("concerts", concerts);
         return "concert-list";
     }
@@ -31,7 +31,7 @@ public class ConcertViewController {
 
     @GetMapping("/new")
     public String creatConcertForm(Model model){
-        model.addAttribute("createConcertRequest", new CreateConcert.Request());
+        model.addAttribute("createConcertRequest", new CreateConcertDto.Request());
         return "create-concert";
     }
 

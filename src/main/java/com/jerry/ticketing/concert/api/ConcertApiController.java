@@ -1,7 +1,7 @@
 package com.jerry.ticketing.concert.api;
 
 import com.jerry.ticketing.concert.application.ConcertService;
-import com.jerry.ticketing.concert.application.dto.CreateConcert;
+import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,9 +20,9 @@ public class ConcertApiController {
      * 새로운 콘서스 생성
      * */
     @PostMapping
-    public ResponseEntity<CreateConcert.Response> createConcert(
-            @Valid @RequestBody CreateConcert.Request request){
-        CreateConcert.Response response = concertService.createConcert(request);
+    public ResponseEntity<CreateConcertDto.Response> createConcert(
+            @Valid @RequestBody CreateConcertDto.Request request){
+        CreateConcertDto.Response response = concertService.createConcert(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

@@ -5,7 +5,7 @@ import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-public class CreatePayment {
+public class CreatePaymentDto {
 
     @Getter
     @NoArgsConstructor
@@ -46,8 +46,8 @@ public class CreatePayment {
         }
 
 
-        public static CreatePayment.Response from(Payment payment){
-            return CreatePayment.Response.builder()
+        public static CreatePaymentDto.Response from(Payment payment){
+            return CreatePaymentDto.Response.builder()
                     .paymentId(payment.getId())
                     .orderId(payment.getOrderId())
                     .orderName(payment.getReservation().getConcert().getTitle() + "공연 티켓")
@@ -57,9 +57,9 @@ public class CreatePayment {
                     .build();
         }
 
-        public static CreatePayment.Response from(ConfirmTossPayment.Response response, Payment payment) {
+        public static CreatePaymentDto.Response from(ConfirmPaymentDto.Response response, Payment payment) {
 
-            CreatePayment.Response createResponse = from(payment);
+            CreatePaymentDto.Response createResponse = from(payment);
 
             // TODO 추후 필요하면 response 정보 사용
             // 에를 들어 paymentKey, OrderID 등등

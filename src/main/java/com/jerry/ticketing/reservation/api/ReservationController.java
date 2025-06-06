@@ -2,7 +2,7 @@ package com.jerry.ticketing.reservation.api;
 
 
 import com.jerry.ticketing.reservation.application.ReservationService;
-import com.jerry.ticketing.reservation.application.dto.CreateReservation;
+import com.jerry.ticketing.reservation.application.dto.CreateReservationDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<CreateReservation.Response> createReservation(
-            @Valid @RequestBody CreateReservation.Request request) {
+    public ResponseEntity<CreateReservationDto.Response> createReservation(
+            @Valid @RequestBody CreateReservationDto.Request request) {
         return ResponseEntity.ok(reservationService.createReservation(request)) ;
 
     }

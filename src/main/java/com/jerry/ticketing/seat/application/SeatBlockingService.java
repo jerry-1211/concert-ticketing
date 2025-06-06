@@ -4,7 +4,7 @@ package com.jerry.ticketing.seat.application;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
-import com.jerry.ticketing.seat.application.dto.BlockingSeat;
+import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class SeatBlockingService {
      * @param request 클라이언트로 부터 block 요청을 받은 요청
      */
     @Transactional
-    public List<ConcertSeat> blockSeats(BlockingSeat.Request request){
+    public List<ConcertSeat> blockSeats(ConcertSeatBlockDto.Request request){
 
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()));
