@@ -7,5 +7,5 @@ INSERT INTO member (name, email, password, phone_number, city, street)
 VALUES ('김토스', 'kimtoss@example.com', 'password123', '010-1234-5678', '서울시 강남구', '테헤란로 123');
 
 -- Reservation 데이터
-INSERT INTO reservation (member_id, concert_id, total_price, reservation_status, created_at, expires_at, amount)
-VALUES (1, 1, 50000, 'PENDING', '2025-05-27', '2025-05-29', 2);
+INSERT INTO reservation (member_id, concert_id, total_price, status, created_at, expires_at, amount, order_id)
+VALUES (1, 1, 50000, 'PENDING', '2025-05-27', '2025-05-29', 2, null);

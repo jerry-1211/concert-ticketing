@@ -21,8 +21,8 @@ import java.time.temporal.ChronoUnit;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(ConcertController.class)
-class ConcertControllerTest {
+@WebMvcTest(ConcertApiController.class)
+class ConcertApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

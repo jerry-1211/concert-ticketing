@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.payment;
 
-import com.jerry.ticketing.application.payment.util.PaymentIdempotentKeyGenerator;
+import com.jerry.ticketing.application.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.domain.payment.Payment;
 import com.jerry.ticketing.domain.reservation.Reservation;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
@@ -34,7 +34,7 @@ public class PaymentService {
         Reservation reservation = reservationRepository.findById(request.getReservationId())
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
-        String orderId = PaymentIdempotentKeyGenerator.generate(reservation.getId());
+        String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);
 
         Payment payment = Payment.createTossPayment(reservation, orderId);
