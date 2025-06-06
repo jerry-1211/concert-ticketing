@@ -1,6 +1,7 @@
 package com.jerry.ticketing.domain.member;
 
-import com.jerry.ticketing.repository.member.MemberRepository;
+import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
 import com.jerry.ticketing.domain.TestFixture;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;

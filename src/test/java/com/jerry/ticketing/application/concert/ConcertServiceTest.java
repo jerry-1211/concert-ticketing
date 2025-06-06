@@ -1,12 +1,13 @@
 package com.jerry.ticketing.application.concert;
 
-import com.jerry.ticketing.application.seat.ConcertInitializationService;
-import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.domain.concert.ConcertMapper;
-import com.jerry.ticketing.dto.CreateConcert;
+import com.jerry.ticketing.seat.application.ConcertInitializationService;
+import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.concert.domain.ConcertMapper;
+import com.jerry.ticketing.concert.application.dto.CreateConcert;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ConcertErrorCode;
-import com.jerry.ticketing.repository.concert.ConcertRepository;
+import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.application.seat.factory.SeatFactory;
-import com.jerry.ticketing.application.seat.enums.SectionType;
-import com.jerry.ticketing.repository.seat.SeatRepository;
+import com.jerry.ticketing.seat.infrastructure.factory.SeatFactory;
+import com.jerry.ticketing.seat.domain.enums.SectionType;
+import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

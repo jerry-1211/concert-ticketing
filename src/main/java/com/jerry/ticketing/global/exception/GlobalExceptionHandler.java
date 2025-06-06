@@ -1,6 +1,6 @@
 package com.jerry.ticketing.global.exception;
 
-import com.jerry.ticketing.dto.BusinessErrorResponse;
+import com.jerry.ticketing.global.BusinessErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

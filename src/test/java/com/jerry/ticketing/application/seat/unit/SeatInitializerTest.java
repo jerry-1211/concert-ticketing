@@ -1,8 +1,8 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.application.seat.factory.SeatFactory;
-import com.jerry.ticketing.application.seat.util.BatchSaveHelper;
-import com.jerry.ticketing.repository.seat.SeatRepository;
+import com.jerry.ticketing.seat.infrastructure.factory.SeatFactory;
+import com.jerry.ticketing.global.util.BatchSaveHelper;
+import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 

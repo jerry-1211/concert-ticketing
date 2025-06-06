@@ -1,7 +1,7 @@
 package com.jerry.ticketing.global.validation;
 
-import com.jerry.ticketing.domain.seat.ConcertSeat;
-import com.jerry.ticketing.domain.seat.ConcertSeats;
+import com.jerry.ticketing.seat.domain.ConcertSeat;
+import com.jerry.ticketing.seat.domain.ConcertSeats;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
 import org.springframework.stereotype.Component;

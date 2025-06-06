@@ -2,8 +2,9 @@ package com.jerry.ticketing.api.concert;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.application.concert.ConcertService;
-import com.jerry.ticketing.dto.CreateConcert;
+import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.api.ConcertApiController;
+import com.jerry.ticketing.concert.application.dto.CreateConcert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

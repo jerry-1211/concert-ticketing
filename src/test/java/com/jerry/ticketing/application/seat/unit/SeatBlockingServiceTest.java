@@ -1,14 +1,11 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.application.seat.SeatBlockingService;
-import com.jerry.ticketing.domain.seat.ConcertSeat;
-import com.jerry.ticketing.domain.seat.ConcertSeats;
-import com.jerry.ticketing.domain.seat.enums.ConcertSeatStatus;
-import com.jerry.ticketing.dto.BlockingSeat;
-import com.jerry.ticketing.global.exception.BusinessException;
-import com.jerry.ticketing.global.exception.SeatErrorCode;
+import com.jerry.ticketing.seat.application.SeatBlockingService;
+import com.jerry.ticketing.seat.domain.ConcertSeat;
+import com.jerry.ticketing.seat.domain.ConcertSeats;
+import com.jerry.ticketing.seat.application.dto.BlockingSeat;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
-import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 

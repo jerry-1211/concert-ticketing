@@ -1,9 +1,11 @@
 package com.jerry.ticketing.domain.seat;
 
-import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.repository.seat.SeatRepository;
-import com.jerry.ticketing.repository.seat.SectionRepository;
+import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import com.jerry.ticketing.domain.TestFixture;
+import com.jerry.ticketing.seat.domain.Seat;
+import com.jerry.ticketing.seat.domain.Section;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
