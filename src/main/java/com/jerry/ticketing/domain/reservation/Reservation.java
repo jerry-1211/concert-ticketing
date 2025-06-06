@@ -54,6 +54,9 @@ public class Reservation {
     @Column
     private String orderId;
 
+    @Column
+    private String orderName;
+
     private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
         this.member = member;
         this.concert = concert;
@@ -64,13 +67,33 @@ public class Reservation {
         this.amount = amount;
     }
 
+    public Reservation(Member member, Concert concert, String orderName, OffsetDateTime expiresAt, int totalPrice, int amount) {
+        this.member = member;
+        this.concert = concert;
+        this.orderName = orderName;
+        this.expiresAt = expiresAt;
+        this.totalPrice = totalPrice;
+        this.amount = amount;
+        this.status = ReservationStatus.PENDING;
+        this.createdAt = OffsetDateTime.now();
+    }
+
     public static Reservation createReservation (Member member, Concert concert,
-                        int totalPrice, ReservationStatus status,
-                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+                                                 int totalPrice, ReservationStatus status,
+                                                 OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
 
         return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt,amount);
 
     }
+
+
+    public static Reservation createReservation(Member member, Concert concert, String orderName,
+                                                OffsetDateTime expiresAt, int totalPrice, int amount) {
+
+        return new Reservation(member, concert, orderName, expiresAt, totalPrice, amount);
+
+    }
+
 
     public void confirmReservation(){
         status = ReservationStatus.CONFIRMED;
