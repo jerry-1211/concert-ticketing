@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://js.tosspayments.com/v2/standard"></script>
+
+    <title>좌석 예약</title>
+    <style>
+        .seat-container { margin: 20px; }
+        .section { margin-bottom: 30px; }
+        .zone-buttons, .row-buttons { margin: 10px 0; }
+        .btn {
+            margin: 2px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            cursor: pointer;
+        }
+        .btn.active { background: #007bff; color: white; }
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        .seat {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        /* 상태별 스타일 */
+        .seat.notable {
+            background: #948f8f;
+            color: #fffdfa;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .seat.notable::before {
+            content: '×';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            color: #fffdfa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+        .seat.selected { background: #28a745; color: white; }
+        .seat.vip { border-color: #dc3545; }
+        .seat.standard { border-color: #ffc107; }
+        .seat.economy { border-color: #6c757d; }
+        .selected-seats { margin: 20px 0; }
+        .reserve-btn {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .reserve-btn:disabled { background: #6c757d; cursor: not-allowed; }
+        .legend { margin: 20px 0; }
+        .legend-item { display: inline-block; margin-right: 20px; }
+    </style>
+</head>
+<body>
+<div class="seat-container">
+    <h2>콘서트 좌석 예약</h2>
+
+    <div class="legend">
+        <div class="legend-item">
+            <span class="seat vip" style="width: 20px; height: 20px;"></span> VIP (1000석)
+        </div>
+        <div class="legend-item">
+            <span class="seat standard" style="width: 20px; height: 20px;"></span> STANDARD (1500석)
+        </div>
+        <div class="legend-item">
+            <span class="seat economy" style="width: 20px; height: 20px;"></span> ECONOMY (2000석)
+        </div>
+    </div>
+
+    <!-- Zone 선택 -->
+    <div class="section">
+        <h3>1. Zone 선택</h3>
+        <div class="zone-buttons" id="zoneButtons">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- Row 선택 -->
+    <div class="section" id="rowSection" style="display: none;">
+        <h3>2. Row 선택</h3>
+        <div class="row-buttons" id="rowButtons">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 좌석 선택 -->
+    <div class="section" id="seatSection" style="display: none;">
+        <h3>3. 좌석 선택</h3>
+        <div class="seat-info" id="seatInfo"></div>
+        <div class="seat-grid" id="seatGrid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 선택된 좌석 표시 -->
+    <div class="selected-seats">
+        <h3>선택된 좌석</h3>
+        <div id="selectedSeatsList"></div>
+        <button class="reserve-btn" id="reserveBtn" onclick="reserveSeats()" disabled>
+            결제하기
+        </button>
+    </div>
+</div>
+
+
+<!--결제 로직-->
+<script>
+    // ------  SDK 초기화 ------
+    const clientKey = "test_ck_LlDJaYngro9wkzG7kWZK3ezGdRpX";
+    const customerKey = "_VpSOj_EwRTCArg_8m6cC";
+    const tossPayments = TossPayments(clientKey);
+    const payment = tossPayments.payment({ customerKey });
+
+    // 이벤트 리스너로 처리
+     async function processPayment(result) {
+         // TODO  : 이것도 멤버 수정 ...
+        console.log("processPayment 호출 완료 ! ")
+
+        try {
+            const orderName = result.orderName;
+            const totalPrice = result.totalPrice;
+            const reservationId = result.reservationId;
+
+            const response = await fetch('/api/payment/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reservationId: reservationId,
+                    totalPrice: totalPrice,
+                    orderName: orderName
+                })
+            });
+
+            const paymentData = await response.json();
+
+            await payment.requestPayment({
+                method: "CARD",
+                amount: {
+                    currency: "KRW",
+                    value: totalPrice,
+                },
+                orderId: paymentData.orderId,
+                orderName: orderName,
+                successUrl: paymentData.successUrl,
+                failUrl: paymentData.failUrl,
+                customerEmail: paymentData.customerEmail,
+                customerName: paymentData.customerName,
+                customerMobilePhone: paymentData.customerMobilePhone,
+                card: {
+                    useEscrow: false,
+                    flowMode: "DEFAULT",
+                    useCardPoint: false,
+                    useAppCardOnly: false,
+                },
+            });
+        } catch (error) {
+            console.error("결제 요청 실패: ", error);
+        }
+    };
+</script>
+
+
+
+<!--좌석 예약 로직-->
+<script th:inline="javascript">
+    const concertId = /*[[${concertId}]]*/ 1;
+    let selectedZone = '';
+    let selectedRow = '';
+    let selectedSeats = [];
+
+    // 페이지 로드 시 Zone 버튼들 생성
+    document.addEventListener('DOMContentLoaded', function() {
+        loadZones();
+    });
+
+    async function loadZones() {
+        try {
+            const response = await fetch(`/seats/api/zones?concertId=${concertId}`);
+            const zones = await response.json();
+
+            const zoneButtons = document.getElementById('zoneButtons');
+            zoneButtons.innerHTML = '';
+
+            zones.forEach(zone => {
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.textContent = zone;
+                button.onclick = () => selectZone(zone);
+                zoneButtons.appendChild(button);
+            });
+        } catch (error) {
+            console.error('Zone 로드 실패:', error);
+        }
+    }
+
+    async function selectZone(zone) {
+        selectedZone = zone;
+        selectedRow = '';
+        selectedSeats = [];
+
+        // Zone 버튼 활성화 표시
+        document.querySelectorAll('.zone-buttons .btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === zone);
+        });
+
+        // Row 섹션 표시 및 로드
+        document.getElementById('rowSection').style.display = 'block';
+        document.getElementById('seatSection').style.display = 'none';
+        updateSelectedSeats();
+
+        try {
+            const response = await fetch(`/seats/api/rows?zone=${zone}`);
+            const rows = await response.json();
+
+            const rowButtons = document.getElementById('rowButtons');
+            rowButtons.innerHTML = '';
+
+            rows.forEach(row => {
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.textContent = row;
+                button.onclick = () => selectRow(row);
+                rowButtons.appendChild(button);
+            });
+        } catch (error) {
+            console.error('Row 로드 실패:', error);
+        }
+    }
+
+    async function selectRow(row) {
+        selectedRow = row;
+        selectedSeats = [];
+
+        // Row 버튼 활성화 표시
+        document.querySelectorAll('.row-buttons .btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === row);
+        });
+
+        // 좌석 섹션 표시 및 로드
+        document.getElementById('seatSection').style.display = 'block';
+        updateSelectedSeats();
+
+        try {
+            const response = await fetch(`/seats/api/seats?concertId=${concertId}&zone=${selectedZone}&row=${row}`);
+            const seats = await response.json();
+
+            displaySeats(seats);
+        } catch (error) {
+            console.error('좌석 로드 실패:', error);
+        }
+    }
+
+    function displaySeats(seats) {
+        const seatGrid = document.getElementById('seatGrid');
+        const seatInfo = document.getElementById('seatInfo');
+
+        seatGrid.innerHTML = '';
+
+        if (seats.length > 0) {
+            const seatType = seats[0].seatType.toLowerCase();
+            const price = seats[0].price;
+            seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${price}원</p>`;
+
+            seats.forEach(seat => {
+                const seatElement = document.createElement('div');
+                let className = `seat ${seatType}`;
+
+                // status가 AVAILABLE이 아니면 추가 클래스 적용
+                if (seat.status !== 'AVAILABLE') {
+                    className += " notable";
+                }
+
+                seatElement.className = className;
+                seatElement.textContent = seat.seatNumber;
+                seatElement.onclick = () => toggleSeat(seat);
+                seatElement.dataset.seatId = seat.seatId;
+                seatGrid.appendChild(seatElement);
+            });
+
+        }
+    }
+
+    function toggleSeat(seat) {
+        const seatElement = document.querySelector(`[data-seat-id="${seat.seatId}"]`);
+        const isSelected = selectedSeats.find(s => s.seatId === seat.seatId);
+
+        if (isSelected) {
+            // 선택 해제
+            selectedSeats = selectedSeats.filter(s => s.seatId !== seat.seatId);
+            seatElement.classList.remove('selected');
+        } else {
+            // 선택
+            selectedSeats.push(seat);
+            seatElement.classList.add('selected');
+        }
+
+        updateSelectedSeats();
+    }
+
+    function updateSelectedSeats() {
+        const selectedSeatsList = document.getElementById('selectedSeatsList');
+        const reserveBtn = document.getElementById('reserveBtn');
+
+        if (selectedSeats.length === 0) {
+            selectedSeatsList.innerHTML = '<p>선택된 좌석이 없습니다.</p>';
+            reserveBtn.disabled = true;
+        } else {
+            const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatNumber}`).join(', ');
+            const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+            selectedSeatsList.innerHTML = `
+                    <p>선택된 좌석: ${seatNames}</p>
+                    <p>총 가격: ${totalPrice.toLocaleString()}원</p>
+                `;
+            reserveBtn.disabled = false;
+        }
+    }
+
+    async function reserveSeats() {
+        // TODO
+
+        if (selectedSeats.length === 0) {
+            alert('좌석을 선택해주세요.');
+            return;
+        }
+
+        const request = {
+            concertId: concertId,
+            concertSeatIds: selectedSeats.map(seat => seat.seatId),
+            memberId: 1 // 실제로는 로그인된 사용자 ID를 사용
+        };
+
+        try {
+            const response = await fetch('/api/seats/blocks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(request)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+
+                // 예약된 좌석들을 화면에서 제거
+                selectedSeats.forEach(seat => {
+                    const seatElement = document.querySelector(`[data-seat-id="${seat.seatId}"]`);
+                    if (seatElement) {
+                        seatElement.remove();
+                    }
+                });
+
+
+                reservationConcertSeat(result,selectedSeats,concertId)
+                selectedSeats = [];
+                updateSelectedSeats();
+            } else {
+                const error = await response.text();
+                alert('예약 실패: ' + error);
+            }
+        } catch (error) {
+            console.error('예약 요청 실패:', error);
+            alert('예약 요청 중 오류가 발생했습니다.');
+        }
+    }
+</script>
+
+
+<script>
+    async function reservationConcertSeat(result,selectedSeats,concertId) {
+        // TODO : memberID 하드 코딩
+        try {
+            const blockedSeatIds = result.blockedSeatIds;     // 차단된 좌석 ID 목록
+            const totalPrice = result.totalPrice;
+            const expireAt = result.expireAt
+            const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatNumber}`).join(', ');
+
+
+            const response = await fetch('/api/reservation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    memberId : 1, // 하드 코딩
+                    concertId: concertId,
+                    orderName: `${blockedSeatIds} - ${seatNames}`,
+                    expireAt : expireAt,
+                    totalPrice : totalPrice,
+                    amount: selectedSeats.length
+                })
+            });
+
+            const reservationData = await response.json();
+            console.log(reservationData);
+
+
+            if (response.ok) {
+                await processPayment(reservationData);
+            } else {
+                const error = await response.text();
+                alert('예약 실패: ' + error);
+            }
+
+
+        } catch (error) {
+            console.error("예약 실패: ", error);
+        }
+    }
+</script>
+
+
+</body>
+</html>

@@ -48,4 +48,35 @@ public enum SectionType {
     public static List<SectionType> getSectionTypes() {
         return Arrays.asList(SectionType.values());
     }
+
+    public static List<String> createZoneList(){
+        return IntStream.rangeClosed(VIP.getStartZone().charAt(0), ECONOMY.getEndZone().charAt(0))
+                .mapToObj(i -> String.valueOf((char) i))
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> createRowList(String startRow, String endRow){
+        return IntStream.rangeClosed(startRow.charAt(0), endRow.charAt(0))
+                .mapToObj(i -> String.valueOf((char) i))
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> getRowsByZone(String zone){
+        return getSectionTypes().stream()
+                .filter(sectionType -> isZoneInSection(zone, sectionType))
+                .findFirst()
+                .map(sectionType -> createRowList(sectionType.getStartRow(), sectionType.getEndRow()))
+                .orElse(Collections.emptyList());
+    }
+
+
+    private static boolean isZoneInSection(String zone, SectionType sectionType){
+        String startZone = String.valueOf(sectionType.getStartZone()) ;
+        String endZone = String.valueOf(sectionType.getEndZone());
+        return zone.compareTo(startZone) >= 0 && zone.compareTo(endZone) <= 0;
+    }
+
+
+
+
 }
