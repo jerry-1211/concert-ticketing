@@ -37,7 +37,7 @@ public class Reservation {
     //예약 상태
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ReservationStatus reservationStatus;
+    private ReservationStatus status;
 
     //예약 만들어진 시점
     @Column(nullable = false)
@@ -51,25 +51,56 @@ public class Reservation {
     @Column(nullable = false)
     private int amount;
 
-    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus reservationStatus, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+    @Column
+    private String orderId;
+
+    @Column
+    private String orderName;
+
+    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
         this.member = member;
         this.concert = concert;
         this.totalPrice = totalPrice;
-        this.reservationStatus = reservationStatus;
+        this.status = status;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.amount = amount;
     }
 
-    public static Reservation createReservation (Member member, Concert concert,
-                        int totalPrice, ReservationStatus reservationStatus,
-                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+    public Reservation(Member member, Concert concert, String orderName, OffsetDateTime expiresAt, int totalPrice, int amount) {
+        this.member = member;
+        this.concert = concert;
+        this.orderName = orderName;
+        this.expiresAt = expiresAt;
+        this.totalPrice = totalPrice;
+        this.amount = amount;
+        this.status = ReservationStatus.PENDING;
+        this.createdAt = OffsetDateTime.now();
+    }
 
-        return new Reservation(member, concert, totalPrice, reservationStatus, createdAt, expiresAt,amount);
+    public static Reservation createReservation (Member member, Concert concert,
+                                                 int totalPrice, ReservationStatus status,
+                                                 OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+
+        return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt,amount);
 
     }
 
+
+    public static Reservation createReservation(Member member, Concert concert, String orderName,
+                                                OffsetDateTime expiresAt, int totalPrice, int amount) {
+
+        return new Reservation(member, concert, orderName, expiresAt, totalPrice, amount);
+
+    }
+
+
     public void confirmReservation(){
-        reservationStatus = ReservationStatus.CONFIRMED;
+        status = ReservationStatus.CONFIRMED;
+        this.expiresAt = OffsetDateTime.now().plusMonths(3);
+    }
+
+    public void updateOrderId(String orderId){
+        this.orderId = orderId;
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/concerts")
 @RequiredArgsConstructor
-public class ConcertController {
+public class ConcertApiController {
 
 
     private final ConcertService concertService;
@@ -25,7 +25,6 @@ public class ConcertController {
         CreateConcert.Response response = concertService.createConcert(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
     }
 
 

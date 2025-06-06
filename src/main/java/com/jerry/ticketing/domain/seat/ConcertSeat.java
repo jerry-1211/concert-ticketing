@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -101,5 +102,9 @@ public class ConcertSeat {
         return !isAvailable();
     }
 
-
+    // 가격 계산 (추후 일급 객체로 리팩토링 필요)
+    public static int calculateTotalPrice(List<ConcertSeat> concertSeats) {
+        int price = concertSeats.get(0).getPrice();
+        return price * concertSeats.size();
+    }
 }

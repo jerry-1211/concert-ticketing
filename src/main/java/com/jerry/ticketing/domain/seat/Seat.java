@@ -18,7 +18,7 @@ public class Seat {
 
     // 좌석 열
     @Column(name = "seat_row")
-    private char seatRow;
+    private String seatRow;
 
     // 좌석 번호
     private int number;
@@ -27,13 +27,13 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
-    private Seat(char seatRow, int number, SeatType seatType) {
+    private Seat(String seatRow, int number, SeatType seatType) {
         this.seatRow = seatRow;
         this.number = number;
         this.seatType = seatType;
     }
 
-    public static Seat createSeat(char seatRow, int number, SeatType seatType){
+    public static Seat createSeat(String seatRow, int number, SeatType seatType){
         return new Seat(seatRow, number, seatType);
     }
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-@RequestMapping("payment")
+@RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentViewController {
 
@@ -41,10 +41,4 @@ public class PaymentViewController {
         model.addAttribute("message", request.getParameter("message"));
         return "widget/fail";
     }
-
-    @GetMapping("/sample")
-    public String samplePage(){
-        return "widget/sample";
-    }
-
 }

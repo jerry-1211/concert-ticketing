@@ -4,6 +4,7 @@ package com.jerry.ticketing.domain.payment;
 import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
 import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
 import com.jerry.ticketing.domain.reservation.Reservation;
+import com.jerry.ticketing.dto.TossPaymentWebhook;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.OffsetDateTime;
@@ -40,28 +41,56 @@ public class Payment {
 
     // 결제 멱등성
     @Column(nullable = false)
-    private String idempotencyKey;
+    private String orderId;
+
+    // 마지막 트랜잭션키
+    @Column
+    private String lastTransactionKey;
+
+
+    // 주문자명
+    @Column
+    private String orderName;
+
+
+    // 결제 방법
+    @Column
+    private String method;
+
+    // 결제 금액
+    @Column
+    private int totalAmount;
+
+    @Column
+    private String paymentKey;
 
 
 
     private Payment(Reservation reservation, PaymentMethod paymentMethod,
-                   PaymentStatus paymentStatus, OffsetDateTime paymentDate, String idempotencyKey) {
+                   PaymentStatus paymentStatus, OffsetDateTime paymentDate, String orderId) {
         this.reservation = reservation;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.paymentDate = paymentDate;
-        this.idempotencyKey = idempotencyKey;
+        this.orderId = orderId;
     }
 
-    public static Payment createTossPayment(Reservation reservation, String idempotencyKey){
-        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), idempotencyKey);
+    public static Payment createTossPayment(Reservation reservation, String orderId){
+        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
     }
 
-    public void updateStatus(PaymentStatus status){
-        paymentStatus = status;
+    public void updateConfirm(String paymentKey){
+        paymentStatus = PaymentStatus.CONFIRMED;
+        this.paymentKey = paymentKey;
     }
 
-    public void updatePaymentDate(){
+
+
+    public void completed(TossPaymentWebhook.Request.PaymentData data) {
+        this.lastTransactionKey = data.getLastTransactionKey();
+        this.orderName = data.getOrderName();
+        this.method = data.getMethod();
+        this.totalAmount = data.getTotalAmount();
         paymentDate = OffsetDateTime.now();
     }
 }

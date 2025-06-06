@@ -3,12 +3,13 @@ package com.jerry.ticketing.api.payment;
 import com.jerry.ticketing.application.payment.PaymentService;
 import com.jerry.ticketing.dto.ConfirmTossPayment;
 import com.jerry.ticketing.dto.CreatePayment;
-import com.jerry.ticketing.dto.TossPaymentWebhook;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -24,7 +25,6 @@ public class PaymentApiController {
      * 결제 요청 생성
      */
     @PostMapping("/request")
-    @ResponseBody
     public ResponseEntity<CreatePayment.Response> createPayment(@Valid @RequestBody CreatePayment.Request request) {
         CreatePayment.Response response = paymentService.createPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
@@ -37,7 +37,6 @@ public class PaymentApiController {
      * Toss 결제 승인
      */
     @PostMapping("/toss/confirm")
-    @ResponseBody
     public ResponseEntity<CreatePayment.Response> tossPaymentSuccess(
             @RequestBody ConfirmTossPayment.Request request){
 

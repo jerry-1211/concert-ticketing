@@ -27,7 +27,7 @@ spring:
 
 toss:
   payments:
-    test-secrete-api-key: "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6"
+    test-secrete-api-key: "test_sk_24xLea5zVAzwY1OOjGExrQAMYNwW"
     success-url: "http://localhost:8080/payment/success"
     fail-url: "http://localhost:8080/payment/fail"
     base-url: "https://api.tosspayments.com/v1/payments"

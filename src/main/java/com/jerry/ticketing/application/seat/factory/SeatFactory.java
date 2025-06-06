@@ -34,7 +34,7 @@ public class SeatFactory {
     private void createAllSeats() {
         log.info("좌석 초기화를 시작합니다...");
         SectionType.getSectionTypes().forEach(type ->
-                IntStream.rangeClosed(type.getStartZone(), type.getEndZone())
+                IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
                         .forEach(zone -> createSeats(type))
         );
         log.info("좌석 데이터 초기화가 완료되었습니다.");
@@ -48,9 +48,9 @@ public class SeatFactory {
         List<Seat> seatBatch = new ArrayList<>();
         int totalCreated = 0;
 
-        for (char rowChar = type.getStartRow(); rowChar <= type.getEndRow(); rowChar++) {
+        for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
-                Seat seat = Seat.createSeat(rowChar, number, type.getSeatType());
+                Seat seat = Seat.createSeat(String.valueOf(rowChar), number, type.getSeatType());
                 seatBatch.add(seat);
 
                 totalCreated = batchSaveHelper.saveIfFull(seatBatch, totalCreated, seatRepository);

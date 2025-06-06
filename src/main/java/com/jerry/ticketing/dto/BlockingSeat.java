@@ -33,10 +33,15 @@ public class BlockingSeat {
 
         private OffsetDateTime expireAt;
 
+        private int totalPrice;
+
+
+
         public static BlockingSeat.Response toResponse(List<ConcertSeat> blockedConcertSeats){
             return new BlockingSeat.Response(
                     blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
-                    blockedConcertSeats.get(0).getBlockedExpireAt()
+                    blockedConcertSeats.get(0).getBlockedExpireAt(),
+                    ConcertSeat.calculateTotalPrice(blockedConcertSeats)
             );
         }
     }

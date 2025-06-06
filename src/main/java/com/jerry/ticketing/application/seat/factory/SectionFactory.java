@@ -41,8 +41,8 @@ public class SectionFactory {
 
         List<Section> sections = types.stream()
                 .flatMap(type ->
-                        IntStream.rangeClosed(type.getStartZone(), type.getEndZone())
-                                .mapToObj(zone -> Section.initSection(concert, (char) zone, type.getCapacity())))
+                        IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
+                                .mapToObj(zone -> Section.initSection(concert, String.valueOf((char) zone), type.getCapacity())))
                 .toList();
 
         sectionRepository.saveAll(sections);
