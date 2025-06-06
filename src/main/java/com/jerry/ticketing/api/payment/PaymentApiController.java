@@ -25,7 +25,6 @@ public class PaymentApiController {
      * 결제 요청 생성
      */
     @PostMapping("/request")
-    @ResponseBody
     public ResponseEntity<CreatePayment.Response> createPayment(@Valid @RequestBody CreatePayment.Request request) {
         CreatePayment.Response response = paymentService.createPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
@@ -38,7 +37,6 @@ public class PaymentApiController {
      * Toss 결제 승인
      */
     @PostMapping("/toss/confirm")
-    @ResponseBody
     public ResponseEntity<CreatePayment.Response> tossPaymentSuccess(
             @RequestBody ConfirmTossPayment.Request request){
 
