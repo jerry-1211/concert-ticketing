@@ -3,11 +3,14 @@ package com.jerry.ticketing.application.concert;
 import com.jerry.ticketing.application.seat.ConcertInitializationService;
 import com.jerry.ticketing.domain.concert.Concert;
 import com.jerry.ticketing.domain.concert.ConcertMapper;
+import com.jerry.ticketing.dto.ConcertList;
 import com.jerry.ticketing.dto.CreateConcert;
 import com.jerry.ticketing.repository.concert.ConcertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,4 +33,12 @@ public class ConcertService {
         return CreateConcert.Response.from(saveConcert);
 
     }
+
+    @Transactional(readOnly = true)
+    public List<ConcertList.Response> getAllConcerts(){
+        return  concertRepository.findAll().stream().map(ConcertList.Response::from).toList();
+    }
+
+
+
 }
