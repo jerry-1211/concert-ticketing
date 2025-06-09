@@ -40,7 +40,7 @@ public class CreatePaymentDto {
 
 
         public void setPaymentUrls(TossPaymentConfig tossPaymentConfig) {
-            this.secreteKey = tossPaymentConfig.getTestSecreteApiKey();
+            this.secreteKey = tossPaymentConfig.getTestSecretApiKey();
             this.successUrl = tossPaymentConfig.getSuccessUrl();
             this.failUrl = tossPaymentConfig.getFailUrl();
         }

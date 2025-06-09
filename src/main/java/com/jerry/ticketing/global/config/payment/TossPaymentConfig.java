@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "toss.payments")
 public class TossPaymentConfig {
-    private String testSecreteApiKey;
+    private String testSecretApiKey;
     private String successUrl;
     private String failUrl;
     private String baseUrl;
