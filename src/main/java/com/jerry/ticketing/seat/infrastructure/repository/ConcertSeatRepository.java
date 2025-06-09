@@ -14,7 +14,7 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat,Long> {
 
     List<ConcertSeat> findByConcertId(Long id);
 
-    List<ConcertSeat> findByConcertIdAndSeatIdIn(Long concertId, List<Long> seatIds);
+    List<ConcertSeat> findByConcertIdAndIdIn(Long concertId, List<Long> seatIds);
 
     List<ConcertSeat> findByBlockedExpireAtBeforeAndStatus(OffsetDateTime expireTime, ConcertSeatStatus status);
 

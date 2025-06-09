@@ -31,7 +31,7 @@ public class SeatBlockingService {
     public List<ConcertSeat> blockSeats(ConcertSeatBlockDto.Request request){
 
         ConcertSeats concertSeats = ConcertSeats.from(
-                concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()));
+                concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()));
 
         concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
 

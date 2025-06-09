@@ -62,7 +62,7 @@ class SeatBlockingServiceTest {
     void blockSeat_Success() {
 
         // Given
-        when(concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getConcertSeatIds()))
+        when(concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()))
                 .thenReturn(concertSeats);
 
         ConcertSeats BlockConcertSeats = new ConcertSeats(concertSeats);
