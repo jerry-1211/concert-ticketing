@@ -563,6 +563,6 @@ textarea {
 }
 
 .p-grid-col5 {
-    flex: 0 0 41.66667%;
-    max-width: 41.66667%;
+    flex: 1 0 41.66667%;
+    max-width: 90%;
 }
