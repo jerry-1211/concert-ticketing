@@ -22,7 +22,7 @@ public class ConcertViewController {
 
 
     @GetMapping
-    public String showAllConcerts(Model model){
+    public String showAllConcerts(Model model) {
         List<ConcertDto.Response> concerts = concertService.getAllConcerts();
         model.addAttribute("concerts", concerts);
         return "concert-list";
@@ -30,9 +30,9 @@ public class ConcertViewController {
 
 
     @GetMapping("/new")
-    public String creatConcertForm(Model model){
+    public String creatConcertForm(Model model) {
         model.addAttribute("createConcertRequest", new CreateConcertDto.Request());
-        return "create-concert";
+        return "concert-new";
     }
 
 }

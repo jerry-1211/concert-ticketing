@@ -17,18 +17,18 @@ public class PaymentViewController {
     /**
      * 결제 페이지
      * */
-    @GetMapping(value = "/checkout")
-    public String checkoutPage(){
-        return "widget/checkout";
-    }
+//    @GetMapping(value = "/checkout")
+//    public String checkoutPage(){
+//        return "widget/checkout";
+//    }
 
 
     /**
      * 토스페이먼츠 결제 성공 페이지
      */
     @GetMapping("/success")
-    public String successPage(){
-        return "widget/success";
+    public String successPage() {
+        return "payment/success";
     }
 
 
@@ -39,6 +39,6 @@ public class PaymentViewController {
     public String failPayment(HttpServletRequest request, Model model) {
         model.addAttribute("code", request.getParameter("code"));
         model.addAttribute("message", request.getParameter("message"));
-        return "widget/fail";
+        return "payment/fail";
     }
 }

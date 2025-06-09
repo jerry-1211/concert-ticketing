@@ -21,19 +21,19 @@ public class ConcertSeatViewController {
 
 
     @GetMapping("/concert-seats")
-    public String seatReservationPage(@RequestParam Long concertId, Model model){
+    public String seatReservationPage(@RequestParam Long concertId, Model model) {
         model.addAttribute("concertId", concertId);
-        return "concert-seats";
+        return "seat-reservation";
     }
 
     @GetMapping("/api/zones")
-    public ResponseEntity<List<String>> getZone(@RequestParam Long concertId){
+    public ResponseEntity<List<String>> getZone(@RequestParam Long concertId) {
         return ResponseEntity.ok(SectionType.createZoneList());
     }
 
 
     @GetMapping("/api/rows")
-    public ResponseEntity<List<String>> getRows(@RequestParam String zone){
+    public ResponseEntity<List<String>> getRows(@RequestParam String zone) {
         return ResponseEntity.ok(SectionType.getRowsByZone(zone));
     }
 
@@ -41,11 +41,10 @@ public class ConcertSeatViewController {
     @GetMapping("/api/seats")
     public ResponseEntity<List<ConcertSeatDto.Response>> getSeats(@RequestParam Long concertId,
                                                                   @RequestParam String zone,
-                                                                  @RequestParam String row){
+                                                                  @RequestParam String row) {
 
         return ResponseEntity.ok(concertSeatService.getSeats(concertId, zone, row));
     }
-
 
 
 }

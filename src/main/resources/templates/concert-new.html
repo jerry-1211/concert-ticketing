@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콘서트 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/concert-new-styles.css">
+</head>
+<body class="bg-light">
+<div class="container-fluid">
+    <div class="form-container">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">
+                    <i class="fas fa-music me-2"></i>
+                    새 콘서트 등록
+                </h2>
+            </div>
+            <div class="card-body">
+                <!-- 성공/에러 메시지 알림 영역 -->
+                <div id="alert-container"></div>
+
+                <form id="concertForm">
+
+                    <!-- 콘서트 제목 -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">
+                            콘서트 제목 <span class="required">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               placeholder="콘서트 제목을 입력하세요"
+                               maxlength="100"
+                               required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 공연 날짜 및 시간 -->
+                    <div class="mb-3">
+                        <label for="dateTime" class="form-label">
+                            공연 날짜 및 시간 <span class="required">*</span>
+                        </label>
+                        <input type="datetime-local"
+                               class="form-control"
+                               id="dateTime"
+                               name="dateTime"
+                               required>
+                        <div class="form-text">현재 또는 미래 날짜를 선택해주세요.</div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 공연 장소 -->
+                    <div class="mb-3">
+                        <label for="venue" class="form-label">
+                            공연 장소 <span class="required">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="venue"
+                               name="venue"
+                               placeholder="공연 장소를 입력하세요"
+                               maxlength="100"
+                               required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 티켓 가격 -->
+                    <div class="mb-3">
+                        <label for="price" class="form-label">
+                            티켓 가격 <span class="required">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="number"
+                                   class="form-control"
+                                   id="price"
+                                   name="price"
+                                   placeholder="0"
+                                   min="0"
+                                   max="100000000"
+                                   required>
+                            <span class="input-group-text">원</span>
+                        </div>
+                        <div class="form-text">0원 이상 1억원 이하로 입력해주세요.</div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 사용자당 최대 티켓 수 -->
+                    <div class="mb-3">
+                        <label for="maxTicketsPerUser" class="form-label">
+                            사용자당 최대 티켓 수 <span class="required">*</span>
+                        </label>
+                        <select class="form-select" id="maxTicketsPerUser" name="maxTicketsPerUser" required>
+                            <option value="">선택하세요</option>
+                            <option value="1">1개</option>
+                            <option value="2">2개</option>
+                            <option value="3">3개</option>
+                            <option value="4">4개</option>
+                            <option value="5">5개</option>
+                        </select>
+                        <div class="form-text">한 사용자가 구매할 수 있는 최대 티켓 수를 설정하세요.</div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 콘서트 설명 -->
+                    <div class="mb-4">
+                        <label for="description" class="form-label">
+                            콘서트 설명
+                        </label>
+                        <textarea class="form-control"
+                                  id="description"
+                                  name="description"
+                                  rows="4"
+                                  placeholder="콘서트에 대한 상세 설명을 입력하세요"
+                                  maxlength="1000"></textarea>
+                        <div class="form-text">최대 1000자까지 입력 가능합니다.</div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- 버튼 그룹 -->
+                    <div class="d-flex justify-content-between">
+                        <a href="/concerts" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            목록으로
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-save me-2"></i>
+                            콘서트 등록
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/concert-new-script.js"></script>
+</body>
+</html>
