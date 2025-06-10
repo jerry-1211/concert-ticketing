@@ -14,6 +14,10 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
+    public static final int RESERVATION_TIMEOUT_MINUTES = 2;
+    public static final int PENDING_CHECK_INTERVAL_SECONDS = 30000;
+
+
     // 예약 id
     @Id
     @Column(name = "reservation_id")
@@ -78,11 +82,11 @@ public class Reservation {
         this.createdAt = OffsetDateTime.now();
     }
 
-    public static Reservation createReservation (Member member, Concert concert,
-                                                 int totalPrice, ReservationStatus status,
-                                                 OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount){
+    public static Reservation createReservation(Member member, Concert concert,
+                                                int totalPrice, ReservationStatus status,
+                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
 
-        return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt,amount);
+        return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt, amount);
 
     }
 
@@ -95,12 +99,17 @@ public class Reservation {
     }
 
 
-    public void confirmReservation(){
+    public void confirmReservation() {
         status = ReservationStatus.CONFIRMED;
-        this.expiresAt = OffsetDateTime.now().plusMonths(3);
+        this.expiresAt = OffsetDateTime.now().plusMinutes(RESERVATION_TIMEOUT_MINUTES);
     }
 
-    public void updateOrderId(String orderId){
+    public void cancelReservation() {
+        status = ReservationStatus.CANCELLED;
+    }
+
+
+    public void updateOrderId(String orderId) {
         this.orderId = orderId;
     }
 }

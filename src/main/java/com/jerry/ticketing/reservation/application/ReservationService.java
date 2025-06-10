@@ -9,12 +9,15 @@ import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
 import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
 import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+import java.util.List;
 
 
 @Service
@@ -29,14 +32,14 @@ public class ReservationService {
     @Transactional
     public void confirmReservation(String orderId) {
         Reservation reservation = reservationRepository.findByOrderId(orderId)
-                .orElseThrow(()->new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
         reservation.confirmReservation();
     }
 
 
     @Transactional
-    public CreateReservationDto.Response  createReservation(CreateReservationDto.Request request){
+    public CreateReservationDto.Response createReservation(CreateReservationDto.Request request) {
         // 나중에 MemberService 로 옮기기
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new RuntimeException());
@@ -53,5 +56,18 @@ public class ReservationService {
         return CreateReservationDto.Response.from(reservation);
 
     }
+
+    @Transactional
+    public void releaseExpiredReservation() {
+        OffsetDateTime now = OffsetDateTime.now();
+        List<Reservation> reservations = reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING);
+
+
+        // TODO: 일급 객체로 바꾸기
+        reservations.forEach(Reservation::cancelReservation);
+
+
+    }
+
 
 }
