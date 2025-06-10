@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SeatBlockingService {
+public class ConcertSeatBlockingService {
 
     private final ConcertSeatBlockValidator concertSeatBlockValidator;
     private final ConcertSeatRepository concertSeatRepository;
@@ -28,7 +28,7 @@ public class SeatBlockingService {
      * @param request 클라이언트로 부터 block 요청을 받은 요청
      */
     @Transactional
-    public List<ConcertSeat> blockSeats(ConcertSeatBlockDto.Request request){
+    public List<ConcertSeat> blockSeats(ConcertSeatBlockDto.Request request) {
 
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()));
@@ -42,17 +42,15 @@ public class SeatBlockingService {
 
 
     /**
-     * 만료된 좌석 선점을 자동으로 해제합니다.
+     * 만료된 좌석 선점을 자동으로 해제합니다.x
      * 스케줄러에 의해 주기적으로 실행됩니다.
-     * */
+     */
     @Transactional
-    public void releaseExpiredBlockedSeats(){
+    public void releaseExpiredBlockedSeats() {
         OffsetDateTime now = OffsetDateTime.now();
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED));
-
         concertSeats.available();
-
     }
 
 

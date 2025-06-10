@@ -1,7 +1,7 @@
 package com.jerry.ticketing.api.seat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.seat.application.SeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
 import com.jerry.ticketing.seat.api.ConcertSeatApiController;
@@ -14,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
@@ -31,7 +32,7 @@ class ConcertSeatApiControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private SeatBlockingService seatBlockingService;
+    private ConcertSeatBlockingService seatBlockingService;
 
     @Test
     @DisplayName("좌석 점유 성공 테스트")

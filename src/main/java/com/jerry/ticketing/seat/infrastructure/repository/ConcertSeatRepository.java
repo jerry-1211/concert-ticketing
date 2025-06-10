@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-public interface ConcertSeatRepository extends JpaRepository<ConcertSeat,Long> {
+public interface ConcertSeatRepository extends JpaRepository<ConcertSeat, Long> {
     List<ConcertSeat> findBySeatId(Long id);
 
     List<ConcertSeat> findByConcertId(Long id);
@@ -17,6 +17,8 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat,Long> {
     List<ConcertSeat> findByConcertIdAndIdIn(Long concertId, List<Long> seatIds);
 
     List<ConcertSeat> findByBlockedExpireAtBeforeAndStatus(OffsetDateTime expireTime, ConcertSeatStatus status);
+
+    List<ConcertSeat> findByIdIn(List<Long> ids);
 
 
 //    @Query("SELECT cs FROM ConcertSeat cs, Concert c, Section st, Seat s " +
@@ -27,17 +29,14 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat,Long> {
 //                                           @Param("row") String row);
 
 
-    @Query("SELECT cs FROM ConcertSeat cs "+
+    @Query("SELECT cs FROM ConcertSeat cs " +
             "WHERE cs.concert.id = :concertId " +
             "AND cs.section.zone = :zone " +
             "AND cs.seat.seatRow = :row"
-            )
+    )
     List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
                                            @Param("zone") String zone,
                                            @Param("row") String row);
-
-
-
 
 
 }

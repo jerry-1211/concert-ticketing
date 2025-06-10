@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.api;
 
 
-import com.jerry.ticketing.seat.application.SeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/seats")
 @RequiredArgsConstructor
 public class ConcertSeatApiController {
-    private final SeatBlockingService seatBlockingService;
+    private final ConcertSeatBlockingService seatBlockingService;
 
     /**
      * 좌석 선점
-     * */
+     */
     @PostMapping("/blocks")
     public ResponseEntity<ConcertSeatBlockDto.Response> blockSeats(@RequestBody ConcertSeatBlockDto.Request request) {
 

@@ -15,6 +15,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ConcertSeat {
 
+    public static final int BLOCKING_TIMEOUT_MINUTES = 15;
+    public static final int BLOCKING_CHECK_INTERVAL_SECONDS = 30000;
+
     // 콘서트 좌석 id
     @Id
     @Column
@@ -82,27 +85,30 @@ public class ConcertSeat {
     }
 
     // 좌석 선점
-    public void blockConcertSeat(Long memberId){
-        final int BLOCKING_TIMEOUT_MINUTES = 15;
-
-        this.status =  ConcertSeatStatus.BLOCKED;
+    public void blockConcertSeat(Long memberId) {
+        this.status = ConcertSeatStatus.BLOCKED;
         this.blockedBy = memberId;
         this.blockedAt = OffsetDateTime.now();
         this.blockedExpireAt = OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
+    }
 
+    // 좌석 확정
+    public void confirmConcertSeat() {
+        this.status = ConcertSeatStatus.RESERVED;
+        this.blockedExpireAt = OffsetDateTime.now().plusYears(10);
     }
 
 
     // 좌석 예약 가능 여부
-    public boolean isAvailable(){
+    public boolean isAvailable() {
         return this.status == ConcertSeatStatus.AVAILABLE;
     }
 
-    public boolean isNotAvailable(){
+    public boolean isNotAvailable() {
         return !isAvailable();
     }
 
-    // 가격 계산 (추후 일급 객체로 리팩토링 필요)
+    // TODO: 가격 계산 (추후 일급 객체로 리팩토링 필요)
     public static int calculateTotalPrice(List<ConcertSeat> concertSeats) {
         int price = concertSeats.get(0).getPrice();
         return price * concertSeats.size();
