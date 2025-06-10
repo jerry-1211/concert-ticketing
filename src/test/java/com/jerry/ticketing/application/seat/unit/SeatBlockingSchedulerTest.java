@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.scheduler.SeatBlockingScheduler;
-import com.jerry.ticketing.seat.application.SeatBlockingService;
+import com.jerry.ticketing.scheduler.ConcertSeatScheduler;
+import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,13 +15,13 @@ import static org.mockito.Mockito.verify;
 class SeatBlockingSchedulerTest {
 
     @Mock
-    private SeatBlockingService seatBlockingService;
+    private ConcertSeatBlockingService seatBlockingService;
 
     @InjectMocks
-    private SeatBlockingScheduler seatBlockingScheduler;
+    private ConcertSeatScheduler seatBlockingScheduler;
 
     @Test
-    void releaseExpiredBlockedSeats_ShouldCallService(){
+    void releaseExpiredBlockedSeats_ShouldCallService() {
         // When
         seatBlockingScheduler.releaseExpiredBlockedSeats();
 

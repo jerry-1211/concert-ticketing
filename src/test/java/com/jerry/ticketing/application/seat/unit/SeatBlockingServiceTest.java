@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.seat.application.SeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.ConcertSeats;
 import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
@@ -35,7 +35,7 @@ class SeatBlockingServiceTest {
 
 
     @InjectMocks
-    private SeatBlockingService seatBlockingService;
+    private ConcertSeatBlockingService seatBlockingService;
 
     private List<ConcertSeat> concertSeats;
     private ConcertSeatBlockDto.Request request;
@@ -44,7 +44,7 @@ class SeatBlockingServiceTest {
     void setup() {
 
         // 테스트 데이터 설정
-        this.request = new ConcertSeatBlockDto.Request(1L, Arrays.asList(1L, 2L),100L);
+        this.request = new ConcertSeatBlockDto.Request(1L, Arrays.asList(1L, 2L), 100L);
 
 
         // Mock ConcertSeat 객체 생성
