@@ -21,7 +21,7 @@ public class ConcertService {
     private final ConcertMapper concertMapper;
 
     @Transactional
-    public CreateConcertDto.Response createConcert(CreateConcertDto.Request request){
+    public CreateConcertDto.Response createConcert(CreateConcertDto.Request request) {
 
         Concert concert = concertMapper.buildConcert(request);
 
@@ -35,10 +35,15 @@ public class ConcertService {
     }
 
     @Transactional(readOnly = true)
-    public List<ConcertDto.Response> getAllConcerts(){
-        return  concertRepository.findAll().stream().map(ConcertDto.Response::from).toList();
+    public List<ConcertDto.Response> getAllConcerts() {
+        return concertRepository.findAll().stream().map(ConcertDto.Response::from).toList();
     }
 
+
+    @Transactional(readOnly = true)
+    public ConcertDto.Response getConcert(Long concertId) {
+        return ConcertDto.Response.from(concertRepository.findById(concertId).orElseThrow());
+    }
 
 
 }

@@ -1,6 +1,6 @@
 // URL에서 concertId 가져오기
 const urlParams = new URLSearchParams(window.location.search);
-const concertId = urlParams.get('concertId') || 1;
+const concertId = urlParams.get('concertId');
 
 let selectedZone = '';
 let selectedRow = '';
@@ -129,6 +129,12 @@ function toggleSeat(seat) {
         selectedSeats = selectedSeats.filter(s => s.seatId !== seat.seatId);
         seatElement.classList.remove('selected');
     } else {
+        // 최대 선택 가능 수량 체크 (추가된 부분)
+        if (selectedSeats.length >= MAX_TICKETS_PER_USER) {
+            alert(`최대 ${MAX_TICKETS_PER_USER}매까지만 선택 가능합니다.`);
+            return;
+        }
+
         // 선택
         selectedSeats.push(seat);
         seatElement.classList.add('selected');
@@ -137,9 +143,13 @@ function toggleSeat(seat) {
     updateSelectedSeats();
 }
 
+
 function updateSelectedSeats() {
     const selectedSeatsList = document.getElementById('selectedSeatsList');
     const reserveBtn = document.getElementById('reserveBtn');
+
+    document.getElementById('selectedCount').textContent = selectedSeats.length;
+
 
     if (selectedSeats.length === 0) {
         selectedSeatsList.innerHTML = '<p>선택된 좌석이 없습니다.</p>';

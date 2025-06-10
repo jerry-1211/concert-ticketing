@@ -105,3 +105,26 @@
     display: inline-block;
     margin-right: 20px;
 }
+
+.seat.disabled {
+    cursor: not-allowed !important;
+    filter: grayscale(100%);
+}
+
+.ticket-info.max-reached {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.warning {
+    color: #856404;
+    font-weight: bold;
+}
+
+.max-reached {
+    color: #d63384;
+    font-weight: bold;
+    font-size: 0.9em;
+}

@@ -1,6 +1,8 @@
 package com.jerry.ticketing.seat.api;
 
 
+import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.application.dto.ConcertDto;
 import com.jerry.ticketing.seat.application.ConcertSeatService;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
 import com.jerry.ticketing.seat.application.dto.ConcertSeatDto;
@@ -18,11 +20,14 @@ import java.util.List;
 public class ConcertSeatViewController {
 
     private final ConcertSeatService concertSeatService;
+    private final ConcertService concertService;
 
 
     @GetMapping("/concert-seats")
     public String seatReservationPage(@RequestParam Long concertId, Model model) {
-        model.addAttribute("concertId", concertId);
+
+        ConcertDto.Response concert = concertService.getConcert(concertId);
+        model.addAttribute("concert", concert);
         return "seat-reservation";
     }
 
