@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <title>좌석 예약</title>
+    <link rel="stylesheet" href="/css/seat-reservation-styles.css">
+</head>
+<body>
+
+<script th:inline="javascript">
+    const MAX_TICKETS_PER_USER = /*[[${concert.maxTicketsPerUser}]]*/ 4;
+</script>
+
+
+<div class="seat-container">
+    <h2>콘서트 좌석 예약</h2>
+
+    <!-- 최대 선택 가능 좌석 수 표시 -->
+    <div class="ticket-info">
+        <p>최대 <span th:text="${concert.maxTicketsPerUser}"></span>매까지 예약 가능합니다.</p>
+    </div>
+
+    <div class="concert-title">
+        <p><span th:text="${concert.title}"></span> 콘서트 예약</p>
+        <p> 콘서트 설명 : <span th:text="${concert.description}"></span></p>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <span class="seat vip" style="width: 20px; height: 20px;"></span> VIP (1000석)
+        </div>
+        <div class="legend-item">
+            <span class="seat standard" style="width: 20px; height: 20px;"></span> STANDARD (1500석)
+        </div>
+        <div class="legend-item">
+            <span class="seat economy" style="width: 20px; height: 20px;"></span> ECONOMY (2000석)
+        </div>
+    </div>
+
+    <!-- Zone 선택 -->
+    <div class="section">
+        <h3>1. Zone 선택</h3>
+        <div class="zone-buttons" id="zoneButtons">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- Row 선택 -->
+    <div class="section" id="rowSection" style="display: none;">
+        <h3>2. Row 선택</h3>
+        <div class="row-buttons" id="rowButtons">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 좌석 선택 -->
+    <div class="section" id="seatSection" style="display: none;">
+        <h3>3. 좌석 선택</h3>
+        <div class="seat-info" id="seatInfo"></div>
+        <div class="seat-grid" id="seatGrid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 선택된 좌석 표시 -->
+    <div class="selected-seats">
+        <h3>선택된 좌석</h3>
+        <div class="selected-count">
+            <span id="selectedCount">0</span> / <span th:text="${concert.maxTicketsPerUser}">4</span> 선택됨
+        </div>
+        <div id="selectedSeatsList"></div>
+        <button class="reserve-btn" id="reserveBtn" disabled>
+            결제하기
+        </button>
+    </div>
+</div>
+
+<!-- 결제 시스템을 먼저 로드 -->
+<script src="/js/seat-reservation-script.js"></script>
+<script src="/js/reservation-payment-system.js"></script>
+</body>
+</html>

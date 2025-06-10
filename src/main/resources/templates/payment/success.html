@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
+    <link rel="stylesheet" type="text/css" href="/css/payment-success-styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>토스페이먼츠 샘플 프로젝트</title>
+</head>
+
+<body>
+<div class="box_section" style="width: 600px">
+    <img width="100px" src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png"/>
+    <h2>결제를 완료했어요</h2>
+
+    <div class="p-grid typography--p" style="margin-top: 50px">
+        <div class="p-grid-col text--left"><b>결제금액</b></div>
+        <div class="p-grid-col text--right" id="amount"></div>
+    </div>
+    <div class="p-grid typography--p" style="margin-top: 10px">
+        <div class="p-grid-col text--left"><b>주문번호</b></div>
+        <div class="p-grid-col text--right" id="orderId"></div>
+    </div>
+    <div class="p-grid typography--p" style="margin-top: 10px">
+        <div class="p-grid-col text--left"><b>paymentKey</b></div>
+        <div class="p-grid-col text--right" id="paymentKey" style="white-space: initial; width: 250px"></div>
+    </div>
+    <div class="p-grid" style="margin-top: 30px">
+        <button class="button p-grid-col5" id="main-button">메인 페이지 이동</button>
+    </div>
+</div>
+
+<div class="box_section" style="width: 600px; text-align: left">
+    <b>Response Data :</b>
+    <div id="response" style="white-space: initial"></div>
+</div>
+
+<script src="/js/payment-success-script.js"></script>
+</body>
+</html>
+
+
+

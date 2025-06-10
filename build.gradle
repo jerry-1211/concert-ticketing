@@ -31,13 +31,13 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-
+    runtimeOnly 'com.mysql:mysql-connector-j'  // 프로덕션용 MySQL
+    testRuntimeOnly 'com.h2database:h2'        // 테스트용 H2
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

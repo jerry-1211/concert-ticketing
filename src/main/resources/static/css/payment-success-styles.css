@@ -1,0 +1,62 @@
+.box_section {
+    width: 600px;
+}
+
+.p-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.typography--p {
+    margin-top: 50px;
+}
+
+.typography--p:nth-child(3),
+.typography--p:nth-child(4) {
+    margin-top: 10px;
+}
+
+.p-grid-col {
+    flex: 1;
+}
+
+.text--left {
+    text-align: left;
+}
+
+.text--right {
+    text-align: right;
+}
+
+.button {
+    padding: 12px 24px;
+    background-color: #3182f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #1b64da;
+}
+
+.p-grid-col5 {
+    width: 100%;
+    margin-top: 30px;
+}
+
+#paymentKey {
+    white-space: initial;
+    width: 250px;
+}
+
+#response {
+    white-space: initial;
+}
+
+.box_section:last-child {
+    text-align: left;
+}

@@ -1,3 +1,4 @@
+name: ticketing-project
 services:
   app:
     image: eclipse-temurin:17-jdk-jammy
@@ -7,30 +8,53 @@ services:
     working_dir: /app
     command: sh -c "java -jar *[!plain].jar"
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:8080"
     restart: "no"
-    depends_on: # app이 h2 보다 늦게 실행되도록 설정
-      - h2
+    depends_on: # app이 mysql 보다 늦게 실행되도록 설정
+      - mysql
     environment:
-      SPRING_DATASOURCE_URL:  jdbc:h2:tcp://h2:1521/test
-      SPRING_DATASOURCE_USERNAME: sa
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      TOSS_PAYMENTS_SECRET_KEY: ${TOSS_PAYMENTS_SECRET_KEY}
+      TOSS_SUCCESS_URL: ${TOSS_SUCCESS_URL}
+      TOSS_FAIL_URL: ${TOSS_FAIL_URL}
+      TOSS_BASE_URL: ${TOSS_BASE_URL}
+
     deploy:
       resources:
         limits:
           memory: 4G
         reservations:
           memory: 2G
-  h2:
-    image: oscarfonts/h2:latest
-    container_name: h2-database
+
+  mysql:  # h2 서비스를 mysql로 교체
+    image: mysql:latest
+    container_name: mysql-container
     ports:
-      - "1521:1521"
-      - "8181:81"
+      - "${MYSQL_PORT}:3306"
     environment:
-      H2_OPTIONS: -tcp -tcpAllowOthers -tcpPort 1521 -webAllowOthers -webPort 81 -ifNotExists -baseDir /opt/h2-data
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
-      - h2-data:/opt/h2-data
+      - mysql_data:/var/lib/mysql
+    healthcheck:  # MySQL이 완전히 준비될 때까지 대기
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+
+  ngrok:
+    image: ngrok/ngrok
+    container_name: ngrok-container
+    ports:
+      - "${NGROK_PORT}:4040"
+    network_mode: host
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    command: ["http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}"]
+    depends_on:
+      - app
+
 
 volumes:
-  h2-data: # 인메모리가 아닌 디스크에 영구 저장
+  mysql_data:  # h2-data 대신 mysql_data로 변경

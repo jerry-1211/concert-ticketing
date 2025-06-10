@@ -1,15 +1,16 @@
 package com.jerry.ticketing.domain.payment;
 
-import com.jerry.ticketing.repository.concert.ConcertRepository;
-import com.jerry.ticketing.repository.member.MemberRepository;
-import com.jerry.ticketing.repository.payment.PaymentRepository;
-import com.jerry.ticketing.repository.reservation.ReservationRepository;
+import com.jerry.ticketing.payment.domain.Payment;
+import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
+import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
 import com.jerry.ticketing.domain.TestFixture;
-import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.domain.member.Member;
-import com.jerry.ticketing.domain.payment.enums.PaymentMethod;
-import com.jerry.ticketing.domain.payment.enums.PaymentStatus;
-import com.jerry.ticketing.domain.reservation.Reservation;
+import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
+import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
+import com.jerry.ticketing.reservation.domain.Reservation;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

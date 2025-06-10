@@ -1,14 +1,14 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.application.seat.ConcertInitializationService;
-import com.jerry.ticketing.application.seat.factory.SectionFactory;
-import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.domain.seat.Seat;
-import com.jerry.ticketing.domain.seat.Section;
-import com.jerry.ticketing.repository.concert.ConcertRepository;
-import com.jerry.ticketing.repository.seat.ConcertSeatRepository;
-import com.jerry.ticketing.repository.seat.SeatRepository;
-import com.jerry.ticketing.repository.seat.SectionRepository;
+import com.jerry.ticketing.seat.application.ConcertInitializationService;
+import com.jerry.ticketing.seat.infrastructure.factory.SectionFactory;
+import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.seat.domain.Seat;
+import com.jerry.ticketing.seat.domain.Section;
+import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

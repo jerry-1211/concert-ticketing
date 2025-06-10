@@ -1,0 +1,46 @@
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.required {
+    color: #dc3545;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+    padding: 12px 30px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}

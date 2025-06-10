@@ -1,15 +1,15 @@
 package com.jerry.ticketing.domain;
 
-import com.jerry.ticketing.domain.concert.Concert;
-import com.jerry.ticketing.domain.member.Address;
-import com.jerry.ticketing.domain.member.Member;
-import com.jerry.ticketing.domain.payment.Payment;
-import com.jerry.ticketing.domain.reservation.Reservation;
-import com.jerry.ticketing.domain.reservation.enums.ReservationStatus;
-import com.jerry.ticketing.domain.seat.ConcertSeat;
-import com.jerry.ticketing.domain.seat.Seat;
-import com.jerry.ticketing.domain.seat.Section;
-import com.jerry.ticketing.domain.seat.enums.SeatType;
+import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.member.domain.Address;
+import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.payment.domain.Payment;
+import com.jerry.ticketing.reservation.domain.Reservation;
+import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
+import com.jerry.ticketing.seat.domain.ConcertSeat;
+import com.jerry.ticketing.seat.domain.Seat;
+import com.jerry.ticketing.seat.domain.Section;
+import com.jerry.ticketing.seat.domain.enums.SeatType;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
