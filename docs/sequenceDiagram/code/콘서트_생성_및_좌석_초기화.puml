@@ -1,0 +1,56 @@
+ㅎ햐@startuml 콘서트_생성_및_좌석_초기화_최종
+!theme plain
+
+actor 관리자 as Admin
+participant Frontend
+participant ConcertApiController as ConcertAPI
+participant ConcertService
+participant ConcertInitializationService as InitService
+participant SectionFactory
+participant ConcertSeatFactory as SeatFactory
+database Database as DB
+
+title 콘서트 생성 및 좌석 초기화 플로우 (43,000석)
+
+== 1. 콘서트 생성 요청 ==
+Admin -> Frontend: 콘서트 생성 요청
+Frontend -> ConcertAPI: POST "/api/concerts"
+ConcertAPI -> ConcertService: createConcert()
+
+== 2. 콘서트 기본정보 생성 ==
+ConcertService -> DB: 콘서트 정보 DB 저장
+DB --> ConcertService: 콘서트 ID 반환
+
+== 3. 좌석 초기화 ==
+ConcertService -> InitService: initializeSectionAndConcertSeats()
+note right of InitService
+  총 43,000석 생성
+  - VIP: A-F zone × a-j row × 1-100 (6×10×100 = 6,000석)
+  - STANDARD: G-L zone × a-o row × 1-100 (6×15×100 = 9,000석)
+  - ECONOMY: M-Z zone × a-t row × 1-100 (14×20×100 = 28,000석)
+  배치 사이즈: 1000
+end note
+
+== 4. 팩토리 패턴으로 생성 ==
+loop VIP, STANDARD, ECONOMY 섹션별
+    InitService -> SectionFactory: createIfNotExists()
+    SectionFactory -> DB: 섹션 정보 저장
+
+    loop 각 섹션의 좌석들 (배치 처리)
+        InitService -> SeatFactory: createIfNotExists()
+        SeatFactory -> DB: 좌석 정보 일괄 저장 (Available 상태)
+        note right of DB
+          배치 INSERT (1000석씩)
+          초기 상태: Available
+        end note
+    end
+end
+
+== 5. 완료 ==
+DB --> InitService: 모든 좌석 생성 완료
+InitService --> ConcertService: 좌석 초기화 완료
+ConcertService --> ConcertAPI: 콘서트 생성 완료
+ConcertAPI --> Frontend: 성공 응답
+Frontend --> Admin: 콘서트 생성 완료 안내
+
+@enduml

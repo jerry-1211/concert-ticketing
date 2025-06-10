@@ -1,0 +1,52 @@
+@startuml 좌석_해제_스케줄링
+!theme plain
+
+participant SeatBlockingScheduler as Scheduler
+participant SeatBlockingService as SeatService
+participant ConcertSeatRepository as Repository
+participant ConcertSeat as SeatEntity
+database Database as DB
+
+title 주기적 좌석 해제 작업 (30초마다)
+
+== 1. 스케줄러 실행 ==
+Scheduler -> SeatService: releaseExpiredBlockedSeats()
+note right of Scheduler
+  @Scheduled(fixedRate = BLOCKING_CHECK_INTERVAL_SECONDS)
+  30초마다 자동 실행
+end note
+
+== 2. 만료 좌석 조회 ==
+SeatService -> Repository: findByBlockedExpireAtBeforeAndStatus(now, BLOCKED)
+Repository -> DB: 만료된 Blocked 좌석 검색
+note right of DB
+  조건:
+  - blockedExpireAt < now
+  - status = BLOCKED
+end note
+DB --> Repository: 만료 좌석 목록
+Repository --> SeatService: 만료된 좌석들 반환
+
+== 3. 좌석 상태 변경 ==
+loop 각 만료 좌석별 처리
+    SeatService -> SeatEntity: concertSeats.available()
+    SeatEntity -> SeatEntity: 상태 변경 (Blocked → Available)
+    SeatService -> DB: 좌석 상태 업데이트
+    note right of DB
+      해제된 좌석:
+      - 다시 예약 가능
+      - blockedExpireAt 초기화
+    end note
+end
+
+== 4. 완료 ==
+DB --> SeatService: 모든 좌석 해제 완료
+SeatService --> Scheduler: 해제 작업 완료
+note right of Scheduler
+  결과:
+  - 만료된 좌석들 재사용 가능
+  - 시스템 리소스 정리
+  - 데드락 방지
+end note
+
+@enduml

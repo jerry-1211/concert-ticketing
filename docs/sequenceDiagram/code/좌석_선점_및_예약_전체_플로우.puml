@@ -1,0 +1,78 @@
+@startuml 좌석_선점_및_예약_전체_플로우
+!theme plain
+
+actor 사용자 as User
+participant Frontend
+participant ConcertSeatApiController as SeatAPI
+participant SeatBlockingService as SeatService
+participant ConcertSeats as SeatsEntity
+participant ReservationController as ReservationAPI
+participant ReservationService
+participant ConcertSeatService
+participant "토스 서버" as TossServer
+participant PaymentWebhookService as WebhookService
+database Database as DB
+
+title 좌석 선점 → 예약 생성 → 예약 완료 플로우
+
+== 1. 좌석 선점 ==
+User -> Frontend: 좌석 선택
+Frontend -> SeatAPI: POST "/api/seats/blocks"
+SeatAPI -> SeatService: blockSeats()
+SeatService -> SeatsEntity: concertSeats.block(memberId)
+
+loop 각 좌석별
+    SeatsEntity -> SeatsEntity: v.blockConcertSeat(memberId)
+    note right of SeatsEntity
+      - status: BLOCKED
+      - blockedBy: memberId
+      - blockedAt: now()
+      - blockedExpireAt: now()+15분
+    end note
+end
+
+SeatsEntity -> DB: 좌석 선점 정보 저장
+SeatService --> SeatAPI: 선점 완료
+SeatAPI --> Frontend: 좌석 선점 성공
+
+== 2. 예약 생성 ==
+User -> Frontend: 예약 진행
+Frontend -> ReservationAPI: POST "/api/reservation"
+ReservationAPI -> ReservationService: createReservation()
+ReservationService -> DB: Member & Concert 조회
+ReservationService -> ReservationService: Reservation.createReservation()
+note right of ReservationService
+  매개변수:
+  - Member
+  - Concert
+  - String orderName
+  - OffsetDateTime expireAt
+  - int totalPrice
+  - int amount
+end note
+ReservationService -> DB: 예약 정보 저장 (PENDING 상태)
+ReservationService --> ReservationAPI: 예약 생성 완료
+ReservationAPI --> Frontend: 결제 페이지로 이동
+
+== 3. 결제 완료 후 예약 확정 ==
+User -> User: 결제 완료 (토스)
+TossServer -> WebhookService: 웹훅 호출 (handleWebhook)
+WebhookService -> WebhookService: finalizeOrder()
+WebhookService -> ReservationService: confirmReservation(data.getOrderId()) (예약 확정)
+WebhookService -> ConcertSeatService: confirmReservation(data.getOrderName()) (좌석 확정)
+
+note right of ConcertSeatService
+  좌석 상태 최종 확정:
+  - BLOCKED → RESERVED
+  - 좌석별 예약 완료 처리
+end note
+
+ConcertSeatService -> DB: 좌석 상태 업데이트
+ReservationService -> DB: 예약 최종 확정 (CONFIRMED 상태)
+
+ConcertSeatService --> WebhookService: 좌석 예약 완료
+ReservationService --> WebhookService: 예약 완료
+
+
+
+@enduml
