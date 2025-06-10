@@ -2,7 +2,7 @@ package com.jerry.ticketing.payment.application;
 
 
 import com.jerry.ticketing.reservation.application.ReservationService;
-import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
+import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
 import com.jerry.ticketing.seat.application.ConcertSeatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,8 @@ public class PaymentWebhookService {
     private final ConcertSeatService concertSeatService;
 
 
-    public void handleWebhook(PaymentWebhookDto.Request request) {
-        PaymentWebhookDto.Request.PaymentData data = request.getData();
+    public void handleWebhook(WebhookPaymentDto.Request request) {
+        WebhookPaymentDto.Request.PaymentData data = request.getData();
 
         if (data.getStatus().equals("DONE")) {
             finalizeOrder(data);
@@ -34,7 +34,7 @@ public class PaymentWebhookService {
     /**
      * Web hook 결제 후 처리
      */
-    private void finalizeOrder(PaymentWebhookDto.Request.PaymentData data) {
+    private void finalizeOrder(WebhookPaymentDto.Request.PaymentData data) {
 
         paymentService.updatePaymentOnCompleted(data);
         reservationService.confirmReservation(data.getOrderId());

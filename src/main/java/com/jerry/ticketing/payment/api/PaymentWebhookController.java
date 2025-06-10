@@ -1,7 +1,7 @@
 package com.jerry.ticketing.payment.api;
 
 import com.jerry.ticketing.payment.application.PaymentWebhookService;
-import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
+import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class PaymentWebhookController {
      */
     @PostMapping("/payment")
     public ResponseEntity<Void> handleWebhook(
-            @RequestBody PaymentWebhookDto.Request request){
+            @RequestBody WebhookPaymentDto.Request request) {
 
         paymentWebhookService.handleWebhook(request);
 

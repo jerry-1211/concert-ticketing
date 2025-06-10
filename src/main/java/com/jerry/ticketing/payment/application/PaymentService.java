@@ -6,7 +6,7 @@ import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.payment.application.dto.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.CreatePaymentDto;
-import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
+import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
@@ -29,9 +29,9 @@ public class PaymentService {
 
     /**
      * 결제 요청 생성
-     * */
+     */
     @Transactional
-    public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request){
+    public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
         Reservation reservation = reservationRepository.findById(request.getReservationId())
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
@@ -47,7 +47,7 @@ public class PaymentService {
 
     /**
      * 결제 확인
-     * */
+     */
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
         ConfirmPaymentDto.Response response = tossPaymentClient.confirmPayment(request);
@@ -65,9 +65,9 @@ public class PaymentService {
 
     /**
      * Webhook 처리 후 업데이트
-     * */
+     */
     @Transactional
-    public void updatePaymentOnCompleted(PaymentWebhookDto.Request.PaymentData data){
+    public void updatePaymentOnCompleted(WebhookPaymentDto.Request.PaymentData data) {
         Payment payment = paymentRepository.findByOrderIdWithLock(data.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
