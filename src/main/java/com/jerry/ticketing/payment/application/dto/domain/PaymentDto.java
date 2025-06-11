@@ -1,4 +1,4 @@
-package com.jerry.ticketing.payment.application.dto;
+package com.jerry.ticketing.payment.application.dto.domain;
 
 
 import com.jerry.ticketing.payment.domain.Payment;

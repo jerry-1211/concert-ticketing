@@ -3,8 +3,8 @@ package com.jerry.ticketing.application.concert;
 import com.jerry.ticketing.seat.application.ConcertInitializationService;
 import com.jerry.ticketing.concert.application.ConcertService;
 import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.concert.domain.ConcertMapper;
-import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
+import com.jerry.ticketing.concert.infrastructure.mapper.ConcertMapper;
+import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ConcertErrorCode;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
@@ -45,7 +45,7 @@ class ConcertServiceTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
 
         request = CreateConcertDto.Request.of(
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
@@ -84,13 +84,12 @@ class ConcertServiceTest {
 
     @Test
     @DisplayName("콘서스 저상 실패 시 Concert Error 코드 검증")
-    void shouldThrowConcertErrorCodeWhenSaveFails(){
+    void shouldThrowConcertErrorCodeWhenSaveFails() {
 
         // Given
         when(concertMapper.buildConcert(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class)))
                 .thenThrow(new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED));
-
 
 
         // When & Then

@@ -3,8 +3,7 @@ package com.jerry.ticketing.payment.domain;
 
 import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
 import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
-import com.jerry.ticketing.reservation.domain.Reservation;
-import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import jakarta.persistence.*;
 import lombok.*;
 

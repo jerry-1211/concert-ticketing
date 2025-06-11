@@ -2,11 +2,10 @@ package com.jerry.ticketing.seat.api;
 
 
 import com.jerry.ticketing.concert.application.ConcertService;
-import com.jerry.ticketing.concert.application.dto.ConcertDto;
+import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
 import com.jerry.ticketing.seat.application.ConcertSeatService;
-import com.jerry.ticketing.seat.application.dto.DetailConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/seats")
 @RequiredArgsConstructor
-public class ConcertSeatViewController {
+public class ConcertSeatWebController {
 
     private final ConcertSeatService concertSeatService;
     private final ConcertService concertService;

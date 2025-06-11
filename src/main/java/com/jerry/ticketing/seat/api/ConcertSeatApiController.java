@@ -3,7 +3,7 @@ package com.jerry.ticketing.seat.api;
 
 import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
+import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,6 @@
 package com.jerry.ticketing.seat.application;
 
-import com.jerry.ticketing.seat.application.dto.SeatDto;
+import com.jerry.ticketing.seat.application.dto.domain.SeatDto;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

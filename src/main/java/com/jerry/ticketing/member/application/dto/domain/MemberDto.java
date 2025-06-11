@@ -1,4 +1,4 @@
-package com.jerry.ticketing.member.application.dto;
+package com.jerry.ticketing.member.application.dto.domain;
 
 
 import com.jerry.ticketing.member.domain.Address;

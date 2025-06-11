@@ -1,8 +1,8 @@
 package com.jerry.ticketing.payment.api;
 
 import com.jerry.ticketing.payment.application.PaymentService;
-import com.jerry.ticketing.payment.application.dto.ConfirmPaymentDto;
-import com.jerry.ticketing.payment.application.dto.CreatePaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -32,13 +32,12 @@ public class PaymentApiController {
     }
 
 
-
     /**
      * Toss 결제 승인
      */
     @PostMapping("/toss/confirm")
     public ResponseEntity<CreatePaymentDto.Response> tossPaymentSuccess(
-            @RequestBody ConfirmPaymentDto.Request request){
+            @RequestBody ConfirmPaymentDto.Request request) {
 
         CreatePaymentDto.Response response = paymentService.confirmPayment(request);
         response.setPaymentUrls(tossPaymentConfig);

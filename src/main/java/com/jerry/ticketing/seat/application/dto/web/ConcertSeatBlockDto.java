@@ -1,4 +1,4 @@
-package com.jerry.ticketing.seat.application.dto;
+package com.jerry.ticketing.seat.application.dto.web;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import lombok.AllArgsConstructor;
@@ -36,8 +36,7 @@ public class ConcertSeatBlockDto {
         private int totalPrice;
 
 
-
-        public static ConcertSeatBlockDto.Response toResponse(List<ConcertSeat> blockedConcertSeats){
+        public static ConcertSeatBlockDto.Response toResponse(List<ConcertSeat> blockedConcertSeats) {
             return new ConcertSeatBlockDto.Response(
                     blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
                     blockedConcertSeats.get(0).getBlockedExpireAt(),
@@ -45,7 +44,6 @@ public class ConcertSeatBlockDto {
             );
         }
     }
-
 
 
 }

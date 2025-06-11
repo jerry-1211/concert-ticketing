@@ -4,7 +4,7 @@ package com.jerry.ticketing.api.concert;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerry.ticketing.concert.application.ConcertService;
 import com.jerry.ticketing.concert.api.ConcertApiController;
-import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
+import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

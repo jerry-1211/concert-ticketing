@@ -3,7 +3,7 @@ package com.jerry.ticketing.api.seat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
+import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
 import com.jerry.ticketing.seat.api.ConcertSeatApiController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

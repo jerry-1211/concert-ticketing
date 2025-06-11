@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.application;
 
 import com.jerry.ticketing.global.util.OrderNameParser;
-import com.jerry.ticketing.seat.application.dto.DetailConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;

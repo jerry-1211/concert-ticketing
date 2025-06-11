@@ -1,4 +1,4 @@
-package com.jerry.ticketing.reservation.application.dto;
+package com.jerry.ticketing.reservation.application.dto.domain;
 
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;

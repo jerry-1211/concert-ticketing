@@ -1,4 +1,4 @@
-package com.jerry.ticketing.concert.application.dto;
+package com.jerry.ticketing.concert.application.dto.domain;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import lombok.AllArgsConstructor;

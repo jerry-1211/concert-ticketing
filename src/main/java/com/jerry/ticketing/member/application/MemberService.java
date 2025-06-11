@@ -1,7 +1,7 @@
 package com.jerry.ticketing.member.application;
 
 
-import com.jerry.ticketing.member.application.dto.MemberDto;
+import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

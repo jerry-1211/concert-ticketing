@@ -2,8 +2,8 @@ package com.jerry.ticketing.application.seat.unit;
 
 import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import com.jerry.ticketing.seat.domain.ConcertSeats;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
+import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
+import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import org.junit.jupiter.api.BeforeEach;

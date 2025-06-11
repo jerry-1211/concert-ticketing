@@ -1,7 +1,7 @@
-package com.jerry.ticketing.payment.api;
+package com.jerry.ticketing.payment.api.webhook;
 
 import com.jerry.ticketing.payment.application.PaymentWebhookService;
-import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

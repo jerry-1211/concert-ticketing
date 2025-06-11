@@ -2,7 +2,7 @@ package com.jerry.ticketing.payment.application;
 
 
 import com.jerry.ticketing.reservation.application.ReservationService;
-import com.jerry.ticketing.payment.application.dto.WebhookPaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.seat.application.ConcertSeatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

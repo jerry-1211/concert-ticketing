@@ -1,4 +1,4 @@
-package com.jerry.ticketing.reservation.application.dto;
+package com.jerry.ticketing.reservation.application.dto.web;
 
 import com.jerry.ticketing.reservation.domain.Reservation;
 import lombok.*;
@@ -28,7 +28,6 @@ public class CreateReservationDto {
     }
 
 
-
     @Getter
     @Setter
     @Builder
@@ -45,12 +44,12 @@ public class CreateReservationDto {
 
         private Long reservationId;
 
-        public static CreateReservationDto.Response from(Reservation reservation){
+        public static CreateReservationDto.Response from(Reservation reservation) {
             return Response.builder()
-                        .orderName(reservation.getOrderName())
-                        .totalPrice(reservation.getTotalPrice())
-                        .reservationId(reservation.getId())
-                        .build();
+                    .orderName(reservation.getOrderName())
+                    .totalPrice(reservation.getTotalPrice())
+                    .reservationId(reservation.getId())
+                    .build();
         }
 
     }

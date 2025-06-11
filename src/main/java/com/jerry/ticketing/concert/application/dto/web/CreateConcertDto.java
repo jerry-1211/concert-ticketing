@@ -1,4 +1,4 @@
-package com.jerry.ticketing.concert.application.dto;
+package com.jerry.ticketing.concert.application.dto.web;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import jakarta.validation.constraints.*;
@@ -71,7 +71,7 @@ public class CreateConcertDto {
         private String description;
         private int maxTicketsPerUser;
 
-        public static CreateConcertDto.Response from (Concert concert){
+        public static CreateConcertDto.Response from(Concert concert) {
             return CreateConcertDto.Response.builder()
                     .id(concert.getId())
                     .title(concert.getTitle())

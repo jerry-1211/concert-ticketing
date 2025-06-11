@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/payment")
 @RequiredArgsConstructor
-public class PaymentViewController {
+public class PaymentWebController {
 
     /**
      * 결제 페이지

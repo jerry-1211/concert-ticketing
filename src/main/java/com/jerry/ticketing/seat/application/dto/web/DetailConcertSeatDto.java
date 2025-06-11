@@ -1,5 +1,8 @@
-package com.jerry.ticketing.seat.application.dto;
+package com.jerry.ticketing.seat.application.dto.web;
 
+import com.jerry.ticketing.seat.application.dto.domain.ConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.domain.SeatDto;
+import com.jerry.ticketing.seat.application.dto.domain.SectionDto;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import com.jerry.ticketing.seat.domain.enums.SeatType;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package com.jerry.ticketing.seat.application;
 
-import com.jerry.ticketing.seat.application.dto.ConcertSeatDto;
-import com.jerry.ticketing.seat.application.dto.DetailConcertSeatDto;
-import com.jerry.ticketing.seat.application.dto.SeatDto;
-import com.jerry.ticketing.seat.application.dto.SectionDto;
+import com.jerry.ticketing.seat.application.dto.domain.ConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.domain.SeatDto;
+import com.jerry.ticketing.seat.application.dto.domain.SectionDto;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

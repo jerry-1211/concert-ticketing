@@ -1,7 +1,7 @@
 package com.jerry.ticketing.global.validation;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import com.jerry.ticketing.seat.domain.ConcertSeats;
+import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class ConcertSeatBlockValidator {
 
-    public void validator(ConcertSeats concertSeatsBlock, List<Long> concertSeatIds){
+    public void validator(ConcertSeats concertSeatsBlock, List<Long> concertSeatIds) {
         checkAllSeatsExist(concertSeatsBlock, concertSeatIds);
         checkAlreadyBlocked(concertSeatsBlock);
     }
@@ -23,7 +23,7 @@ public class ConcertSeatBlockValidator {
         }
     }
 
-    private void checkAlreadyBlocked(ConcertSeats concertSeatsBlock){
+    private void checkAlreadyBlocked(ConcertSeats concertSeatsBlock) {
         concertSeatsBlock.item()
                 .stream()
                 .filter(ConcertSeat::isNotAvailable)

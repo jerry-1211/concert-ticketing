@@ -2,7 +2,7 @@ package com.jerry.ticketing.payment.infrastructure.external;
 
 import com.jerry.ticketing.global.util.AuthUtils;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
-import com.jerry.ticketing.payment.application.dto.ConfirmPaymentDto;
+import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

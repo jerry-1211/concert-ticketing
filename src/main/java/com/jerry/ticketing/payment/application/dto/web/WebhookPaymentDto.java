@@ -1,4 +1,4 @@
-package com.jerry.ticketing.payment.application.dto;
+package com.jerry.ticketing.payment.application.dto.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

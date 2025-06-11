@@ -1,4 +1,4 @@
-package com.jerry.ticketing.seat.application.dto;
+package com.jerry.ticketing.seat.application.dto.domain;
 
 
 import com.jerry.ticketing.seat.domain.Section;
