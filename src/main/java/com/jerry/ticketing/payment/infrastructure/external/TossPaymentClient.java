@@ -18,12 +18,12 @@ public class TossPaymentClient {
 
     private final TossPaymentConfig tossPaymentConfig;
 
-    public ConfirmPaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
+    public void confirmPayment(ConfirmPaymentDto.Request request) {
 
         WebClient webClient = WebClient.create();
         String encodeAuth = TossPaymentAuthUtils.encodeBasicAuth(tossPaymentConfig);
 
-        return webClient.post()
+        webClient.post()
                 .uri(tossPaymentConfig.getBaseUrl() + "/confirm")
                 .header(HttpHeaders.AUTHORIZATION, "Basic " + encodeAuth)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

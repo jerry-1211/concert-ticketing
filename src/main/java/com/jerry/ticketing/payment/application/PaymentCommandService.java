@@ -3,15 +3,14 @@ package com.jerry.ticketing.payment.application;
 import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
-import com.jerry.ticketing.reservation.domain.Reservation;
+import com.jerry.ticketing.reservation.application.ReservationService;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
-import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
-import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
+import com.jerry.ticketing.reservation.domain.Reservation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,28 +20,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PaymentService {
+public class PaymentCommandService {
 
     private final PaymentRepository paymentRepository;
-    private final ReservationRepository reservationRepository;
+    private final PaymentQueryService paymentQueryService;
     private final TossPaymentClient tossPaymentClient;
-    private final PaymentApplicationService paymentApplicationService;
+    private final ReservationService reservationService;
 
     /**
      * 결제 요청 생성
      */
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
-        Reservation reservation = reservationRepository.findById(request.getReservationId())
-                .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
+        Reservation reservation = reservationService.findReservationEntityById(request.getReservationId());
 
         String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);
 
         Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getId(), orderId));
 
-        return paymentApplicationService.getPaymentDetail(savedPayment.getId());
+        return paymentQueryService.getPaymentDetail(savedPayment.getId());
     }
 
 
@@ -51,7 +49,8 @@ public class PaymentService {
      */
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
-        ConfirmPaymentDto.Response response = tossPaymentClient.confirmPayment(request);
+
+        tossPaymentClient.confirmPayment(request);
 
         Payment payment = paymentRepository.findByOrderIdWithLock(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
@@ -61,7 +60,7 @@ public class PaymentService {
 
         log.info("결제 승인 완료 - PaymentKey: {}", request.getPaymentKey());
 
-        return paymentApplicationService.getPaymentDetail(payment.getId());
+        return paymentQueryService.getPaymentDetail(payment.getId());
     }
 
     /**

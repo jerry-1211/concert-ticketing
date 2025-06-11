@@ -2,7 +2,6 @@ package com.jerry.ticketing.reservation.application;
 
 
 import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
@@ -71,9 +70,15 @@ public class ReservationService {
     }
 
     @Transactional
-    public ReservationDto findReservationById(Long reservationId) {
+    public ReservationDto findReservationDtoById(Long reservationId) {
         return ReservationDto.from(reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND)));
+                .orElseThrow());
     }
+
+    @Transactional
+    public Reservation findReservationEntityById(Long reservationId) {
+        return reservationRepository.findById(reservationId).orElseThrow();
+    }
+
 
 }

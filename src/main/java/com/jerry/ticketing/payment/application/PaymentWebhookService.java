@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class PaymentWebhookService {
 
-    private final PaymentService paymentService;
+    private final PaymentCommandService paymentCommandService;
     private final ReservationService reservationService;
     private final ConcertSeatService concertSeatService;
 
@@ -36,7 +36,7 @@ public class PaymentWebhookService {
      */
     private void finalizeOrder(WebhookPaymentDto.Request.PaymentData data) {
 
-        paymentService.updatePaymentOnCompleted(data);
+        paymentCommandService.updatePaymentOnCompleted(data);
         reservationService.confirmReservation(data.getOrderId());
         concertSeatService.confirmConcertSeat(data.getOrderName());
 

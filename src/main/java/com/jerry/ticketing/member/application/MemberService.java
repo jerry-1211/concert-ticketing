@@ -17,8 +17,7 @@ public class MemberService {
 
     @Transactional
     public MemberDto findMemberById(Long memberId) {
-        return MemberDto.from(memberRepository.findById(memberId)
-                .orElseThrow());
+        return MemberDto.from(memberRepository.findById(memberId).orElseThrow());
     }
 
 }

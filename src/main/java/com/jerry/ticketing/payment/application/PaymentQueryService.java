@@ -18,23 +18,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PaymentApplicationService {
+public class PaymentQueryService {
     private final PaymentRepository paymentRepository;
     private final ReservationService reservationService;
     private final MemberService memberService;
     private final ConcertService concertService;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public CreatePaymentDto.Response getPaymentDetail(Long paymentId) {
         PaymentDto payment = findPaymentById(paymentId);
-        ReservationDto reservation = reservationService.findReservationById(payment.getReservationId());
+        ReservationDto reservation = reservationService.findReservationDtoById(payment.getReservationId());
         MemberDto member = memberService.findMemberById(reservation.getMemberId());
         ConcertDto concert = concertService.findConcertById(reservation.getConcertId());
 
         return CreatePaymentDto.Response.from(payment, member, concert);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PaymentDto findPaymentById(Long paymentId) {
         return PaymentDto.from(paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND)));

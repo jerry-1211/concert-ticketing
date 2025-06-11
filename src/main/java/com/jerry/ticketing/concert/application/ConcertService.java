@@ -24,7 +24,6 @@ public class ConcertService {
     public CreateConcertDto.Response createConcert(CreateConcertDto.Request request) {
 
         Concert concert = concertMapper.buildConcert(request);
-
         Concert saveConcert = concertRepository.save(concert);
 
         // 좌석 & 섹션 초기화

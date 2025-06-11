@@ -1,6 +1,6 @@
 package com.jerry.ticketing.payment.api;
 
-import com.jerry.ticketing.payment.application.PaymentService;
+import com.jerry.ticketing.payment.application.PaymentCommandService;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentApiController {
 
-    private final PaymentService paymentService;
+    private final PaymentCommandService paymentCommandService;
     private final TossPaymentConfig tossPaymentConfig;
 
     /**
@@ -26,7 +26,7 @@ public class PaymentApiController {
      */
     @PostMapping("/request")
     public ResponseEntity<CreatePaymentDto.Response> createPayment(@Valid @RequestBody CreatePaymentDto.Request request) {
-        CreatePaymentDto.Response response = paymentService.createPayment(request);
+        CreatePaymentDto.Response response = paymentCommandService.createPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
         return ResponseEntity.ok(response);
     }
@@ -39,7 +39,7 @@ public class PaymentApiController {
     public ResponseEntity<CreatePaymentDto.Response> tossPaymentSuccess(
             @RequestBody ConfirmPaymentDto.Request request) {
 
-        CreatePaymentDto.Response response = paymentService.confirmPayment(request);
+        CreatePaymentDto.Response response = paymentCommandService.confirmPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
         return ResponseEntity.ok(response);
     }
