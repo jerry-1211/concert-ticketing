@@ -1,6 +1,7 @@
 package com.jerry.ticketing.payment.application.dto;
 
-import com.jerry.ticketing.payment.domain.Payment;
+import com.jerry.ticketing.concert.application.dto.ConcertDto;
+import com.jerry.ticketing.member.application.dto.MemberDto;
 import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -46,26 +47,26 @@ public class CreatePaymentDto {
         }
 
 
-        public static CreatePaymentDto.Response from(Payment payment){
+        public static CreatePaymentDto.Response from(PaymentDto payment, MemberDto member, ConcertDto concert) {
             return CreatePaymentDto.Response.builder()
-                    .paymentId(payment.getId())
+                    .paymentId(payment.getPaymentId())
                     .orderId(payment.getOrderId())
-                    .orderName(payment.getReservation().getConcert().getTitle() + "공연 티켓")
-                    .customEmail(payment.getReservation().getMember().getEmail())
-                    .customName(payment.getReservation().getMember().getName())
+                    .orderName(concert.getTitle() + "공연 티켓")
+                    .customEmail(member.getEmail())
+                    .customName(member.getName())
                     .status(payment.getPaymentStatus().name())
                     .build();
         }
-
-        public static CreatePaymentDto.Response from(ConfirmPaymentDto.Response response, Payment payment) {
-
-            CreatePaymentDto.Response createResponse = from(payment);
-
-            // TODO 추후 필요하면 response 정보 사용
-            // 에를 들어 paymentKey, OrderID 등등
-
-            return createResponse;
-        }
+//
+//        public static CreatePaymentDto.Response from(ConfirmPaymentDto.Response response, Payment payment) {
+//
+//            CreatePaymentDto.Response createResponse = from(payment);
+//
+//            // TODO 추후 필요하면 response 정보 사용
+//            // 에를 들어 paymentKey, OrderID 등등
+//
+//            return createResponse;
+//        }
     }
 
 }

@@ -26,6 +26,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
     private final TossPaymentClient tossPaymentClient;
+    private final PaymentApplicationService paymentApplicationService;
 
     /**
      * 결제 요청 생성
@@ -35,13 +36,13 @@ public class PaymentService {
         Reservation reservation = reservationRepository.findById(request.getReservationId())
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
+
         String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);
 
-        Payment payment = Payment.createTossPayment(reservation, orderId);
-        Payment savedPayment = paymentRepository.save(payment);
+        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getId(), orderId));
 
-        return CreatePaymentDto.Response.from(savedPayment);
+        return paymentApplicationService.getPaymentDetail(savedPayment.getId());
     }
 
 
@@ -60,7 +61,7 @@ public class PaymentService {
 
         log.info("결제 승인 완료 - PaymentKey: {}", request.getPaymentKey());
 
-        return CreatePaymentDto.Response.from(response, payment);
+        return paymentApplicationService.getPaymentDetail(payment.getId());
     }
 
     /**
@@ -72,7 +73,6 @@ public class PaymentService {
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.completed(data);
-
     }
 
 
