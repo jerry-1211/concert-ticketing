@@ -2,7 +2,9 @@ package com.jerry.ticketing.reservation.application;
 
 
 import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.reservation.application.dto.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.CreateReservationDto;
 import com.jerry.ticketing.global.exception.BusinessException;
@@ -48,7 +50,7 @@ public class ReservationService {
         Concert concert = concertRepository.findById(request.getConcertId())
                 .orElseThrow(() -> new RuntimeException());
 
-        Reservation reservation = Reservation.createReservation(member, concert
+        Reservation reservation = Reservation.createReservation(member.getId(), concert.getId()
                 , request.getOrderName(), request.getExpireAt(), request.getTotalPrice(), request.getAmount());
 
         reservationRepository.save(reservation);
@@ -66,8 +68,12 @@ public class ReservationService {
         // TODO: 일급 객체로 바꾸기
         reservations.forEach(Reservation::cancelReservation);
 
-
     }
 
+    @Transactional
+    public ReservationDto findReservationById(Long reservationId) {
+        return ReservationDto.from(reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND)));
+    }
 
 }
