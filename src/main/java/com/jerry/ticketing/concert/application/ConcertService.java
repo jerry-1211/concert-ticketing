@@ -35,14 +35,14 @@ public class ConcertService {
     }
 
     @Transactional(readOnly = true)
-    public List<ConcertDto.Response> getAllConcerts() {
-        return concertRepository.findAll().stream().map(ConcertDto.Response::from).toList();
+    public List<ConcertDto> findAllConcerts() {
+        return concertRepository.findAll().stream().map(ConcertDto::from).toList();
     }
 
 
     @Transactional(readOnly = true)
-    public ConcertDto.Response getConcert(Long concertId) {
-        return ConcertDto.Response.from(concertRepository.findById(concertId).orElseThrow());
+    public ConcertDto findConcertById(Long concertId) {
+        return ConcertDto.from(concertRepository.findById(concertId).orElseThrow());
     }
 
 

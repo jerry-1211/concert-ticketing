@@ -16,14 +16,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/concerts")
 @RequiredArgsConstructor
-public class ConcertViewController {
+public class ConcertWebController {
 
     private final ConcertService concertService;
 
 
     @GetMapping
     public String showAllConcerts(Model model) {
-        List<ConcertDto.Response> concerts = concertService.getAllConcerts();
+        List<ConcertDto> concerts = concertService.findAllConcerts();
         model.addAttribute("concerts", concerts);
         return "concert-list";
     }
