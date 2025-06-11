@@ -21,22 +21,22 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat, Long> 
     List<ConcertSeat> findByIdIn(List<Long> ids);
 
 
-//    @Query("SELECT cs FROM ConcertSeat cs, Concert c, Section st, Seat s " +
-//            "WHERE cs.concertId = c.id AND cs.sectionId = st.id  AND cs.seatId = s.id " +
-//            "AND c.id = :concertId AND st.zone = :zone AND s.seatRow = :row")
-//    List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
-//                                           @Param("zone") String zone,
-//                                           @Param("row") String row);
-
-
-    @Query("SELECT cs FROM ConcertSeat cs " +
-            "WHERE cs.concert.id = :concertId " +
-            "AND cs.section.zone = :zone " +
-            "AND cs.seat.seatRow = :row"
-    )
+    @Query("SELECT cs FROM ConcertSeat cs, Concert c, Section st, Seat s " +
+            "WHERE cs.concertId = c.id AND cs.sectionId = st.id  AND cs.seatId = s.id " +
+            "AND c.id = :concertId AND st.zone = :zone AND s.seatRow = :row")
     List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
                                            @Param("zone") String zone,
                                            @Param("row") String row);
+
+
+//    @Query("SELECT cs FROM ConcertSeat cs " +
+//            "WHERE cs.concert.id = :concertId " +
+//            "AND cs.section.zone = :zone " +
+//            "AND cs.seat.seatRow = :row"
+//    )
+//    List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
+//                                           @Param("zone") String zone,
+//                                           @Param("row") String row);
 
 
 }

@@ -24,10 +24,11 @@ public class SectionFactory {
 
     /**
      * Section A-Z 까지의 구역을 만듭니다.
+     *
      * @param concertId 콘서트 아이디
-     * */
+     */
     public void createIfNotExists(Long concertId) {
-        if(sectionRepository.findByConcertId(concertId).isEmpty()){
+        if (sectionRepository.findByConcertId(concertId).isEmpty()) {
             createSection(concertId);
         }
     }
@@ -37,12 +38,12 @@ public class SectionFactory {
         List<SectionType> types = SectionType.getSectionTypes();
 
         Concert concert = concertRepository.findById(concertId)
-                    .orElseThrow(() -> new BusinessException(ConcertErrorCode.CONCERT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ConcertErrorCode.CONCERT_NOT_FOUND));
 
         List<Section> sections = types.stream()
                 .flatMap(type ->
                         IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
-                                .mapToObj(zone -> Section.initSection(concert, String.valueOf((char) zone), type.getCapacity())))
+                                .mapToObj(zone -> Section.initSection(concert.getId(), String.valueOf((char) zone), type.getCapacity())))
                 .toList();
 
         sectionRepository.saveAll(sections);

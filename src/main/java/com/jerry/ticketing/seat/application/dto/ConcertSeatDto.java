@@ -3,41 +3,41 @@ package com.jerry.ticketing.seat.application.dto;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
-import com.jerry.ticketing.seat.domain.enums.SeatType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConcertSeatDto {
 
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class Response {
-
-        private Long seatId;
-        private String zone;
-        private String row;
-        private Long seatNumber;
-        private SeatType seatType;
-        private int price;
-        private ConcertSeatStatus status;
-
-        public static ConcertSeatDto.Response from (ConcertSeat concertSeat){
-           return Response.builder()
-                        .seatId(concertSeat.getId())
-                        .zone(String.valueOf(concertSeat.getSection().getZone()))
-                        .row(String.valueOf(concertSeat.getSeat().getSeatRow()))
-                        .seatNumber(concertSeat.getSeat().getId())
-                        .seatType(concertSeat.getSeat().getSeatType())
-                        .price(concertSeat.getPrice())
-                        .status(concertSeat.getStatus())
-                        .build();
-        }
+    private Long concertSeatId;
+    private Long concertId;
+    private Long seatId;
+    private Long sectionId;
+    private int price;
+    private ConcertSeatStatus status;
+    private Long blockedBy;
+    private OffsetDateTime blockedAt;
+    private OffsetDateTime blockedExpireAt;
 
 
+    public static ConcertSeatDto from(ConcertSeat concertSeat) {
+        return new ConcertSeatDto(
+                concertSeat.getId(),
+                concertSeat.getConcertId(),
+                concertSeat.getSeatId(),
+                concertSeat.getSectionId(),
+                concertSeat.getPrice(),
+                concertSeat.getStatus(),
+                concertSeat.getBlockedBy(),
+                concertSeat.getBlockedAt(),
+                concertSeat.getBlockedExpireAt()
+        );
     }
+
+
 }

@@ -1,8 +1,6 @@
 package com.jerry.ticketing.seat.domain;
 
 
-import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.reservation.domain.ReservationItem;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,24 +23,18 @@ public class ConcertSeat {
     private Long id;
 
     // 콘서트 id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "concert_id")
-    private Concert concert;
+    @Column(name = "concert_id")
+    private Long concertId;
+
 
     // 좌석 id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+    @Column(name = "seat_id")
+    private Long seatId;
 
     // 구역 id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "section_id")
-    private Section section;
+    @Column(name = "section_id")
+    private Long sectionId;
 
-    // 예약 아이템 id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_item_id")
-    private ReservationItem reservationItem;
 
     // 콘서트 좌석별 가격
     private int price;
@@ -60,18 +52,18 @@ public class ConcertSeat {
     // 좌석 선점 시작 만료 시간
     private OffsetDateTime blockedExpireAt;
 
-    private ConcertSeat(Concert concert, Seat seat, Section section, int price) {
-        this.concert = concert;
-        this.seat = seat;
-        this.section = section;
+    private ConcertSeat(Long concertId, Long seatId, Long sectionId, int price) {
+        this.concertId = concertId;
+        this.seatId = seatId;
+        this.sectionId = sectionId;
         this.price = price;
         this.status = ConcertSeatStatus.AVAILABLE;
 
     }
 
     // 콘서트 좌석 생성
-    public static ConcertSeat creatConcertSeat(Concert concert, Seat seat, Section section, int price) {
-        return new ConcertSeat(concert, seat, section, price);
+    public static ConcertSeat creatConcertSeat(Long concertId, Long seatId, Long sectionId, int price) {
+        return new ConcertSeat(concertId, seatId, sectionId, price);
     }
 
 

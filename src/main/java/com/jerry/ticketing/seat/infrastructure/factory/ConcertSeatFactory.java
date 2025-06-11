@@ -33,22 +33,23 @@ public class ConcertSeatFactory {
 
     /**
      * ConcertSeat을 Section, Concert, Seat에 매핑
+     *
      * @param
      */
     public void createIfNotExists(Long concertId) {
-        if(concertSeatRepository.findByConcertId(concertId).isEmpty()){
+        if (concertSeatRepository.findByConcertId(concertId).isEmpty()) {
             createAllConcertSeats(concertId);
         }
     }
 
-    private void createAllConcertSeats(Long concertId){
+    private void createAllConcertSeats(Long concertId) {
         AtomicLong seatId = new AtomicLong(1L);
         Concert concert = concertRepository.findById(concertId).orElse(null);
         SectionType.getSectionTypes().forEach(type ->
                 IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
                         .forEach(zone -> {
                             assert concert != null;
-                            createConcertSeats(concert,type, String.valueOf((char)zone),seatId);
+                            createConcertSeats(concert, type, String.valueOf((char) zone), seatId);
                         })
         );
 
@@ -56,25 +57,25 @@ public class ConcertSeatFactory {
     }
 
 
-    private void createConcertSeats(Concert concert, SectionType type, String zone, AtomicLong seatId){
+    private void createConcertSeats(Concert concert, SectionType type, String zone, AtomicLong seatId) {
         List<ConcertSeat> concertSeatBatch = new ArrayList<>();
         int totalCreated = 0;
 
-        Section section = sectionRepository.findByConcertIdAndZone(concert.getId(),zone).orElse(null);
+        Section section = sectionRepository.findByConcertIdAndZone(concert.getId(), zone).orElse(null);
 
         for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
                 Seat seat = seatRepository.findById(seatId.getAndIncrement()).orElse(null);
                 int price = concert.getPrice() * type.getPremium();
 
-                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert, seat, section, price);
+                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), price);
                 concertSeatBatch.add(concertSeat);
 
-                totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated,concertSeatRepository);
+                totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated, concertSeatRepository);
             }
         }
 
-        totalCreated = batchSaveHelper.saveRemaining(concertSeatBatch, totalCreated,concertSeatRepository);
+        totalCreated = batchSaveHelper.saveRemaining(concertSeatBatch, totalCreated, concertSeatRepository);
         log.debug("{}개 콘서트 좌석 저장 완료", totalCreated);
     }
 
