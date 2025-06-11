@@ -29,7 +29,7 @@ public class TestFixture {
     public static Member createMember(String name) {
         return Member.createMember(
                 name, Address.of("경기도", "고양시"),
-                "jerry@naver.com", "password","010-2304-4302");
+                "jerry@naver.com", "password", "010-2304-4302");
     }
 
 
@@ -42,10 +42,10 @@ public class TestFixture {
 
 
     // 구역 데이터 생성
-    public static Section createSection(Concert concert) {
-        return Section.initSection(concert, "A", 100_000);
-    }
-
+//    public static Section createSection(Concert concert) {
+//        return Section.initSection(concert, "A", 100_000);
+//    }
+//
 
     // 좌석 데이터 생성
     public static Seat createSeat() {
@@ -54,21 +54,21 @@ public class TestFixture {
 
 
     // 콘서트 좌석
-    public static ConcertSeat createConcertSeat(Concert concert, Seat seat, Section section) {
-        return ConcertSeat.creatConcertSeat(concert, seat, section, 1000);
-    }
+//    public static ConcertSeat createConcertSeat(Concert concert, Seat seat, Section section) {
+//        return ConcertSeat.creatConcertSeat(concert, seat, section, 1000);
+//    }
 
 
     // 예약
-    public static Reservation createReservation(Member member, Concert concert){
-        return Reservation.createReservation(member, concert, 1000,
+    public static Reservation createReservation(Member member, Concert concert) {
+        return Reservation.createReservation(member.getId(), concert.getId(), 1000,
                 ReservationStatus.PENDING, OffsetDateTime.now(), OffsetDateTime.now(), 3);
     }
 
 
     // 결제
-    public static Payment createPayment(Reservation reservation){
-        return Payment.createTossPayment(reservation, "TEST-IDEMPOTENT");
+    public static Payment createPayment(Long reservationId) {
+        return Payment.createTossPayment(reservationId, "TEST-IDEMPOTENT");
     }
 
 }

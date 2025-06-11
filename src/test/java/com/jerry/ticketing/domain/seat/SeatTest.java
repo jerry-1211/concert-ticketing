@@ -27,16 +27,16 @@ class SeatTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
 
     }
 
     @Test
     @DisplayName("예약 좌석 생성 및 저장 검증")
-    void saveSeat(){
+    void saveSeat() {
         // Given
         Concert concert = TestFixture.createConcert();
-        Section section = TestFixture.createSection(concert);
+//        Section section = TestFixture.createSection(concert);
         Seat seat = TestFixture.createSeat();
 
         //When

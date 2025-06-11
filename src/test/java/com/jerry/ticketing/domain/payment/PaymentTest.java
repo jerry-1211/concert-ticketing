@@ -42,19 +42,19 @@ class PaymentTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         Member member = memberRepository.save(TestFixture.createMember());
         Concert concert = concertRepository.save(TestFixture.createConcert());
-        Reservation reservation = TestFixture.createReservation(member,concert);
+        Reservation reservation = TestFixture.createReservation(member, concert);
 
         this.savedReservation = reservationRepository.save(reservation);
     }
 
     @Test
     @DisplayName("결제 생성 및 저장 검증")
-    void savePayment(){
+    void savePayment() {
         // Given
-        Payment payment = TestFixture.createPayment(savedReservation);
+        Payment payment = TestFixture.createPayment(1L);
 
         // When
         Payment savedPayment = paymentRepository.save(payment);
@@ -65,7 +65,6 @@ class PaymentTest {
         assertThat(savedPayment.getPaymentMethod()).isEqualTo(PaymentMethod.TOSSPAY);
         assertThat(savedPayment.getPaymentStatus()).isEqualTo(PaymentStatus.PENDING);
     }
-
 
 
 }

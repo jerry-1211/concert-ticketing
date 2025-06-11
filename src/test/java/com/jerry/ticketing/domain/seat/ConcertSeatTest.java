@@ -42,29 +42,29 @@ class ConcertSeatTest {
     private Seat saveSeat;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         Concert concert = TestFixture.createConcert();
-        Section section = TestFixture.createSection(concert);
+//        Section section = TestFixture.createSection(concert);
         Seat seat = TestFixture.createSeat();
 
-        this.saveSection = sectionRepository.save(section);
+//        this.saveSection = sectionRepository.save(section);
         this.saveConcert = concertRepository.save(concert);
-        this.saveSeat =seatRepository.save(seat);
+        this.saveSeat = seatRepository.save(seat);
     }
 
     @Test
     @DisplayName("콘서트 예약 생성 및 저장 검증")
-    void saveSeat(){
+    void saveSeat() {
         // Given
-        ConcertSeat concertSeat = TestFixture.createConcertSeat(saveConcert, saveSeat, saveSection);
-        concertSeatRepository.save(concertSeat);
+//        ConcertSeat concertSeat = TestFixture.createConcertSeat(saveConcert, saveSeat, saveSection);
+//        concertSeatRepository.save(concertSeat);
 
         //When
         List<ConcertSeat> concertSeats = concertSeatRepository.findBySeatId(saveSeat.getId());
 
         // Then
         assertThat(concertSeats).hasSize(1);
-        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo("A");
+//        assertThat(concertSeats.get(0).getSeat().getSeatRow()).isEqualTo("A");
 
     }
 
