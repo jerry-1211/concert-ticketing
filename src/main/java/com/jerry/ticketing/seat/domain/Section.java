@@ -1,9 +1,9 @@
 package com.jerry.ticketing.seat.domain;
 
 
-import com.jerry.ticketing.concert.domain.Concert;
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @Entity
 @Getter
@@ -17,9 +17,8 @@ public class Section {
     private Long id;
 
     // 콘서트 id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "concert_id")
-    private Concert concert;
+    @Column(name = "concert_id")
+    private Long concertId;
 
     // 구역별 위치 (ex) A석, B석
     @Column(nullable = false)
@@ -33,25 +32,25 @@ public class Section {
     @Column(nullable = false)
     private int remainingSeats;
 
-    private Section(Concert concert, String zone, int capacity) {
-        this.concert = concert;
+    private Section(Long concertId, String zone, int capacity) {
+        this.concertId = concertId;
         this.zone = zone;
         this.capacity = capacity;
         this.remainingSeats = capacity;
     }
 
-    public static Section initSection(Concert concert, String zone, int capacity) {
-        return new Section(concert, zone, capacity);
+    public static Section initSection(Long concertId, String zone, int capacity) {
+        return new Section(concertId, zone, capacity);
     }
 
-    public int decreaseRemainingSeats(){
-        if(this.remainingSeats<=0){
+    public int decreaseRemainingSeats() {
+        if (this.remainingSeats <= 0) {
             throw new IllegalStateException("남은 좌석이 없습니다.");
         }
         return --remainingSeats;
     }
 
-    public boolean hasAvailableSeats(){
+    public boolean hasAvailableSeats() {
         return this.remainingSeats > 0;
     }
 }

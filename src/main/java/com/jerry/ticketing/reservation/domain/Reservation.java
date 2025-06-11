@@ -25,14 +25,12 @@ public class Reservation {
     private Long id;
 
     // 멤버 id
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "member_id", nullable = false)
-    Member member;
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
 
     // 콘서트 id
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "concert_id", nullable = false)
-    private Concert concert;
+    @Column(name = "concert_id", nullable = false)
+    private Long concertId;
 
     // 예약 전체 가격
     @Column(nullable = false)
@@ -61,9 +59,9 @@ public class Reservation {
     @Column
     private String orderName;
 
-    private Reservation(Member member, Concert concert, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
-        this.member = member;
-        this.concert = concert;
+    private Reservation(Long memberId, Long concertId, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+        this.memberId = memberId;
+        this.concertId = concertId;
         this.totalPrice = totalPrice;
         this.status = status;
         this.createdAt = createdAt;
@@ -71,9 +69,9 @@ public class Reservation {
         this.amount = amount;
     }
 
-    public Reservation(Member member, Concert concert, String orderName, OffsetDateTime expiresAt, int totalPrice, int amount) {
-        this.member = member;
-        this.concert = concert;
+    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalPrice, int amount) {
+        this.memberId = memberId;
+        this.concertId = concertId;
         this.orderName = orderName;
         this.expiresAt = expiresAt;
         this.totalPrice = totalPrice;
@@ -82,19 +80,19 @@ public class Reservation {
         this.createdAt = OffsetDateTime.now();
     }
 
-    public static Reservation createReservation(Member member, Concert concert,
+    public static Reservation createReservation(Long memberId, Long concertId,
                                                 int totalPrice, ReservationStatus status,
                                                 OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
 
-        return new Reservation(member, concert, totalPrice, status, createdAt, expiresAt, amount);
+        return new Reservation(memberId, concertId, totalPrice, status, createdAt, expiresAt, amount);
 
     }
 
 
-    public static Reservation createReservation(Member member, Concert concert, String orderName,
+    public static Reservation createReservation(Long memberId, Long concertId, String orderName,
                                                 OffsetDateTime expiresAt, int totalPrice, int amount) {
 
-        return new Reservation(member, concert, orderName, expiresAt, totalPrice, amount);
+        return new Reservation(memberId, concertId, orderName, expiresAt, totalPrice, amount);
 
     }
 
