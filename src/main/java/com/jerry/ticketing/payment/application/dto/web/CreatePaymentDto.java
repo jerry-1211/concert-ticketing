@@ -2,7 +2,7 @@ package com.jerry.ticketing.payment.application.dto.web;
 
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
-import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
 import com.jerry.ticketing.payment.application.dto.domain.PaymentDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

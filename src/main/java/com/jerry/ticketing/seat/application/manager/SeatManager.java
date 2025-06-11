@@ -1,8 +1,8 @@
-package com.jerry.ticketing.seat.infrastructure.factory;
+package com.jerry.ticketing.seat.application.manager;
 
 
 import com.jerry.ticketing.seat.domain.enums.SectionType;
-import com.jerry.ticketing.global.util.BatchSaveHelper;
+import com.jerry.ticketing.seat.infrastructure.batch.BatchSaveHelper;
 import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class SeatFactory {
+public class SeatManager {
 
     // 좌석 생성 배치 크기
     private final SeatRepository seatRepository;
@@ -24,8 +24,8 @@ public class SeatFactory {
 
     /**
      * 초기 좌석(VO객체)을 생성합니다.
-     * */
-    public void initializeSeats(){
+     */
+    public void initializeSeats() {
         if (seatRepository.count() == 0) {
             createAllSeats();
         }
@@ -43,7 +43,7 @@ public class SeatFactory {
 
     /**
      * Section Config를 기반으로 실제 Seat 객체를 생성합니다.
-     * */
+     */
     private void createSeats(SectionType type) {
         List<Seat> seatBatch = new ArrayList<>();
         int totalCreated = 0;

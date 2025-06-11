@@ -1,6 +1,6 @@
 package com.jerry.ticketing.seat.application;
 
-import com.jerry.ticketing.global.util.OrderNameParser;
+import com.jerry.ticketing.seat.util.ConcertSeatIdExtractor;
 import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
@@ -34,7 +34,7 @@ public class ConcertSeatService {
 
 
     public void confirmConcertSeat(String orderName) {
-        List<Long> concertSeatIds = OrderNameParser.extractConcertSeatIds(orderName);
+        List<Long> concertSeatIds = ConcertSeatIdExtractor.extractFromOrderName(orderName);
         List<ConcertSeat> concertSeats = concertSeatRepository.findByIdIn(concertSeatIds);
         concertSeats.forEach(ConcertSeat::confirmConcertSeat);
     }

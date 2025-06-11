@@ -1,4 +1,4 @@
-package com.jerry.ticketing.scheduler;
+package com.jerry.ticketing.seat.infrastructure.scheduler;
 
 
 import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;

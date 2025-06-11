@@ -1,4 +1,4 @@
-package com.jerry.ticketing.seat.infrastructure.factory;
+package com.jerry.ticketing.seat.application.manager;
 
 
 import com.jerry.ticketing.seat.domain.enums.SectionType;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 @Component
 @RequiredArgsConstructor
-public class SectionFactory {
+public class SectionManager {
 
     private final SectionRepository sectionRepository;
     private final ConcertRepository concertRepository;

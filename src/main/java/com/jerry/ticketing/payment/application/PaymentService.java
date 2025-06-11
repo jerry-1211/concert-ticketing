@@ -1,6 +1,6 @@
 package com.jerry.ticketing.payment.application;
 
-import com.jerry.ticketing.global.util.PaymentOrderIdGenerator;
+import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.reservation.domain.Reservation;

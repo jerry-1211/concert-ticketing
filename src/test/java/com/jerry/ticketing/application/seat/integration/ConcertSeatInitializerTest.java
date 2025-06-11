@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.integration;
 
 import com.jerry.ticketing.seat.application.ConcertInitializationService;
-import com.jerry.ticketing.seat.infrastructure.factory.SectionFactory;
+import com.jerry.ticketing.seat.application.manager.SectionManager;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.domain.Section;
@@ -38,7 +38,7 @@ class ConcertSeatInitializerTest {
     private SectionRepository sectionRepository;
 
     @Mock
-    private SectionFactory sectionFactory;
+    private SectionManager sectionFactory;
 
     @Mock
     private ConcertSeatRepository concertSeatRepository;
@@ -49,7 +49,7 @@ class ConcertSeatInitializerTest {
     private Section mockSection;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         // 기본 Mock 설정
         Concert mockConcert = mock(Concert.class);
         mockSection = mock(Section.class);
@@ -66,7 +66,7 @@ class ConcertSeatInitializerTest {
 
     @Test
     @DisplayName("Section에 매팽된 Concert가 없을 때 Section & ConcertSeat 초기화 메서드 호출")
-    void shouldInitializeSectionAndConcertSeatsWhenConcertNotMapped(){
+    void shouldInitializeSectionAndConcertSeatsWhenConcertNotMapped() {
 
 //        // When
 //       concertSeatInitializer.initializeSectionAndConcertSeats(1L);

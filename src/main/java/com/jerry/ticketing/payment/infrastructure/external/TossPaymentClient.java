@@ -1,7 +1,7 @@
 package com.jerry.ticketing.payment.infrastructure.external;
 
-import com.jerry.ticketing.global.util.AuthUtils;
-import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.payment.util.TossPaymentAuthUtils;
+import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class TossPaymentClient {
     public ConfirmPaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
 
         WebClient webClient = WebClient.create();
-        String encodeAuth = AuthUtils.encodeBasicAuth(tossPaymentConfig);
+        String encodeAuth = TossPaymentAuthUtils.encodeBasicAuth(tossPaymentConfig);
 
         return webClient.post()
                 .uri(tossPaymentConfig.getBaseUrl() + "/confirm")

@@ -1,4 +1,4 @@
-package com.jerry.ticketing.global.util;
+package com.jerry.ticketing.payment.util;
 
 import java.util.UUID;
 

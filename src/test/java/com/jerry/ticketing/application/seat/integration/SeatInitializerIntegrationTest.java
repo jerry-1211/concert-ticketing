@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.seat.infrastructure.factory.SeatFactory;
+import com.jerry.ticketing.seat.application.manager.SeatManager;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,20 +17,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SeatInitializerIntegrationTest {
 
     @Autowired
-    private SeatFactory seatInitializer;
+    private SeatManager seatInitializer;
 
     @Autowired
     private SeatRepository seatRepository;
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         seatRepository.deleteAll();
     }
 
     @Test
     @DisplayName("좌석 초기화 후 올바른 개수의 좌성이 생성되었는지 확인")
-    void shouldCreateCorrectNumberOfSeats(){
+    void shouldCreateCorrectNumberOfSeats() {
         // Given
         assertThat(seatRepository.count()).isEqualTo(0L);
 

@@ -1,8 +1,8 @@
-package com.jerry.ticketing.seat.infrastructure.factory;
+package com.jerry.ticketing.seat.application.manager;
 
 
 import com.jerry.ticketing.seat.domain.enums.SectionType;
-import com.jerry.ticketing.global.util.BatchSaveHelper;
+import com.jerry.ticketing.seat.infrastructure.batch.BatchSaveHelper;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.Seat;
@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ConcertSeatFactory {
+public class ConcertSeatManager {
     private final SectionRepository sectionRepository;
     private final ConcertRepository concertRepository;
     private final ConcertSeatRepository concertSeatRepository;

@@ -1,4 +1,4 @@
-package com.jerry.ticketing.scheduler;
+package com.jerry.ticketing.reservation.infrastructure.scheduler;
 
 
 import com.jerry.ticketing.reservation.application.ReservationService;

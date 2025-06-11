@@ -3,7 +3,7 @@ package com.jerry.ticketing.payment.api;
 import com.jerry.ticketing.payment.application.PaymentService;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
-import com.jerry.ticketing.global.config.payment.TossPaymentConfig;
+import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
