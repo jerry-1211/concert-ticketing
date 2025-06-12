@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ConcertApiController {
 
-
     private final ConcertCommandService concertCommandService;
 
-    /**
-     * 새로운 콘서스 생성
-     */
     @PostMapping
     public ResponseEntity<CreateConcertDto.Response> createConcert(
             @Valid @RequestBody CreateConcertDto.Request request) {

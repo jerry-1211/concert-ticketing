@@ -22,7 +22,6 @@ import java.util.stream.IntStream;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class ConcertSeatManager {
     private final SectionRepository sectionRepository;
     private final ConcertRepository concertRepository;
@@ -53,7 +52,6 @@ public class ConcertSeatManager {
                         })
         );
 
-        log.info("{}콘서트 좌석 데이터가 생성 완료", concert != null ? concert.getTitle() : null);
     }
 
 
@@ -76,7 +74,6 @@ public class ConcertSeatManager {
         }
 
         totalCreated = batchSaveHelper.saveRemaining(concertSeatBatch, totalCreated, concertSeatRepository);
-        log.debug("{}개 콘서트 좌석 저장 완료", totalCreated);
     }
 
 }

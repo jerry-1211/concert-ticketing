@@ -23,7 +23,6 @@ public class ConcertCommandService {
         Concert concert = concertMapper.buildConcert(request);
         Concert saveConcert = concertRepository.save(concert);
 
-        // 좌석 & 섹션 초기화
         concertSeatInitializer.initializeSectionAndConcertSeats(saveConcert.getId());
 
         return CreateConcertDto.Response.from(saveConcert);

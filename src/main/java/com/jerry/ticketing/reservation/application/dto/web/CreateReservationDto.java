@@ -13,17 +13,11 @@ public class CreateReservationDto {
     public static class Request {
 
         private Long memberId;
-
         private Long concertId;
-
         private String orderName;
-
         private OffsetDateTime expireAt;
-
         private int totalPrice;
-
         private int amount;
-
 
     }
 
@@ -35,13 +29,7 @@ public class CreateReservationDto {
     public static class Response {
 
         private String orderName;
-
         private int totalPrice;
-
-//        private Long memberId;
-
-//        private Long concertId;
-
         private Long reservationId;
 
         public static CreateReservationDto.Response from(Reservation reservation) {

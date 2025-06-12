@@ -16,7 +16,6 @@ public class ConcertSeatBlockValidator {
         checkAlreadyBlocked(concertSeatsBlock);
     }
 
-
     private void checkAllSeatsExist(ConcertSeats concertSeatsBlock, List<Long> concertSeatIds) {
         if (concertSeatsBlock.isNotSame(concertSeatIds)) {
             throw new BusinessException(SeatErrorCode.SEAT_NOT_FOUND);

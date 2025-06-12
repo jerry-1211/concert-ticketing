@@ -20,7 +20,6 @@ public class ConcertWebController {
 
     private final ConcertQueryService concertQueryService;
 
-
     @GetMapping
     public String showAllConcerts(Model model) {
         List<ConcertDto> concerts = concertQueryService.findAllConcerts();

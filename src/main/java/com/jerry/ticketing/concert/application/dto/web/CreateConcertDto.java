@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 
 public class CreateConcertDto {
 
-
     @NoArgsConstructor
     @Getter
     public static class Request {
@@ -53,10 +52,8 @@ public class CreateConcertDto {
                                                   String venue, int price, String description, int maxTicketsPerUser) {
 
             return new CreateConcertDto.Request(title, dateTime, venue, price, description, maxTicketsPerUser);
-
         }
     }
-
 
     @Getter
     @Builder

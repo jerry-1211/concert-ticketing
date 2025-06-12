@@ -35,7 +35,6 @@ public class ConcertSeat {
     @Column(name = "section_id")
     private Long sectionId;
 
-
     // 콘서트 좌석별 가격
     private int price;
 
@@ -61,13 +60,11 @@ public class ConcertSeat {
 
     }
 
-    // 콘서트 좌석 생성
     public static ConcertSeat creatConcertSeat(Long concertId, Long seatId, Long sectionId, int price) {
         return new ConcertSeat(concertId, seatId, sectionId, price);
     }
 
 
-    // 콘서트 좌석 초기화
     public void initConcertSeat() {
         this.status = ConcertSeatStatus.AVAILABLE;
         this.blockedBy = null;
@@ -76,7 +73,6 @@ public class ConcertSeat {
 
     }
 
-    // 좌석 선점
     public void blockConcertSeat(Long memberId) {
         this.status = ConcertSeatStatus.BLOCKED;
         this.blockedBy = memberId;
@@ -84,14 +80,12 @@ public class ConcertSeat {
         this.blockedExpireAt = OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
     }
 
-    // 좌석 확정
     public void confirmConcertSeat() {
         this.status = ConcertSeatStatus.RESERVED;
         this.blockedExpireAt = OffsetDateTime.now().plusYears(10);
     }
 
 
-    // 좌석 예약 가능 여부
     public boolean isAvailable() {
         return this.status == ConcertSeatStatus.AVAILABLE;
     }

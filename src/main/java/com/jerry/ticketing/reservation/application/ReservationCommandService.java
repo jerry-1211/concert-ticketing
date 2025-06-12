@@ -3,7 +3,6 @@ package com.jerry.ticketing.reservation.application;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.member.domain.Member;
-import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
 import com.jerry.ticketing.global.exception.BusinessException;
@@ -13,7 +12,6 @@ import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
 import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +21,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ReservationCommandService {
 
+    private final ReservationRepository reservationRepository;
     private final ConcertRepository concertRepository;
     private final MemberRepository memberRepository;
-    private final ReservationRepository reservationRepository;
 
     @Transactional
     public CreateReservationDto.Response createReservation(CreateReservationDto.Request request) {
@@ -49,6 +46,7 @@ public class ReservationCommandService {
 
     }
 
+
     @Transactional
     public void confirmReservation(String orderId) {
         Reservation reservation = reservationRepository.findByOrderId(orderId)
@@ -56,6 +54,7 @@ public class ReservationCommandService {
 
         reservation.confirmReservation();
     }
+
 
     @Transactional
     public void releaseExpiredReservation() {

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class SeatManager {
@@ -32,12 +31,10 @@ public class SeatManager {
     }
 
     private void createAllSeats() {
-        log.info("좌석 초기화를 시작합니다...");
         SectionType.getSectionTypes().forEach(type ->
                 IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
                         .forEach(zone -> createSeats(type))
         );
-        log.info("좌석 데이터 초기화가 완료되었습니다.");
     }
 
 
@@ -58,7 +55,6 @@ public class SeatManager {
         }
 
         totalCreated = batchSaveHelper.saveRemaining(seatBatch, totalCreated, seatRepository);
-        log.debug("총 {}개 좌석 생성 완료", totalCreated);
     }
 
 }

@@ -28,15 +28,4 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat, Long> 
                                            @Param("zone") String zone,
                                            @Param("row") String row);
 
-
-//    @Query("SELECT cs FROM ConcertSeat cs " +
-//            "WHERE cs.concert.id = :concertId " +
-//            "AND cs.section.zone = :zone " +
-//            "AND cs.seat.seatRow = :row"
-//    )
-//    List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
-//                                           @Param("zone") String zone,
-//                                           @Param("row") String row);
-
-
 }

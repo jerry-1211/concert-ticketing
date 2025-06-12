@@ -16,8 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Function;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class PaymentCommandService {
@@ -27,13 +28,10 @@ public class PaymentCommandService {
     private final TossPaymentClient tossPaymentClient;
     private final ReservationQueryService reservationQueryService;
 
-    /**
-     * 결제 요청 생성
-     */
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
 
-        Reservation reservation = reservationQueryService.findReservationEntityById(request.getReservationId());
+        Reservation reservation = reservationQueryService.findReservationById(request.getReservationId(), Function.identity());
 
         String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);
@@ -44,9 +42,6 @@ public class PaymentCommandService {
     }
 
 
-    /**
-     * 결제 확인
-     */
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
 
@@ -56,9 +51,6 @@ public class PaymentCommandService {
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.updateConfirm(request.getPaymentKey());
-
-
-        log.info("결제 승인 완료 - PaymentKey: {}", request.getPaymentKey());
 
         return paymentQueryService.findDetailedPaymentById(payment.getId());
     }

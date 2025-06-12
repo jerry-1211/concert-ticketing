@@ -58,16 +58,6 @@ public class CreatePaymentDto {
                     .status(payment.getPaymentStatus().name())
                     .build();
         }
-//
-//        public static CreatePaymentDto.Response from(ConfirmPaymentDto.Response response, Payment payment) {
-//
-//            CreatePaymentDto.Response createResponse = from(payment);
-//
-//            // TODO 추후 필요하면 response 정보 사용
-//            // 에를 들어 paymentKey, OrderID 등등
-//
-//            return createResponse;
-//        }
     }
 
 }

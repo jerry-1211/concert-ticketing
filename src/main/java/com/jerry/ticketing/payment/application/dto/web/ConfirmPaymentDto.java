@@ -18,7 +18,6 @@ public class ConfirmPaymentDto {
         private String amount;
     }
 
-
     @Getter
     @Builder
     @NoArgsConstructor

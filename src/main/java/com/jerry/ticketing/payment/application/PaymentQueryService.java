@@ -27,12 +27,13 @@ public class PaymentQueryService {
     @Transactional(readOnly = true)
     public CreatePaymentDto.Response findDetailedPaymentById(Long paymentId) {
         PaymentDto payment = findPaymentById(paymentId);
-        ReservationDto reservation = reservationQueryService.findReservationDtoById(payment.getReservationId());
+        ReservationDto reservation = reservationQueryService.findReservationById(payment.getReservationId(), ReservationDto::from);
         MemberDto member = memberService.findMemberById(reservation.getMemberId());
         ConcertDto concert = concertQueryService.findConcertById(reservation.getConcertId());
 
         return CreatePaymentDto.Response.from(payment, member, concert);
     }
+
 
     @Transactional(readOnly = true)
     public PaymentDto findPaymentById(Long paymentId) {

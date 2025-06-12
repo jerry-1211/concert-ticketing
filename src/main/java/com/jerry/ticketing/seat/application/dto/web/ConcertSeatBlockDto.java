@@ -16,9 +16,7 @@ public class ConcertSeatBlockDto {
     public static class Request {
 
         private Long concertId;
-
         private List<Long> concertSeatIds;
-
         private Long memberId;
 
     }
@@ -30,9 +28,7 @@ public class ConcertSeatBlockDto {
     public static class Response {
 
         private List<Long> blockedSeatIds;
-
         private OffsetDateTime expireAt;
-
         private int totalPrice;
 
 

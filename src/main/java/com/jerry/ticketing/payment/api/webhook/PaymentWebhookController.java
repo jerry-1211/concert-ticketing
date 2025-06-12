@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@Slf4j
 @RequestMapping("/api/webhook")
 @RequiredArgsConstructor
 public class PaymentWebhookController {
@@ -20,7 +19,7 @@ public class PaymentWebhookController {
     private final PaymentWebhookService paymentWebhookService;
 
     /**
-     * Toss 결제 완료 후 webhook
+     * Toss 결제 완료 후 토스 서버로 부터 받는 webhook 입니다.
      */
     @PostMapping("/payment")
     public ResponseEntity<Void> handleWebhook(

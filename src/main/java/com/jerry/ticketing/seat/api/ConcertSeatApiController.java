@@ -19,9 +19,6 @@ import java.util.List;
 public class ConcertSeatApiController {
     private final ConcertSeatCommandService seatBlockingService;
 
-    /**
-     * 좌석 선점
-     */
     @PostMapping("/blocks")
     public ResponseEntity<ConcertSeatBlockDto.Response> blockSeats(@RequestBody ConcertSeatBlockDto.Request request) {
 

@@ -22,6 +22,7 @@ public class ConcertSeatQueryService {
     private final SectionQueryService sectionQueryService;
     private final DetailConcertSeatMapper mapper;
 
+
     @Transactional(readOnly = true)
     public List<DetailConcertSeatDto> findDetailedConcertSeatsByLocation(Long concertId, String zone, String row) {
         ConcertSeats concertSeats = new ConcertSeats(concertSeatRepository.findByJoinConditions(concertId, zone, row));

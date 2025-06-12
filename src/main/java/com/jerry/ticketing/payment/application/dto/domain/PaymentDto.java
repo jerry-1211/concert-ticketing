@@ -13,7 +13,6 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class PaymentDto {
 
-
     private Long paymentId;
     private Long reservationId;
     private PaymentMethod paymentMethod;

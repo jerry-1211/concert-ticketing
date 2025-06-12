@@ -46,11 +46,9 @@ public class Payment {
     @Column
     private String lastTransactionKey;
 
-
     // 주문자명
     @Column
     private String orderName;
-
 
     // 결제 방법
     @Column
@@ -60,6 +58,7 @@ public class Payment {
     @Column
     private int totalAmount;
 
+    // 결제 key
     @Column
     private String paymentKey;
 
@@ -81,7 +80,6 @@ public class Payment {
         paymentStatus = PaymentStatus.CONFIRMED;
         this.paymentKey = paymentKey;
     }
-
 
     public void completed(WebhookPaymentDto.Request.PaymentData data) {
         this.lastTransactionKey = data.getLastTransactionKey();

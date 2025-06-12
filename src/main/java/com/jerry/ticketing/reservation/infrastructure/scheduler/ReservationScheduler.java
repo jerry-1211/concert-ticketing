@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ReservationScheduler {
@@ -16,7 +15,6 @@ public class ReservationScheduler {
 
     @Scheduled(fixedRate = Reservation.PENDING_CHECK_INTERVAL_SECONDS)
     public void releaseExpiredReservation() {
-        log.info("기한 지난 결제 스케줄러 실행");
         reservationCommandService.releaseExpiredReservation();
     }
 }

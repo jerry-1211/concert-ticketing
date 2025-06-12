@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-
 public class ConcertDto {
 
     private Long concertId;

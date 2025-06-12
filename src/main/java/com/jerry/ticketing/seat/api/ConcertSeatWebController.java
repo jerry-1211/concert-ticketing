@@ -31,6 +31,7 @@ public class ConcertSeatWebController {
         return "seat-reservation";
     }
 
+
     @GetMapping("/api/zones")
     public ResponseEntity<List<String>> getZone(@RequestParam Long concertId) {
         return ResponseEntity.ok(SectionType.createZoneList());

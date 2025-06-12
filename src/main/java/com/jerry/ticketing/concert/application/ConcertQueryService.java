@@ -14,7 +14,6 @@ public class ConcertQueryService {
 
     private final ConcertRepository concertRepository;
 
-
     @Transactional(readOnly = true)
     public List<ConcertDto> findAllConcerts() {
         return concertRepository.findAll().stream().map(ConcertDto::from).toList();
@@ -25,6 +24,5 @@ public class ConcertQueryService {
     public ConcertDto findConcertById(Long concertId) {
         return ConcertDto.from(concertRepository.findById(concertId).orElseThrow());
     }
-
 
 }
