@@ -4,18 +4,13 @@ const customerKey = "_VpSOj_EwRTCArg_8m6cC";
 const tossPayments = TossPayments(clientKey);
 const payment = tossPayments.payment({customerKey});
 
-/**
- * 예약 생성 및 결제 처리
- * @param {Object} result - 좌석 블록 결과
- * @param {Array} selectedSeats - 선택된 좌석 배열
- * @param {number} concertId - 콘서트 ID
- */
+
 async function reservationConcertSeat(result, selectedSeats, concertId) {
     try {
         const blockedSeatIds = result.blockedSeatIds;
-        const totalPrice = result.totalPrice;
+        const totalAmount = result.totalAmount;
         const expireAt = result.expireAt;
-        const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatNumber}`).join(', ');
+        const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.concertSeatId}`).join(', ');
 
         const response = await fetch('/api/reservation', {
             method: 'POST',
@@ -27,8 +22,8 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
                 concertId: concertId,
                 orderName: `${blockedSeatIds} - ${seatNames}`,
                 expireAt: expireAt,
-                totalPrice: totalPrice,
-                amount: selectedSeats.length
+                totalAmount: totalAmount,
+                quantity: selectedSeats.length
             })
         });
 
@@ -47,16 +42,13 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
     }
 }
 
-/**
- * 결제 처리
- * @param {Object} result - 예약 결과 데이터
- */
+
 async function processPayment(result) {
     console.log("processPayment 호출 완료 ! ");
 
     try {
         const orderName = result.orderName;
-        const totalPrice = result.totalPrice;
+        const totalAmount = result.totalAmount;
         const reservationId = result.reservationId;
 
         const response = await fetch('/api/payment/request', {
@@ -66,7 +58,7 @@ async function processPayment(result) {
             },
             body: JSON.stringify({
                 reservationId: reservationId,
-                totalPrice: totalPrice,
+                totalAmount: totalAmount,
                 orderName: orderName
             })
         });
@@ -77,7 +69,7 @@ async function processPayment(result) {
             method: "CARD",
             amount: {
                 currency: "KRW",
-                value: totalPrice,
+                value: totalAmount,
             },
             orderId: paymentData.orderId,
             orderName: orderName,
@@ -99,9 +91,7 @@ async function processPayment(result) {
     }
 }
 
-/**
- * 결제 설정 정보 가져오기
- */
+
 function getPaymentConfig() {
     return {
         clientKey,

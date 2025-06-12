@@ -17,7 +17,7 @@ public class DetailConcertSeatDto {
     private SeatType seatType;
 
     private Long concertSeatId;
-    private int price;
+    private int totalAmount;
     private ConcertSeatStatus status;
 
     private String zone;
@@ -31,7 +31,7 @@ public class DetailConcertSeatDto {
                 seat.getSeatType(),
 
                 concertSeat.getConcertSeatId(),
-                concertSeat.getPrice(),
+                concertSeat.getTotalAmount(),
                 concertSeat.getStatus(),
 
                 section.getZone(),

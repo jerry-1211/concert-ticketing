@@ -99,8 +99,8 @@ function displaySeats(seats) {
 
     if (seats.length > 0) {
         const seatType = seats[0].seatType.toLowerCase();
-        const price = seats[0].price;
-        seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${price}원</p>`;
+        const totalAmount = seats[0].totalAmount;
+        seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${totalAmount}원</p>`;
 
         seats.forEach(seat => {
             const seatElement = document.createElement('div');
@@ -157,10 +157,10 @@ function updateSelectedSeats() {
         reserveBtn.disabled = true;
     } else {
         const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatId}`).join(', ');
-        const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+        const totalAmount = selectedSeats.reduce((sum, seat) => sum + seat.totalAmount, 0);
         selectedSeatsList.innerHTML = `
                 <p>선택된 좌석: ${seatNames}</p>
-                <p>총 가격: ${totalPrice.toLocaleString()}원</p>
+                <p>총 가격: ${totalAmount.toLocaleString()}원</p>
             `;
         reserveBtn.disabled = false;
     }

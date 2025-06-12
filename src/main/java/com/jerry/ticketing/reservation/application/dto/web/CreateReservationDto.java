@@ -16,8 +16,8 @@ public class CreateReservationDto {
         private Long concertId;
         private String orderName;
         private OffsetDateTime expireAt;
-        private int totalPrice;
-        private int amount;
+        private int totalAmount;
+        private int quantity;
 
     }
 
@@ -29,13 +29,13 @@ public class CreateReservationDto {
     public static class Response {
 
         private String orderName;
-        private int totalPrice;
+        private int totalAmount;
         private Long reservationId;
 
         public static CreateReservationDto.Response from(Reservation reservation) {
             return Response.builder()
                     .orderName(reservation.getOrderName())
-                    .totalPrice(reservation.getTotalPrice())
+                    .totalAmount(reservation.getTotalAmount())
                     .reservationId(reservation.getId())
                     .build();
         }

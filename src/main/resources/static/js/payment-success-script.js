@@ -2,7 +2,6 @@
 // 클라이언트에서 결제 금액을 조작하는 행위를 방지할 수 있습니다.
 const urlParams = new URLSearchParams(window.location.search);
 
-// 서버로 결제 승인에 필요한 결제 정보를 보내세요.
 async function confirm() {
     var requestData = {
         paymentKey: urlParams.get("paymentKey"),

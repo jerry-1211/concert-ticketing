@@ -14,11 +14,11 @@ public class ReservationDto {
     private Long reservationId;
     private Long memberId;
     private Long concertId;
-    private int totalPrice;
+    private int totalAmount;
     private ReservationStatus status;
     private OffsetDateTime createdAt;
     private OffsetDateTime expiresAt;
-    private int amount;
+    private int quantity;
     private String orderId;
     private String orderName;
 
@@ -27,11 +27,11 @@ public class ReservationDto {
                 reservation.getId(),
                 reservation.getMemberId(),
                 reservation.getConcertId(),
-                reservation.getTotalPrice(),
+                reservation.getTotalAmount(),
                 reservation.getStatus(),
                 reservation.getCreatedAt(),
                 reservation.getExpiresAt(),
-                reservation.getAmount(),
+                reservation.getQuantity(),
                 reservation.getOrderId(),
                 reservation.getOrderName()
         );

@@ -18,7 +18,7 @@ public class ConcertSeatDto {
     private Long concertId;
     private Long seatId;
     private Long sectionId;
-    private int price;
+    private int totalAmount;
     private ConcertSeatStatus status;
     private Long blockedBy;
     private OffsetDateTime blockedAt;
@@ -31,7 +31,7 @@ public class ConcertSeatDto {
                 concertSeat.getConcertId(),
                 concertSeat.getSeatId(),
                 concertSeat.getSectionId(),
-                concertSeat.getPrice(),
+                concertSeat.getAmount(),
                 concertSeat.getStatus(),
                 concertSeat.getBlockedBy(),
                 concertSeat.getBlockedAt(),

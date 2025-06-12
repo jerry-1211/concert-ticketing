@@ -16,9 +16,7 @@ public class CreatePaymentDto {
 
         @NotNull(message = "예약 ID는 필수입니다.")
         private Long reservationId;
-
-        private int totalPrice;
-
+        private int totalAmount;
         private String orderName;
 
     }

@@ -34,7 +34,7 @@ public class ConfirmPaymentDto {
         private String method;
         private String currency;
         private String mId;
-        private String disdcount;
+        private String discount;
 
         // 결제 수단별 종류
         private Object card;

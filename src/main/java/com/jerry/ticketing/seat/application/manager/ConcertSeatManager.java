@@ -12,7 +12,6 @@ import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -64,9 +63,9 @@ public class ConcertSeatManager {
         for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
                 Seat seat = seatRepository.findById(seatId.getAndIncrement()).orElse(null);
-                int price = concert.getPrice() * type.getPremium();
+                int amount = concert.getPrice() * type.getPremium();
 
-                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), price);
+                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), amount);
                 concertSeatBatch.add(concertSeat);
 
                 totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated, concertSeatRepository);

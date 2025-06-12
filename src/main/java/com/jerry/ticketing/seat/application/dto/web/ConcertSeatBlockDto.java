@@ -29,7 +29,7 @@ public class ConcertSeatBlockDto {
 
         private List<Long> blockedSeatIds;
         private OffsetDateTime expireAt;
-        private int totalPrice;
+        private int totalAmount;
 
 
         public static ConcertSeatBlockDto.Response toResponse(List<ConcertSeat> blockedConcertSeats) {

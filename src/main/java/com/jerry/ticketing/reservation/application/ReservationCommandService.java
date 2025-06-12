@@ -38,7 +38,7 @@ public class ReservationCommandService {
                 .orElseThrow(() -> new RuntimeException());
 
         Reservation reservation = Reservation.createReservation(member.getId(), concert.getId()
-                , request.getOrderName(), request.getExpireAt(), request.getTotalPrice(), request.getAmount());
+                , request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         reservationRepository.save(reservation);
 

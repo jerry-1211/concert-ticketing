@@ -1,8 +1,6 @@
 package com.jerry.ticketing.reservation.domain;
 
 
-import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,7 +32,7 @@ public class Reservation {
 
     // 예약 전체 가격
     @Column(nullable = false)
-    private int totalPrice;
+    private int totalAmount;
 
     //예약 상태
     @Column(nullable = false)
@@ -51,7 +49,7 @@ public class Reservation {
 
     // 결제 티켓 숫자
     @Column(nullable = false)
-    private int amount;
+    private int quantity;
 
     @Column
     private String orderId;
@@ -59,40 +57,40 @@ public class Reservation {
     @Column
     private String orderName;
 
-    private Reservation(Long memberId, Long concertId, int totalPrice, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+    private Reservation(Long memberId, Long concertId, int totalAmount, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int quantity) {
         this.memberId = memberId;
         this.concertId = concertId;
-        this.totalPrice = totalPrice;
+        this.totalAmount = totalAmount;
         this.status = status;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.amount = amount;
+        this.quantity = quantity;
     }
 
-    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalPrice, int amount) {
+    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalAmount, int quantity) {
         this.memberId = memberId;
         this.concertId = concertId;
         this.orderName = orderName;
         this.expiresAt = expiresAt;
-        this.totalPrice = totalPrice;
-        this.amount = amount;
+        this.totalAmount = totalAmount;
+        this.quantity = quantity;
         this.status = ReservationStatus.PENDING;
         this.createdAt = OffsetDateTime.now();
     }
 
     public static Reservation createReservation(Long memberId, Long concertId,
-                                                int totalPrice, ReservationStatus status,
-                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int amount) {
+                                                int totalAmount, ReservationStatus status,
+                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int quantity) {
 
-        return new Reservation(memberId, concertId, totalPrice, status, createdAt, expiresAt, amount);
+        return new Reservation(memberId, concertId, totalAmount, status, createdAt, expiresAt, quantity);
 
     }
 
 
     public static Reservation createReservation(Long memberId, Long concertId, String orderName,
-                                                OffsetDateTime expiresAt, int totalPrice, int amount) {
+                                                OffsetDateTime expiresAt, int totalAmount, int quantity) {
 
-        return new Reservation(memberId, concertId, orderName, expiresAt, totalPrice, amount);
+        return new Reservation(memberId, concertId, orderName, expiresAt, totalAmount, quantity);
 
     }
 
