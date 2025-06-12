@@ -33,6 +33,20 @@ public class ConcertSeats {
         return this.concertSeats.size() != ConcertSeatIds.size();
     }
 
+    public List<Long> getSeatIds() {
+        return concertSeats.stream()
+                .map(ConcertSeat::getSeatId)
+                .distinct()
+                .toList();
+    }
+
+    public List<Long> getSectionIds() {
+        return concertSeats.stream()
+                .map(ConcertSeat::getSectionId)
+                .distinct()
+                .toList();
+    }
+
 
 }
 
