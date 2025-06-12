@@ -26,7 +26,7 @@ public class ConcertSeatWebController {
     @GetMapping("/concert-seats")
     public String seatReservationPage(@RequestParam Long concertId, Model model) {
 
-        ConcertDto concert = concertQueryService.findConcertById(concertId);
+        ConcertDto concert = concertQueryService.findConcertById(concertId, ConcertDto::from);
         model.addAttribute("concert", concert);
         return "seat-reservation";
     }

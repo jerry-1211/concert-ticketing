@@ -1,6 +1,5 @@
 package com.jerry.ticketing.seat.application;
 
-import com.jerry.ticketing.seat.application.dto.domain.SectionDto;
 import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -19,13 +19,13 @@ public class SectionQueryService {
     private final SectionRepository sectionRepository;
 
     @Transactional
-    public Map<Long, SectionDto> findSectionByIds(List<Long> sectionIds) {
+    public <T> Map<Long, T> findSectionByIds(List<Long> sectionIds, Function<Section, T> mapper) {
         List<Section> sections = sectionRepository.findAllById(sectionIds);
 
         return sections.stream()
                 .collect(Collectors.toMap(
                         Section::getId,
-                        SectionDto::from
+                        mapper
                 ));
     }
 }
