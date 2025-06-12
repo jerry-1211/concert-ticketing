@@ -25,7 +25,7 @@ public class PaymentQueryService {
     private final ConcertQueryService concertQueryService;
 
     @Transactional(readOnly = true)
-    public CreatePaymentDto.Response getPaymentDetail(Long paymentId) {
+    public CreatePaymentDto.Response findDetailedPaymentById(Long paymentId) {
         PaymentDto payment = findPaymentById(paymentId);
         ReservationDto reservation = reservationQueryService.findReservationDtoById(payment.getReservationId());
         MemberDto member = memberService.findMemberById(reservation.getMemberId());

@@ -40,7 +40,7 @@ public class PaymentCommandService {
 
         Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getId(), orderId));
 
-        return paymentQueryService.getPaymentDetail(savedPayment.getId());
+        return paymentQueryService.findDetailedPaymentById(savedPayment.getId());
     }
 
 
@@ -60,7 +60,7 @@ public class PaymentCommandService {
 
         log.info("결제 승인 완료 - PaymentKey: {}", request.getPaymentKey());
 
-        return paymentQueryService.getPaymentDetail(payment.getId());
+        return paymentQueryService.findDetailedPaymentById(payment.getId());
     }
 
     /**
