@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.integration;
 
-import com.jerry.ticketing.seat.application.ConcertInitializationService;
+import com.jerry.ticketing.seat.application.initializer.ConcertInitializationService;
 import com.jerry.ticketing.seat.application.manager.SeatManager;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
 import com.jerry.ticketing.concert.domain.Concert;

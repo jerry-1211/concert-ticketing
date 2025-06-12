@@ -1,4 +1,4 @@
-package com.jerry.ticketing.seat.application;
+package com.jerry.ticketing.seat.application.initializer;
 
 
 import com.jerry.ticketing.seat.application.manager.ConcertSeatManager;

@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.unit;
 
 import com.jerry.ticketing.seat.infrastructure.scheduler.ConcertSeatScheduler;
-import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 class SeatBlockingSchedulerTest {
 
     @Mock
-    private ConcertSeatBlockingService seatBlockingService;
+    private ConcertSeatCommandService seatBlockingService;
 
     @InjectMocks
     private ConcertSeatScheduler seatBlockingScheduler;

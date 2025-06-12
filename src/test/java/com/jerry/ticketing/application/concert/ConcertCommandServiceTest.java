@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.concert;
 
-import com.jerry.ticketing.seat.application.ConcertInitializationService;
-import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.seat.application.initializer.ConcertInitializationService;
+import com.jerry.ticketing.concert.application.ConcertCommandService;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.concert.infrastructure.mapper.ConcertMapper;
 import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class ConcertServiceTest {
+class ConcertCommandServiceTest {
 
     @Mock
     private ConcertRepository concertRepository;
@@ -38,7 +38,7 @@ class ConcertServiceTest {
     private ConcertMapper concertMapper;
 
     @InjectMocks
-    private ConcertService concertService;
+    private ConcertCommandService concertCommandService;
 
     private Concert savedConcert;
     private CreateConcertDto.Request request;
@@ -67,7 +67,7 @@ class ConcertServiceTest {
 
 
         // When
-        CreateConcertDto.Response response = concertService.createConcert(request);
+        CreateConcertDto.Response response = concertCommandService.createConcert(request);
 
 
         // Then
@@ -93,7 +93,7 @@ class ConcertServiceTest {
 
 
         // When & Then
-        assertThatThrownBy(() -> concertService.createConcert(request))
+        assertThatThrownBy(() -> concertCommandService.createConcert(request))
                 .isInstanceOf(BusinessException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ConcertErrorCode.CONCERT_SAVE_FAILED);
     }

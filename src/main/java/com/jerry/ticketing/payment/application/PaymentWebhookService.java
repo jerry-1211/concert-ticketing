@@ -1,9 +1,9 @@
 package com.jerry.ticketing.payment.application;
 
 
-import com.jerry.ticketing.reservation.application.ReservationService;
+import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
-import com.jerry.ticketing.seat.application.ConcertSeatService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentWebhookService {
 
     private final PaymentCommandService paymentCommandService;
-    private final ReservationService reservationService;
-    private final ConcertSeatService concertSeatService;
+    private final ReservationCommandService reservationCommandService;
+    private final ConcertSeatCommandService concertSeatCommandService;
 
 
     public void handleWebhook(WebhookPaymentDto.Request request) {
@@ -37,8 +37,8 @@ public class PaymentWebhookService {
     private void finalizeOrder(WebhookPaymentDto.Request.PaymentData data) {
 
         paymentCommandService.updatePaymentOnCompleted(data);
-        reservationService.confirmReservation(data.getOrderId());
-        concertSeatService.confirmConcertSeat(data.getOrderName());
+        reservationCommandService.confirmReservation(data.getOrderId());
+        concertSeatCommandService.confirmConcertSeat(data.getOrderName());
 
         log.info("결제 승인 완료 - OrderID: {}", data.getOrderId());
     }

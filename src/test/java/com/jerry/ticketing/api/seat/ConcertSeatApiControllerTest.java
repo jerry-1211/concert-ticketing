@@ -1,7 +1,7 @@
 package com.jerry.ticketing.api.seat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
 import com.jerry.ticketing.seat.api.ConcertSeatApiController;
@@ -32,7 +32,7 @@ class ConcertSeatApiControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private ConcertSeatBlockingService seatBlockingService;
+    private ConcertSeatCommandService seatBlockingService;
 
     @Test
     @DisplayName("좌석 점유 성공 테스트")

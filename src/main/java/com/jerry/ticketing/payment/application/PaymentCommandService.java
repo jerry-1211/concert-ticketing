@@ -3,13 +3,13 @@ package com.jerry.ticketing.payment.application;
 import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
-import com.jerry.ticketing.reservation.application.ReservationService;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.reservation.application.ReservationQueryService;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class PaymentCommandService {
     private final PaymentRepository paymentRepository;
     private final PaymentQueryService paymentQueryService;
     private final TossPaymentClient tossPaymentClient;
-    private final ReservationService reservationService;
+    private final ReservationQueryService reservationQueryService;
 
     /**
      * 결제 요청 생성
@@ -33,7 +33,7 @@ public class PaymentCommandService {
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
 
-        Reservation reservation = reservationService.findReservationEntityById(request.getReservationId());
+        Reservation reservation = reservationQueryService.findReservationEntityById(request.getReservationId());
 
         String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);

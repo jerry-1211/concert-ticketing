@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.api;
 
 
-import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/seats")
 @RequiredArgsConstructor
 public class ConcertSeatApiController {
-    private final ConcertSeatBlockingService seatBlockingService;
+    private final ConcertSeatCommandService seatBlockingService;
 
     /**
      * 좌석 선점

@@ -1,7 +1,7 @@
 package com.jerry.ticketing.concert.api;
 
 
-import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
 import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConcertWebController {
 
-    private final ConcertService concertService;
+    private final ConcertQueryService concertQueryService;
 
 
     @GetMapping
     public String showAllConcerts(Model model) {
-        List<ConcertDto> concerts = concertService.findAllConcerts();
+        List<ConcertDto> concerts = concertQueryService.findAllConcerts();
         model.addAttribute("concerts", concerts);
         return "concert-list";
     }

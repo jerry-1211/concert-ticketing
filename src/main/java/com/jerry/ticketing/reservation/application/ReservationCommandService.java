@@ -24,20 +24,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ReservationService {
+public class ReservationCommandService {
 
     private final ConcertRepository concertRepository;
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
-
-    @Transactional
-    public void confirmReservation(String orderId) {
-        Reservation reservation = reservationRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
-
-        reservation.confirmReservation();
-    }
-
 
     @Transactional
     public CreateReservationDto.Response createReservation(CreateReservationDto.Request request) {
@@ -59,6 +50,14 @@ public class ReservationService {
     }
 
     @Transactional
+    public void confirmReservation(String orderId) {
+        Reservation reservation = reservationRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
+
+        reservation.confirmReservation();
+    }
+
+    @Transactional
     public void releaseExpiredReservation() {
         OffsetDateTime now = OffsetDateTime.now();
         List<Reservation> reservations = reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING);
@@ -67,17 +66,6 @@ public class ReservationService {
         // TODO: 일급 객체로 바꾸기
         reservations.forEach(Reservation::cancelReservation);
 
-    }
-
-    @Transactional
-    public ReservationDto findReservationDtoById(Long reservationId) {
-        return ReservationDto.from(reservationRepository.findById(reservationId)
-                .orElseThrow());
-    }
-
-    @Transactional
-    public Reservation findReservationEntityById(Long reservationId) {
-        return reservationRepository.findById(reservationId).orElseThrow();
     }
 
 

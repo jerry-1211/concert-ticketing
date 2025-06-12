@@ -1,6 +1,6 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
@@ -35,7 +35,7 @@ class SeatBlockingServiceTest {
 
 
     @InjectMocks
-    private ConcertSeatBlockingService seatBlockingService;
+    private ConcertSeatCommandService seatBlockingService;
 
     private List<ConcertSeat> concertSeats;
     private ConcertSeatBlockDto.Request request;

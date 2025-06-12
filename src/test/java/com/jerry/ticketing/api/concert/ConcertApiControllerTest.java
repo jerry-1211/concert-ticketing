@@ -2,7 +2,7 @@ package com.jerry.ticketing.api.concert;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.application.ConcertCommandService;
 import com.jerry.ticketing.concert.api.ConcertApiController;
 import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,7 @@ class ConcertApiControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private ConcertService concertService;
+    private ConcertCommandService concertCommandService;
 
     @Test
     @DisplayName("콘서트 생성 성공 테스트")
@@ -52,7 +52,7 @@ class ConcertApiControllerTest {
                 .maxTicketsPerUser(3)
                 .build();
 
-        when(concertService.createConcert(any(CreateConcertDto.Request.class))).thenReturn(response);
+        when(concertCommandService.createConcert(any(CreateConcertDto.Request.class))).thenReturn(response);
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/concerts")

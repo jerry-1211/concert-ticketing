@@ -1,9 +1,9 @@
 package com.jerry.ticketing.seat.api;
 
 
-import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
-import com.jerry.ticketing.seat.application.ConcertSeatService;
+import com.jerry.ticketing.seat.application.ConcertSeatQueryService;
 import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConcertSeatWebController {
 
-    private final ConcertSeatService concertSeatService;
-    private final ConcertService concertService;
+    private final ConcertQueryService concertQueryService;
+    private final ConcertSeatQueryService concertSeatQueryService;
 
 
     @GetMapping("/concert-seats")
     public String seatReservationPage(@RequestParam Long concertId, Model model) {
 
-        ConcertDto concert = concertService.findConcertById(concertId);
+        ConcertDto concert = concertQueryService.findConcertById(concertId);
         model.addAttribute("concert", concert);
         return "seat-reservation";
     }
@@ -48,7 +48,7 @@ public class ConcertSeatWebController {
                                                                @RequestParam String zone,
                                                                @RequestParam String row) {
 
-        return ResponseEntity.ok(concertSeatService.getSeats(concertId, zone, row));
+        return ResponseEntity.ok(concertSeatQueryService.findDetailedConcertSeatsByLocation(concertId, zone, row));
     }
 
 
