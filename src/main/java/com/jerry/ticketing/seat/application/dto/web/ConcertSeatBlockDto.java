@@ -32,7 +32,8 @@ public class ConcertSeatBlockDto {
         private int totalAmount;
 
 
-        public static ConcertSeatBlockDto.Response toResponse(List<ConcertSeat> blockedConcertSeats) {
+        // Todo: blockedConcertSeats 책임 분리
+        public static ConcertSeatBlockDto.Response from(List<ConcertSeat> blockedConcertSeats) {
             return new ConcertSeatBlockDto.Response(
                     blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
                     blockedConcertSeats.get(0).getBlockedExpireAt(),

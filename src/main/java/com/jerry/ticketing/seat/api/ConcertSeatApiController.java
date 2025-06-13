@@ -24,7 +24,7 @@ public class ConcertSeatApiController {
 
         List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(request);
 
-        return ResponseEntity.ok(ConcertSeatBlockDto.Response.toResponse(blockedConcertSeats));
+        return ResponseEntity.ok(ConcertSeatBlockDto.Response.from(blockedConcertSeats));
 
     }
 }
