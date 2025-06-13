@@ -73,7 +73,7 @@ public class Payment {
     }
 
     public static Payment createTossPayment(Long reservationId, String orderId) {
-        return new Payment(reservationId, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
+        return new Payment(reservationId, PaymentMethod.TOSS_PAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
     }
 
     public void updateConfirm(String paymentKey) {

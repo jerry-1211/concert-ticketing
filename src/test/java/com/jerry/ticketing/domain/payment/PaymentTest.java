@@ -62,7 +62,7 @@ class PaymentTest {
         // Then
         assertThat(savedPayment).isNotNull();
         assertThat(savedPayment.getOrderId()).isEqualTo("TEST-IDEMPOTENT");
-        assertThat(savedPayment.getPaymentMethod()).isEqualTo(PaymentMethod.TOSSPAY);
+        assertThat(savedPayment.getPaymentMethod()).isEqualTo(PaymentMethod.TOSS_PAY);
         assertThat(savedPayment.getPaymentStatus()).isEqualTo(PaymentStatus.PENDING);
     }
 
