@@ -2,13 +2,11 @@ package com.jerry.ticketing.seat.application.dto.domain;
 
 
 import com.jerry.ticketing.seat.domain.Section;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class SectionDto {
 
     private Long sectionId;
@@ -18,13 +16,13 @@ public class SectionDto {
     private int remainingSeats;
 
     public static SectionDto from(Section section) {
-        return new SectionDto(
-                section.getId(),
-                section.getConcertId(),
-                section.getZone(),
-                section.getCapacity(),
-                section.getRemainingSeats()
-        );
+        return SectionDto.builder()
+                .sectionId(section.getId())
+                .concertId(section.getConcertId())
+                .zone(section.getZone())
+                .capacity(section.getCapacity())
+                .remainingSeats(section.getRemainingSeats())
+                .build();
     }
 
 }

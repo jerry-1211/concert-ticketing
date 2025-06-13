@@ -3,11 +3,11 @@ package com.jerry.ticketing.member.application.dto.domain;
 
 import com.jerry.ticketing.member.domain.Address;
 import com.jerry.ticketing.member.domain.Member;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class MemberDto {
     private Long memberId;
     private Address address;
@@ -17,14 +17,16 @@ public class MemberDto {
     private String phoneNumber;
 
     public static MemberDto from(Member member) {
-        return new MemberDto(
-                member.getId(),
-                member.getAddress(),
-                member.getName(),
-                member.getEmail(),
-                member.getPassword(),
-                member.getPhoneNumber()
-        );
+        return MemberDto.builder()
+                .memberId(member.getId())
+                .address(member.getAddress())
+                .name(member.getName())
+                .email(member.getEmail())
+                .password(member.getPassword())
+                .phoneNumber(member.getPhoneNumber())
+                .build();
+
+
     }
 
 }

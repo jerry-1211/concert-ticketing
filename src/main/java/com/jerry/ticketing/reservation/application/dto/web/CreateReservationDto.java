@@ -9,7 +9,6 @@ public class CreateReservationDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class Request {
 
         private Long memberId;
@@ -19,13 +18,19 @@ public class CreateReservationDto {
         private int totalAmount;
         private int quantity;
 
+        public Request(Long memberId, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
+            this.memberId = memberId;
+            this.concertId = concertId;
+            this.orderName = orderName;
+            this.expireAt = expireAt;
+            this.totalAmount = totalAmount;
+            this.quantity = quantity;
+        }
     }
 
 
     @Getter
-    @Setter
     @Builder
-    @AllArgsConstructor
     public static class Response {
 
         private String orderName;

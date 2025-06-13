@@ -4,13 +4,13 @@ package com.jerry.ticketing.payment.application.dto.domain;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
 import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.OffsetDateTime;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class PaymentDto {
 
     private Long paymentId;
@@ -27,18 +27,18 @@ public class PaymentDto {
 
 
     public static PaymentDto from(Payment payment) {
-        return new PaymentDto(
-                payment.getId(),
-                payment.getReservationId(),
-                payment.getPaymentMethod(),
-                payment.getPaymentStatus(),
-                payment.getPaymentDate(),
-                payment.getOrderId(),
-                payment.getLastTransactionKey(),
-                payment.getOrderName(),
-                payment.getMethod(),
-                payment.getTotalAmount(),
-                payment.getPaymentKey()
-        );
+        return PaymentDto.builder()
+                .paymentId(payment.getId())
+                .reservationId(payment.getReservationId())
+                .paymentMethod(payment.getPaymentMethod())
+                .paymentStatus(payment.getPaymentStatus())
+                .paymentDate(payment.getPaymentDate())
+                .orderId(payment.getOrderId())
+                .lastTransactionKey(payment.getLastTransactionKey())
+                .orderName(payment.getOrderName())
+                .method(payment.getMethod())
+                .totalAmount(payment.getTotalAmount())
+                .paymentKey(payment.getPaymentKey())
+                .build();
     }
 }

@@ -3,15 +3,13 @@ package com.jerry.ticketing.seat.application.dto.domain;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class ConcertSeatDto {
 
     private Long concertSeatId;
@@ -26,17 +24,17 @@ public class ConcertSeatDto {
 
 
     public static ConcertSeatDto from(ConcertSeat concertSeat) {
-        return new ConcertSeatDto(
-                concertSeat.getId(),
-                concertSeat.getConcertId(),
-                concertSeat.getSeatId(),
-                concertSeat.getSectionId(),
-                concertSeat.getAmount(),
-                concertSeat.getStatus(),
-                concertSeat.getBlockedBy(),
-                concertSeat.getBlockedAt(),
-                concertSeat.getBlockedExpireAt()
-        );
+        return ConcertSeatDto.builder()
+                .concertSeatId(concertSeat.getId())
+                .concertId(concertSeat.getConcertId())
+                .seatId(concertSeat.getSeatId())
+                .sectionId(concertSeat.getSectionId())
+                .totalAmount(concertSeat.getAmount())
+                .status(concertSeat.getStatus())
+                .blockedBy(concertSeat.getBlockedBy())
+                .blockedAt(concertSeat.getBlockedAt())
+                .blockedExpireAt(concertSeat.getBlockedExpireAt())
+                .build();
     }
 
 

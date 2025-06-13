@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.application.dto.web;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class ConcertSeatBlockDto {
     @NoArgsConstructor
-    @AllArgsConstructor
     @Getter
     public static class Request {
 
@@ -19,12 +18,16 @@ public class ConcertSeatBlockDto {
         private List<Long> concertSeatIds;
         private Long memberId;
 
+        public Request(Long concertId, List<Long> concertSeatIds, Long memberId) {
+            this.concertId = concertId;
+            this.concertSeatIds = concertSeatIds;
+            this.memberId = memberId;
+        }
     }
 
 
     @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Builder
     public static class Response {
 
         private List<Long> blockedSeatIds;
@@ -34,11 +37,11 @@ public class ConcertSeatBlockDto {
 
         // Todo: blockedConcertSeats 책임 분리
         public static ConcertSeatBlockDto.Response from(List<ConcertSeat> blockedConcertSeats) {
-            return new ConcertSeatBlockDto.Response(
-                    blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()),
-                    blockedConcertSeats.get(0).getBlockedExpireAt(),
-                    ConcertSeat.calculateTotalPrice(blockedConcertSeats)
-            );
+            return ConcertSeatBlockDto.Response.builder()
+                    .blockedSeatIds(blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()))
+                    .expireAt(blockedConcertSeats.get(0).getBlockedExpireAt())
+                    .totalAmount(ConcertSeat.calculateTotalPrice(blockedConcertSeats))
+                    .build();
         }
     }
 

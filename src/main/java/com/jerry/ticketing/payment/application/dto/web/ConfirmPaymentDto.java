@@ -1,6 +1,5 @@
 package com.jerry.ticketing.payment.application.dto.web;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +9,21 @@ import java.time.OffsetDateTime;
 public class ConfirmPaymentDto {
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class Request {
-
         private String paymentKey;
         private String orderId;
         private String amount;
+
+        public Request(String paymentKey, String orderId, String amount) {
+            this.paymentKey = paymentKey;
+            this.orderId = orderId;
+            this.amount = amount;
+        }
     }
+
 
     @Getter
     @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Response {
 
         private String paymentKey;

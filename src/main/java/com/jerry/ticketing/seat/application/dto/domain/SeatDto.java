@@ -3,13 +3,11 @@ package com.jerry.ticketing.seat.application.dto.domain;
 
 import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.domain.enums.SeatType;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class SeatDto {
 
     private Long seatId;
@@ -18,12 +16,12 @@ public class SeatDto {
     private SeatType seatType;
 
     public static SeatDto from(Seat seat) {
-        return new SeatDto(
-                seat.getId(),
-                seat.getSeatRow(),
-                seat.getNumber(),
-                seat.getSeatType()
-        );
+        return SeatDto.builder()
+                .seatId(seat.getId())
+                .seatRow(seat.getSeatRow())
+                .number(seat.getNumber())
+                .seatType(seat.getSeatType())
+                .build();
     }
 
 }

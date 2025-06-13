@@ -2,7 +2,6 @@ package com.jerry.ticketing.concert.application.dto.web;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,7 +56,6 @@ public class CreateConcertDto {
 
     @Getter
     @Builder
-    @AllArgsConstructor
     public static class Response {
 
         private Long id;

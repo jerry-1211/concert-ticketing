@@ -11,7 +11,6 @@ public class CreatePaymentDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class Request {
 
         @NotNull(message = "예약 ID는 필수입니다.")
@@ -19,13 +18,16 @@ public class CreatePaymentDto {
         private int totalAmount;
         private String orderName;
 
+        public Request(Long reservationId, int totalAmount, String orderName) {
+            this.reservationId = reservationId;
+            this.totalAmount = totalAmount;
+            this.orderName = orderName;
+        }
     }
 
 
     @Getter
-    @Setter
     @Builder
-    @AllArgsConstructor
     public static class Response {
         private Long paymentId;
         private String orderId;

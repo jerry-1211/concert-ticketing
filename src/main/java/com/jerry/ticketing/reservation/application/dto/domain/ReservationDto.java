@@ -2,13 +2,13 @@ package com.jerry.ticketing.reservation.application.dto.domain;
 
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.OffsetDateTime;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class ReservationDto {
 
     private Long reservationId;
@@ -23,17 +23,17 @@ public class ReservationDto {
     private String orderName;
 
     public static ReservationDto from(Reservation reservation) {
-        return new ReservationDto(
-                reservation.getId(),
-                reservation.getMemberId(),
-                reservation.getConcertId(),
-                reservation.getTotalAmount(),
-                reservation.getStatus(),
-                reservation.getCreatedAt(),
-                reservation.getExpiresAt(),
-                reservation.getQuantity(),
-                reservation.getOrderId(),
-                reservation.getOrderName()
-        );
+        return ReservationDto.builder()
+                .reservationId(reservation.getId())
+                .memberId(reservation.getMemberId())
+                .concertId(reservation.getConcertId())
+                .totalAmount(reservation.getTotalAmount())
+                .status(reservation.getStatus())
+                .createdAt(reservation.getCreatedAt())
+                .expiresAt(reservation.getExpiresAt())
+                .quantity(reservation.getQuantity())
+                .orderId(reservation.getOrderId())
+                .orderName(reservation.getOrderName())
+                .build();
     }
 }

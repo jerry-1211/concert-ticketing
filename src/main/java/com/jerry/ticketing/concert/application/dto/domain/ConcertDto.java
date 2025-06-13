@@ -1,7 +1,6 @@
 package com.jerry.ticketing.concert.application.dto.domain;
 
 import com.jerry.ticketing.concert.domain.Concert;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +9,6 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Builder
-@AllArgsConstructor
 public class ConcertDto {
 
     private Long concertId;
