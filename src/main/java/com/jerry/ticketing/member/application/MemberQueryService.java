@@ -1,6 +1,8 @@
 package com.jerry.ticketing.member.application;
 
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +13,14 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberQueryService {
 
     private final MemberRepository memberRepository;
 
     @Transactional
     public <T> T findMemberById(Long memberId, Function<Member, T> mapper) {
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        return mapper.apply(member);
+        return mapper.apply(memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND)));
     }
 
 }

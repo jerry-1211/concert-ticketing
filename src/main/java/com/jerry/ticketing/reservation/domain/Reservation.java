@@ -51,9 +51,11 @@ public class Reservation {
     @Column(nullable = false)
     private int quantity;
 
+    // 주문 Id
     @Column
     private String orderId;
-
+    
+    // 주문자 명
     @Column
     private String orderName;
 

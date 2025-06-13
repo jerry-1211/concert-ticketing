@@ -2,6 +2,8 @@ package com.jerry.ticketing.concert.application;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.ConcertErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +25,8 @@ public class ConcertQueryService {
 
     @Transactional(readOnly = true)
     public <T> T findConcertById(Long concertId, Function<Concert, T> mapper) {
-        Concert concert = concertRepository.findById(concertId).orElseThrow();
-        return mapper.apply(concert);
+        return mapper.apply(concertRepository.findById(concertId)
+                .orElseThrow(() -> new BusinessException(ConcertErrorCode.CONCERT_NOT_FOUND)));
     }
 
 }

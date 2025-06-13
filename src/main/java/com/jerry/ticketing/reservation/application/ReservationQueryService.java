@@ -1,6 +1,8 @@
 package com.jerry.ticketing.reservation.application;
 
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +20,8 @@ public class ReservationQueryService {
 
     @Transactional(readOnly = true)
     public <T> T findReservationById(Long reservationId, Function<Reservation, T> mapper) {
-        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
-        return mapper.apply(reservation);
+        return mapper.apply(reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND)));
 
     }
 

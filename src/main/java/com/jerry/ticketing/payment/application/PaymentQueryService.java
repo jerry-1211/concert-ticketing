@@ -41,8 +41,7 @@ public class PaymentQueryService {
 
     @Transactional(readOnly = true)
     public <T> T findPaymentById(Long paymentId, Function<Payment, T> mapper) {
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
-        return mapper.apply(payment);
+        return mapper.apply(paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND)));
     }
 }

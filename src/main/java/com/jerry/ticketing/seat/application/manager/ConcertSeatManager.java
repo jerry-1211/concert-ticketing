@@ -1,6 +1,10 @@
 package com.jerry.ticketing.seat.application.manager;
 
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.ConcertErrorCode;
+import com.jerry.ticketing.global.exception.SeatErrorCode;
+import com.jerry.ticketing.global.exception.SectionErrorCode;
 import com.jerry.ticketing.seat.domain.enums.SectionType;
 import com.jerry.ticketing.seat.infrastructure.batch.BatchSaveHelper;
 import com.jerry.ticketing.concert.domain.Concert;
@@ -42,11 +46,13 @@ public class ConcertSeatManager {
 
     private void createAllConcertSeats(Long concertId) {
         AtomicLong seatId = new AtomicLong(1L);
-        Concert concert = concertRepository.findById(concertId).orElse(null);
+        Concert concert = concertRepository.findById(concertId)
+                .orElseThrow(() -> new BusinessException(ConcertErrorCode.CONCERT_NOT_FOUND));
+
+
         SectionType.getSectionTypes().forEach(type ->
                 IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
                         .forEach(zone -> {
-                            assert concert != null;
                             createConcertSeats(concert, type, String.valueOf((char) zone), seatId);
                         })
         );
@@ -56,13 +62,16 @@ public class ConcertSeatManager {
 
     private void createConcertSeats(Concert concert, SectionType type, String zone, AtomicLong seatId) {
         List<ConcertSeat> concertSeatBatch = new ArrayList<>();
-        int totalCreated = 0;
 
-        Section section = sectionRepository.findByConcertIdAndZone(concert.getId(), zone).orElse(null);
+        int totalCreated = 0;
+        Section section = sectionRepository.findByConcertIdAndZone(concert.getId(), zone)
+                .orElseThrow(() -> new BusinessException(SectionErrorCode.SECTION_NOT_FOUND));
 
         for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
-                Seat seat = seatRepository.findById(seatId.getAndIncrement()).orElse(null);
+
+                Seat seat = seatRepository.findById(seatId.getAndIncrement())
+                        .orElseThrow(() -> new BusinessException(SeatErrorCode.SEAT_NOT_FOUND));
                 int amount = concert.getPrice() * type.getPremium();
 
                 ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), amount);
@@ -72,7 +81,7 @@ public class ConcertSeatManager {
             }
         }
 
-        totalCreated = batchSaveHelper.saveRemaining(concertSeatBatch, totalCreated, concertSeatRepository);
+        batchSaveHelper.saveRemaining(concertSeatBatch, totalCreated, concertSeatRepository);
     }
 
 }

@@ -43,6 +43,7 @@ public class Section {
         return new Section(concertId, zone, capacity);
     }
 
+    // Todo: 남은 좌석 표현해주는 로직
     public int decreaseRemainingSeats() {
         if (this.remainingSeats <= 0) {
             throw new IllegalStateException("남은 좌석이 없습니다.");

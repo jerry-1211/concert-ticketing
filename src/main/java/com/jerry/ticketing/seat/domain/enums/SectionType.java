@@ -12,8 +12,8 @@ import java.util.stream.IntStream;
 @Getter
 public enum SectionType {
     VIP(1000, "A", "F", "a", "j", 1, 100, SeatType.VIP, 3),
-    STANDARD(1500, "G","L","a", "o", 1, 100, SeatType.STANDARD,2),
-    ECONOMY(2000, "M","Z","a", "t", 1, 100, SeatType.ECONOMY,1);
+    STANDARD(1500, "G", "L", "a", "o", 1, 100, SeatType.STANDARD, 2),
+    ECONOMY(2000, "M", "Z", "a", "t", 1, 100, SeatType.ECONOMY, 1);
 
     private final int capacity;
     private final String startZone;
@@ -38,9 +38,9 @@ public enum SectionType {
     }
 
 
-
-    public static int calculateSeats(SectionType sectionType){
-        return ((int)(sectionType.getEndRow().charAt(0) - sectionType.getStartRow().charAt(0)) + 1 ) * sectionType.getEndNumber();
+    // Todo : SectionType 개선 (Create , get 메서드 명 생각)
+    public static int calculateSeats(SectionType sectionType) {
+        return ((int) (sectionType.getEndRow().charAt(0) - sectionType.getStartRow().charAt(0)) + 1) * sectionType.getEndNumber();
     }
 
 
@@ -48,19 +48,19 @@ public enum SectionType {
         return Arrays.asList(SectionType.values());
     }
 
-    public static List<String> createZoneList(){
+    public static List<String> createZoneList() {
         return IntStream.rangeClosed(VIP.getStartZone().charAt(0), ECONOMY.getEndZone().charAt(0))
                 .mapToObj(i -> String.valueOf((char) i))
                 .collect(Collectors.toList());
     }
 
-    public static List<String> createRowList(String startRow, String endRow){
+    public static List<String> createRowList(String startRow, String endRow) {
         return IntStream.rangeClosed(startRow.charAt(0), endRow.charAt(0))
                 .mapToObj(i -> String.valueOf((char) i))
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getRowsByZone(String zone){
+    public static List<String> getRowsByZone(String zone) {
         return getSectionTypes().stream()
                 .filter(sectionType -> isZoneInSection(zone, sectionType))
                 .findFirst()
@@ -69,13 +69,11 @@ public enum SectionType {
     }
 
 
-    private static boolean isZoneInSection(String zone, SectionType sectionType){
-        String startZone = String.valueOf(sectionType.getStartZone()) ;
+    private static boolean isZoneInSection(String zone, SectionType sectionType) {
+        String startZone = String.valueOf(sectionType.getStartZone());
         String endZone = String.valueOf(sectionType.getEndZone());
         return zone.compareTo(startZone) >= 0 && zone.compareTo(endZone) <= 0;
     }
-
-
 
 
 }
