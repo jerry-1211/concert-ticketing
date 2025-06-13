@@ -72,9 +72,8 @@ public class ConcertSeatManager {
 
                 Seat seat = seatRepository.findById(seatId.getAndIncrement())
                         .orElseThrow(() -> new BusinessException(SeatErrorCode.SEAT_NOT_FOUND));
-                int amount = concert.getPrice() * type.getPremium();
 
-                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), amount);
+                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), type.concertSeatAmount(concert.getPrice()));
                 concertSeatBatch.add(concertSeat);
 
                 totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated, concertSeatRepository);

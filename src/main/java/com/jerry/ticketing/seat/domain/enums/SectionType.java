@@ -76,4 +76,9 @@ public enum SectionType {
     }
 
 
+    public int concertSeatAmount(int price) {
+        return this.premium * price;
+    }
+
+
 }
