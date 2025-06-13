@@ -5,7 +5,7 @@ import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
-import com.jerry.ticketing.member.application.MemberService;
+import com.jerry.ticketing.member.application.MemberQueryService;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.domain.PaymentDto;
@@ -25,14 +25,14 @@ import java.util.function.Function;
 public class PaymentQueryService {
     private final PaymentRepository paymentRepository;
     private final ReservationQueryService reservationQueryService;
-    private final MemberService memberService;
+    private final MemberQueryService memberQueryService;
     private final ConcertQueryService concertQueryService;
 
     @Transactional(readOnly = true)
     public CreatePaymentDto.Response findDetailedPaymentById(Long paymentId) {
         PaymentDto payment = findPaymentById(paymentId, PaymentDto::from);
         ReservationDto reservation = reservationQueryService.findReservationById(payment.getReservationId(), ReservationDto::from);
-        MemberDto member = memberService.findMemberById(reservation.getMemberId(), MemberDto::from);
+        MemberDto member = memberQueryService.findMemberById(reservation.getMemberId(), MemberDto::from);
         ConcertDto concert = concertQueryService.findConcertById(reservation.getConcertId(), ConcertDto::from);
 
         return CreatePaymentDto.Response.from(payment, member, concert);

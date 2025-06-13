@@ -1,7 +1,9 @@
 package com.jerry.ticketing.reservation.application;
 
 
+import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.member.application.MemberQueryService;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.function.Function;
 
 
 @Service
@@ -24,21 +27,17 @@ import java.util.List;
 public class ReservationCommandService {
 
     private final ReservationRepository reservationRepository;
-    private final ConcertRepository concertRepository;
-    private final MemberRepository memberRepository;
+    private final MemberQueryService memberQueryService;
+    private final ConcertQueryService concertQueryService;
 
     @Transactional
     public CreateReservationDto.Response createReservation(CreateReservationDto.Request request) {
-        // 나중에 MemberService 로 옮기기
-        Member member = memberRepository.findById(request.getMemberId())
-                .orElseThrow(() -> new RuntimeException());
+        Member member = memberQueryService.findMemberById(request.getMemberId(), Function.identity());
+        Concert concert = concertQueryService.findConcertById(request.getConcertId(), Function.identity());
 
-        // 나중에 ConcertService 로 옮기기
-        Concert concert = concertRepository.findById(request.getConcertId())
-                .orElseThrow(() -> new RuntimeException());
-
-        Reservation reservation = Reservation.createReservation(member.getId(), concert.getId()
-                , request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
+        Reservation reservation = Reservation.createReservation(
+                member.getId(), concert.getId(),
+                request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         reservationRepository.save(reservation);
 

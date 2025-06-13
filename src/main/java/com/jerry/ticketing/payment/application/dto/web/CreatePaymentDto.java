@@ -34,13 +34,11 @@ public class CreatePaymentDto {
         private String customName;
         private String status;
 
-        private String secreteKey;
         private String successUrl;
         private String failUrl;
 
 
         public void setPaymentUrls(TossPaymentConfig tossPaymentConfig) {
-            this.secreteKey = tossPaymentConfig.getTestSecretApiKey();
             this.successUrl = tossPaymentConfig.getSuccessUrl();
             this.failUrl = tossPaymentConfig.getFailUrl();
         }
