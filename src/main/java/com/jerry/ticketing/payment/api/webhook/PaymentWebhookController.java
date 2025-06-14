@@ -3,7 +3,6 @@ package com.jerry.ticketing.payment.api.webhook;
 import com.jerry.ticketing.payment.application.PaymentWebhookService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,7 @@ public class PaymentWebhookController {
     public ResponseEntity<Void> handleWebhook(
             @RequestBody WebhookPaymentDto.Request request) {
 
-        paymentWebhookService.handleWebhook(request);
+        paymentWebhookService.handle(request);
 
         return ResponseEntity.ok().build();
     }

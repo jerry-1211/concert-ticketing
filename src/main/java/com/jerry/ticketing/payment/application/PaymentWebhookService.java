@@ -5,7 +5,6 @@ import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,7 @@ public class PaymentWebhookService {
     private final ReservationCommandService reservationCommandService;
     private final ConcertSeatCommandService concertSeatCommandService;
 
-    public void handleWebhook(WebhookPaymentDto.Request request) {
+    public void handle(WebhookPaymentDto.Request request) {
         WebhookPaymentDto.Request.PaymentData data = request.getData();
 
         if (data.getStatus().equals("DONE")) {
@@ -34,8 +33,8 @@ public class PaymentWebhookService {
      */
     private void finalizeOrder(WebhookPaymentDto.Request.PaymentData data) {
         paymentCommandService.updatePaymentOnCompleted(data);
-        reservationCommandService.confirmReservation(data.getOrderId());
-        concertSeatCommandService.confirmConcertSeat(data.getOrderName());
+        reservationCommandService.confirm(data.getOrderId());
+        concertSeatCommandService.confirm(data.getOrderName());
     }
 
 }

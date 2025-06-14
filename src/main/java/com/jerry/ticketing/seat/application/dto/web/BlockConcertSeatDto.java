@@ -35,7 +35,6 @@ public class BlockConcertSeatDto {
         private int totalAmount;
 
 
-        // Todo: blockedConcertSeats 책임 분리
         public static BlockConcertSeatDto.Response from(List<ConcertSeat> blockedConcertSeats) {
             return BlockConcertSeatDto.Response.builder()
                     .blockedSeatIds(blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()))

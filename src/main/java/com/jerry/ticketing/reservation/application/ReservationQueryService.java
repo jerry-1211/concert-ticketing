@@ -19,7 +19,7 @@ public class ReservationQueryService {
     private final ReservationRepository reservationRepository;
 
     @Transactional(readOnly = true)
-    public <T> T findReservationById(Long reservationId, Function<Reservation, T> mapper) {
+    public <T> T getReservation(Long reservationId, Function<Reservation, T> mapper) {
         return mapper.apply(reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND)));
 

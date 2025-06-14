@@ -30,14 +30,14 @@ public class PaymentCommandService {
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
 
-        Reservation reservation = reservationQueryService.findReservationById(request.getReservationId(), Function.identity());
+        Reservation reservation = reservationQueryService.getReservation(request.getReservationId(), Function.identity());
 
         String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
         reservation.updateOrderId(orderId);
 
         Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getId(), orderId));
 
-        return paymentQueryService.findDetailedPaymentById(savedPayment.getId());
+        return paymentQueryService.getDetailedPayment(savedPayment.getId());
     }
 
 
@@ -51,7 +51,7 @@ public class PaymentCommandService {
 
         payment.updateConfirm(request.getPaymentKey());
 
-        return paymentQueryService.findDetailedPaymentById(payment.getId());
+        return paymentQueryService.getDetailedPayment(payment.getId());
     }
 
     /**

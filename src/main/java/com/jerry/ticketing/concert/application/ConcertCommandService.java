@@ -20,7 +20,7 @@ public class ConcertCommandService {
     @Transactional
     public CreateConcertDto.Response createConcert(CreateConcertDto.Request request) {
 
-        Concert concert = concertMapper.buildConcert(request);
+        Concert concert = concertMapper.from(request);
         Concert saveConcert = concertRepository.save(concert);
 
         concertSeatInitializer.initializeSectionAndConcertSeats(saveConcert.getId());

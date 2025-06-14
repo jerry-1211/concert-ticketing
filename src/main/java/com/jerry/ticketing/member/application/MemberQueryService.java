@@ -18,7 +18,7 @@ public class MemberQueryService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public <T> T findMemberById(Long memberId, Function<Member, T> mapper) {
+    public <T> T getMemberById(Long memberId, Function<Member, T> mapper) {
         return mapper.apply(memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND)));
     }

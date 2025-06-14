@@ -47,7 +47,7 @@ public class ConcertSeatManager {
     private void createAll(Long concertId) {
         AtomicLong seatId = new AtomicLong(1L);
 
-        Concert concert = concertQueryService.findConcertById(concertId, Function.identity());
+        Concert concert = concertQueryService.getConcertById(concertId, Function.identity());
 
         SeatSectionType.getSectionTypes().forEach(type ->
                 IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))

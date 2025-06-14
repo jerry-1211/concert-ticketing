@@ -29,9 +29,9 @@ public class ReservationCommandService {
     private final ConcertQueryService concertQueryService;
 
     @Transactional
-    public CreateReservationDto.Response createReservation(CreateReservationDto.Request request) {
-        Member member = memberQueryService.findMemberById(request.getMemberId(), Function.identity());
-        Concert concert = concertQueryService.findConcertById(request.getConcertId(), Function.identity());
+    public CreateReservationDto.Response create(CreateReservationDto.Request request) {
+        Member member = memberQueryService.getMemberById(request.getMemberId(), Function.identity());
+        Concert concert = concertQueryService.getConcertById(request.getConcertId(), Function.identity());
 
         Reservation reservation = Reservation.of(
                 member.getId(), concert.getId(),
@@ -45,7 +45,7 @@ public class ReservationCommandService {
 
 
     @Transactional
-    public void confirmReservation(String orderId) {
+    public void confirm(String orderId) {
         Reservation reservation = reservationRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
 
@@ -54,12 +54,10 @@ public class ReservationCommandService {
 
 
     @Transactional
-    public void releaseExpiredReservation() {
+    public void releaseExpiredReservations() {
         OffsetDateTime now = OffsetDateTime.now();
         List<Reservation> reservations = reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING);
 
-
-        // TODO: 일급 객체로 바꾸기
         reservations.forEach(Reservation::cancelReservation);
 
     }

@@ -23,9 +23,9 @@ class SeatBlockingSchedulerTest {
     @Test
     void releaseExpiredBlockedSeats_ShouldCallService() {
         // When
-        seatBlockingScheduler.releaseExpiredBlockedSeats();
+        seatBlockingScheduler.releaseExpiredConcertSeats();
 
         // Then
-        verify(seatBlockingService, times(1)).releaseExpiredBlockedSeats();
+        verify(seatBlockingService, times(1)).releaseExpiredConcertSeats();
     }
 }

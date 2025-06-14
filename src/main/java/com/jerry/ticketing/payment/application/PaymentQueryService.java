@@ -29,18 +29,18 @@ public class PaymentQueryService {
     private final ConcertQueryService concertQueryService;
 
     @Transactional(readOnly = true)
-    public CreatePaymentDto.Response findDetailedPaymentById(Long paymentId) {
-        PaymentDto payment = findPaymentById(paymentId, PaymentDto::from);
-        ReservationDto reservation = reservationQueryService.findReservationById(payment.getReservationId(), ReservationDto::from);
-        MemberDto member = memberQueryService.findMemberById(reservation.getMemberId(), MemberDto::from);
-        ConcertDto concert = concertQueryService.findConcertById(reservation.getConcertId(), ConcertDto::from);
+    public CreatePaymentDto.Response getDetailedPayment(Long paymentId) {
+        PaymentDto payment = getPayment(paymentId, PaymentDto::from);
+        ReservationDto reservation = reservationQueryService.getReservation(payment.getReservationId(), ReservationDto::from);
+        MemberDto member = memberQueryService.getMemberById(reservation.getMemberId(), MemberDto::from);
+        ConcertDto concert = concertQueryService.getConcertById(reservation.getConcertId(), ConcertDto::from);
 
         return CreatePaymentDto.Response.from(payment, member, concert);
     }
 
 
     @Transactional(readOnly = true)
-    public <T> T findPaymentById(Long paymentId, Function<Payment, T> mapper) {
+    public <T> T getPayment(Long paymentId, Function<Payment, T> mapper) {
         return mapper.apply(paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND)));
     }

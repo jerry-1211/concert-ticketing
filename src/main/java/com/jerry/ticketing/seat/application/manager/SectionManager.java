@@ -33,7 +33,7 @@ public class SectionManager {
     private void create(Long concertId) {
         List<SeatSectionType> types = SeatSectionType.getSectionTypes();
 
-        Concert concert = concertQueryService.findConcertById(concertId, Function.identity());
+        Concert concert = concertQueryService.getConcertById(concertId, Function.identity());
 
         List<Section> sections = types.stream()
                 .flatMap(type ->

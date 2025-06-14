@@ -21,7 +21,7 @@ public class SectionDto {
                 .concertId(section.getConcertId())
                 .zone(section.getZone())
                 .capacity(section.getCapacity())
-                .remainingSeats(section.getRemainingSeats())
+                .remainingSeats(section.getRemainingConcertSeats())
                 .build();
     }
 

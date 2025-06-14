@@ -38,7 +38,6 @@ public class ConcertSeatQueryService {
     }
 
 
-    //Todo: CollectionUtils로 변경
     @Transactional(readOnly = true)
     public boolean hasNoConcertSeats(Long concertId) {
         return CollectionUtils.isEmpty(concertSeatRepository.findByConcertId(concertId));

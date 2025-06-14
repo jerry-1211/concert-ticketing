@@ -22,7 +22,7 @@ public class ConcertWebController {
 
     @GetMapping
     public String showAllConcerts(Model model) {
-        List<ConcertDto> concerts = concertQueryService.findAllConcerts(ConcertDto::from);
+        List<ConcertDto> concerts = concertQueryService.getAllConcerts(ConcertDto::from);
         model.addAttribute("concerts", concerts);
         return "concert-list";
     }

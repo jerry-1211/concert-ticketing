@@ -1,6 +1,8 @@
 package com.jerry.ticketing.seat.domain;
 
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.SectionErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,14 +32,14 @@ public class Section {
 
     // 구역별 남은 좌석
     @Column(nullable = false)
-    private int remainingSeats;
+    private int remainingConcertSeats;
 
 
     private Section(Long concertId, String zone, int capacity) {
         this.concertId = concertId;
         this.zone = zone;
         this.capacity = capacity;
-        this.remainingSeats = capacity;
+        this.remainingConcertSeats = capacity;
     }
 
 
@@ -48,13 +50,13 @@ public class Section {
 
     // Todo: 남은 좌석 표현해주는 로직
     public int decreaseRemainingSeats() {
-        if (this.remainingSeats <= 0) {
-            throw new IllegalStateException("남은 좌석이 없습니다.");
+        if (this.remainingConcertSeats <= 0) {
+            throw new BusinessException(SectionErrorCode.SECTION_SOLD_OUT);
         }
-        return --remainingSeats;
+        return --remainingConcertSeats;
     }
 
     public boolean hasAvailableSeats() {
-        return this.remainingSeats > 0;
+        return this.remainingConcertSeats > 0;
     }
 }

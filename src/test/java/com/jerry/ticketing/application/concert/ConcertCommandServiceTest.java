@@ -61,7 +61,7 @@ class ConcertCommandServiceTest {
     void shouldOf() {
 
         // Given
-        when(concertMapper.buildConcert(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);
+        when(concertMapper.from(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class))).thenReturn(savedConcert);
         doNothing().when(concertSeatInitializer).initializeSectionAndConcertSeats(savedConcert.getId());
 
@@ -87,7 +87,7 @@ class ConcertCommandServiceTest {
     void shouldThrowConcertErrorCodeWhenSaveFails() {
 
         // Given
-        when(concertMapper.buildConcert(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);
+        when(concertMapper.from(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);
         when(concertRepository.save(any(Concert.class)))
                 .thenThrow(new BusinessException(ConcertErrorCode.CONCERT_SAVE_FAILED));
 

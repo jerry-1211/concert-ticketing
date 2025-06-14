@@ -19,7 +19,7 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<CreateReservationDto.Response> createReservation(
             @Valid @RequestBody CreateReservationDto.Request request) {
-        return ResponseEntity.ok(reservationCommandService.createReservation(request));
+        return ResponseEntity.ok(reservationCommandService.create(request));
 
     }
 

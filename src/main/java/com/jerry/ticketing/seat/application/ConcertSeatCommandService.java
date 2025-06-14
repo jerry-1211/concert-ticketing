@@ -37,7 +37,7 @@ public class ConcertSeatCommandService {
 
 
     @Transactional
-    public void releaseExpiredBlockedSeats() {
+    public void releaseExpiredConcertSeats() {
         OffsetDateTime now = OffsetDateTime.now();
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED));
@@ -46,7 +46,7 @@ public class ConcertSeatCommandService {
 
 
     @Transactional
-    public void confirmConcertSeat(String orderName) {
+    public void confirm(String orderName) {
         List<Long> concertSeatIds = ConcertSeatIdExtractor.extractFromOrderName(orderName);
         List<ConcertSeat> concertSeats = concertSeatRepository.findByIdIn(concertSeatIds);
         concertSeats.forEach(ConcertSeat::confirm);
