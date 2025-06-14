@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
@@ -44,8 +43,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
     }
 
-    public static Member createMember(String name, Address address,
-                                      String email, String password, String phoneNumber) {
+    public static Member of(String name, Address address,
+                            String email, String password, String phoneNumber) {
         return new Member(name, address, email, password, phoneNumber);
     }
 }

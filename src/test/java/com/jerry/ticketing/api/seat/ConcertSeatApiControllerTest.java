@@ -1,9 +1,9 @@
 package com.jerry.ticketing.api.seat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.seat.application.ConcertSeatBlockingService;
+import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
-import com.jerry.ticketing.seat.application.dto.ConcertSeatBlockDto;
+import com.jerry.ticketing.seat.application.dto.web.BlockConcertSeatDto;
 import com.jerry.ticketing.seat.api.ConcertSeatApiController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,20 +32,20 @@ class ConcertSeatApiControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private ConcertSeatBlockingService seatBlockingService;
+    private ConcertSeatCommandService seatBlockingService;
 
     @Test
     @DisplayName("좌석 점유 성공 테스트")
     void blockSeats_Success() throws Exception {
         // Given
-        ConcertSeatBlockDto.Request request = new ConcertSeatBlockDto.Request(1L, Arrays.asList(1L, 2L), 100L);
+        BlockConcertSeatDto.Request request = new BlockConcertSeatDto.Request(1L, Arrays.asList(1L, 2L), 100L);
         ConcertSeat concertSeat1 = mock(ConcertSeat.class);
         ConcertSeat concertSeat2 = mock(ConcertSeat.class);
 
         when(concertSeat1.getId()).thenReturn(1L);
         when(concertSeat2.getId()).thenReturn(2L);
         when(concertSeat1.getBlockedExpireAt()).thenReturn(OffsetDateTime.now().plusMinutes(10));
-        when(seatBlockingService.blockSeats(any(ConcertSeatBlockDto.Request.class))).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
+        when(seatBlockingService.blockSeats(any(BlockConcertSeatDto.Request.class))).thenReturn(Arrays.asList(concertSeat1, concertSeat2));
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/seats/blocks")

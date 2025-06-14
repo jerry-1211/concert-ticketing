@@ -7,7 +7,6 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Getter
-@Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 public class Concert {
@@ -50,9 +49,9 @@ public class Concert {
         this.maxTicketsPerUser = maxTicketsPerUser;
     }
 
-    public static Concert createConcert(String title, OffsetDateTime dateTime,
-                                        String venue, int price, String description, int maxTicketsPerUser) {
-        return new Concert(title, dateTime, venue, price, description,maxTicketsPerUser);
+    public static Concert of(String title, OffsetDateTime dateTime,
+                             String venue, int price, String description, int maxTicketsPerUser) {
+        return new Concert(title, dateTime, venue, price, description, maxTicketsPerUser);
     }
 
 }

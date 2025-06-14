@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.unit;
 
-import com.jerry.ticketing.seat.infrastructure.factory.SeatFactory;
-import com.jerry.ticketing.global.util.BatchSaveHelper;
+import com.jerry.ticketing.seat.application.manager.SeatManager;
+import com.jerry.ticketing.seat.infrastructure.batch.BatchHelper;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +24,13 @@ class SeatInitializerTest {
     private SeatRepository seatRepository;
 
     @Mock
-    private BatchSaveHelper batchSaveHelper;
+    private BatchHelper batchHelper;
 
     @InjectMocks
-    private SeatFactory seatFactory;
+    private SeatManager seatFactory;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         seatRepository.deleteAll();
     }
 
@@ -52,7 +52,7 @@ class SeatInitializerTest {
 
     @Test
     @DisplayName("좌석이 이미 존재할 때 초기화 매서드를 호출하면 건너뜀")
-    void shouldSkipInitializationWhenNoSeatsExist(){
+    void shouldSkipInitializationWhenNoSeatsExist() {
         // Given
         when(seatRepository.count()).thenReturn(1000L);
 

@@ -33,7 +33,8 @@ public class Seat {
         this.seatType = seatType;
     }
 
-    public static Seat createSeat(String seatRow, int number, SeatType seatType){
+
+    public static Seat of(String seatRow, int number, SeatType seatType) {
         return new Seat(seatRow, number, seatType);
     }
 

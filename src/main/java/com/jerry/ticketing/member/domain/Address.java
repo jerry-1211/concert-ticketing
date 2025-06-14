@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Address {
 
     // 도시
@@ -18,7 +17,12 @@ public class Address {
     // 구역
     private String street;
 
-    public static Address of(String city,String street) {
+    public Address(String city, String street) {
+        this.city = city;
+        this.street = street;
+    }
+
+    public static Address of(String city, String street) {
         return new Address(city, street);
     }
 }

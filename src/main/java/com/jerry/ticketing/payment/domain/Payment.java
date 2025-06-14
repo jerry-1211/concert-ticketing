@@ -3,10 +3,10 @@ package com.jerry.ticketing.payment.domain;
 
 import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
 import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
-import com.jerry.ticketing.reservation.domain.Reservation;
-import com.jerry.ticketing.payment.application.dto.PaymentWebhookDto;
+import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.OffsetDateTime;
 
 @Entity
@@ -21,9 +21,8 @@ public class Payment {
     private Long id;
 
     // 예약 id
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    @Column(name = "reservation_id")
+    private Long reservationId;
 
     // 결제 수단
     @Column(nullable = false)
@@ -47,11 +46,9 @@ public class Payment {
     @Column
     private String lastTransactionKey;
 
-
     // 주문자명
     @Column
     private String orderName;
-
 
     // 결제 방법
     @Column
@@ -61,32 +58,30 @@ public class Payment {
     @Column
     private int totalAmount;
 
+    // 결제 key
     @Column
     private String paymentKey;
 
 
-
-    private Payment(Reservation reservation, PaymentMethod paymentMethod,
-                   PaymentStatus paymentStatus, OffsetDateTime paymentDate, String orderId) {
-        this.reservation = reservation;
+    private Payment(Long reservationId, PaymentMethod paymentMethod,
+                    PaymentStatus paymentStatus, OffsetDateTime paymentDate, String orderId) {
+        this.reservationId = reservationId;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.paymentDate = paymentDate;
         this.orderId = orderId;
     }
 
-    public static Payment createTossPayment(Reservation reservation, String orderId){
-        return new Payment(reservation, PaymentMethod.TOSSPAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
+    public static Payment createTossPayment(Long reservationId, String orderId) {
+        return new Payment(reservationId, PaymentMethod.TOSS_PAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
     }
 
-    public void updateConfirm(String paymentKey){
+    public void updateConfirm(String paymentKey) {
         paymentStatus = PaymentStatus.CONFIRMED;
         this.paymentKey = paymentKey;
     }
 
-
-
-    public void completed(PaymentWebhookDto.Request.PaymentData data) {
+    public void completed(WebhookPaymentDto.Request.PaymentData data) {
         this.lastTransactionKey = data.getLastTransactionKey();
         this.orderName = data.getOrderName();
         this.method = data.getMethod();

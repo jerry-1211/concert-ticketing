@@ -47,7 +47,7 @@ note right of ReservationService
   - Concert
   - String orderName
   - OffsetDateTime expireAt
-  - int totalPrice
+  - int totalAmount
   - int amount
 end note
 ReservationService -> DB: 예약 정보 저장 (PENDING 상태)

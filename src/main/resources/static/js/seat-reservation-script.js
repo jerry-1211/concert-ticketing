@@ -99,8 +99,8 @@ function displaySeats(seats) {
 
     if (seats.length > 0) {
         const seatType = seats[0].seatType.toLowerCase();
-        const price = seats[0].price;
-        seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${price}원</p>`;
+        const totalAmount = seats[0].totalAmount;
+        seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${totalAmount}원</p>`;
 
         seats.forEach(seat => {
             const seatElement = document.createElement('div');
@@ -112,21 +112,22 @@ function displaySeats(seats) {
             }
 
             seatElement.className = className;
-            seatElement.textContent = seat.seatNumber;
+            seatElement.textContent = seat.seatId;
             seatElement.onclick = () => toggleSeat(seat);
-            seatElement.dataset.seatId = seat.seatId;
+            seatElement.dataset.concertSeatId = seat.concertSeatId;
             seatGrid.appendChild(seatElement);
         });
     }
 }
 
+
 function toggleSeat(seat) {
-    const seatElement = document.querySelector(`[data-seat-id="${seat.seatId}"]`);
-    const isSelected = selectedSeats.find(s => s.seatId === seat.seatId);
+    const seatElement = document.querySelector(`[data-concert-seat-id="${seat.concertSeatId}"]`);
+    const isSelected = selectedSeats.find(s => s.concertSeatId === seat.concertSeatId);
 
     if (isSelected) {
         // 선택 해제
-        selectedSeats = selectedSeats.filter(s => s.seatId !== seat.seatId);
+        selectedSeats = selectedSeats.filter(s => s.concertSeatId !== seat.concertSeatId);
         seatElement.classList.remove('selected');
     } else {
         // 최대 선택 가능 수량 체크 (추가된 부분)
@@ -155,11 +156,11 @@ function updateSelectedSeats() {
         selectedSeatsList.innerHTML = '<p>선택된 좌석이 없습니다.</p>';
         reserveBtn.disabled = true;
     } else {
-        const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatNumber}`).join(', ');
-        const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+        const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.seatId}`).join(', ');
+        const totalAmount = selectedSeats.reduce((sum, seat) => sum + seat.totalAmount, 0);
         selectedSeatsList.innerHTML = `
                 <p>선택된 좌석: ${seatNames}</p>
-                <p>총 가격: ${totalPrice.toLocaleString()}원</p>
+                <p>총 가격: ${totalAmount.toLocaleString()}원</p>
             `;
         reserveBtn.disabled = false;
     }
@@ -173,7 +174,7 @@ async function reserveSeats() {
 
     const request = {
         concertId: concertId,
-        concertSeatIds: selectedSeats.map(seat => seat.seatId),
+        concertSeatIds: selectedSeats.map(seat => seat.concertSeatId),
         memberId: 1 // 실제로는 로그인된 사용자 ID를 사용
     };
 
@@ -191,7 +192,7 @@ async function reserveSeats() {
 
             // 예약된 좌석들을 화면에서 제거
             selectedSeats.forEach(seat => {
-                const seatElement = document.querySelector(`[data-seat-id="${seat.seatId}"]`);
+                const seatElement = document.querySelector(`[data-concert-seat-id="${seat.concertSeatId}"]`);
                 if (seatElement) {
                     seatElement.remove();
                 }

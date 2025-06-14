@@ -2,9 +2,9 @@ package com.jerry.ticketing.api.concert;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jerry.ticketing.concert.application.ConcertService;
+import com.jerry.ticketing.concert.application.ConcertCommandService;
 import com.jerry.ticketing.concert.api.ConcertApiController;
-import com.jerry.ticketing.concert.application.dto.CreateConcertDto;
+import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,11 @@ class ConcertApiControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private ConcertService concertService;
+    private ConcertCommandService concertCommandService;
 
     @Test
     @DisplayName("콘서트 생성 성공 테스트")
-    void createConcert_Success() throws Exception {
+    void of_Success() throws Exception {
         // Given
         CreateConcertDto.Request request = CreateConcertDto.Request.of(
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
@@ -52,7 +52,7 @@ class ConcertApiControllerTest {
                 .maxTicketsPerUser(3)
                 .build();
 
-        when(concertService.createConcert(any(CreateConcertDto.Request.class))).thenReturn(response);
+        when(concertCommandService.createConcert(any(CreateConcertDto.Request.class))).thenReturn(response);
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/concerts")
