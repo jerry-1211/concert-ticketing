@@ -1,17 +1,16 @@
 package com.jerry.ticketing.seat.application.manager;
 
 
-import com.jerry.ticketing.seat.domain.enums.SectionType;
+import com.jerry.ticketing.concert.application.ConcertQueryService;
+import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.Section;
-import com.jerry.ticketing.global.exception.BusinessException;
-import com.jerry.ticketing.global.exception.ConcertErrorCode;
-import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
 import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 @Component
@@ -19,26 +18,22 @@ import java.util.stream.IntStream;
 public class SectionManager {
 
     private final SectionRepository sectionRepository;
-    private final ConcertRepository concertRepository;
-
+    private final ConcertQueryService concertQueryService;
 
     /**
      * Section A-Z 까지의 구역을 만듭니다.
-     *
-     * @param concertId 콘서트 아이디
      */
     public void createIfNotExists(Long concertId) {
         if (sectionRepository.findByConcertId(concertId).isEmpty()) {
-            createSection(concertId);
+            create(concertId);
         }
     }
 
 
-    private void createSection(Long concertId) {
-        List<SectionType> types = SectionType.getSectionTypes();
+    private void create(Long concertId) {
+        List<SeatSectionType> types = SeatSectionType.getSectionTypes();
 
-        Concert concert = concertRepository.findById(concertId)
-                .orElseThrow(() -> new BusinessException(ConcertErrorCode.CONCERT_NOT_FOUND));
+        Concert concert = concertQueryService.findConcertById(concertId, Function.identity());
 
         List<Section> sections = types.stream()
                 .flatMap(type ->

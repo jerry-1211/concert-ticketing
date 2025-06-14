@@ -1,10 +1,11 @@
 package com.jerry.ticketing.seat.application.manager;
 
 
-import com.jerry.ticketing.seat.domain.enums.SectionType;
-import com.jerry.ticketing.seat.infrastructure.batch.BatchSaveHelper;
+import com.jerry.ticketing.seat.application.SeatCommandService;
+import com.jerry.ticketing.seat.application.SeatQueryService;
+import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
+import com.jerry.ticketing.seat.infrastructure.batch.BatchHelper;
 import com.jerry.ticketing.seat.domain.Seat;
-import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,37 +17,44 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class SeatManager {
 
-    private final SeatRepository seatRepository;
-    private final BatchSaveHelper batchSaveHelper;
+
+    private final SeatCommandService seatCommandService;
+    private final SeatQueryService seatQueryService;
+    private final BatchHelper batchHelper;
 
     public void initializeSeats() {
-        if (seatRepository.count() == 0) {
-            createAllSeats();
+        if (seatQueryService.hasNoSeats()) {
+            createAll();
         }
     }
 
-    private void createAllSeats() {
-        SectionType.getSectionTypes().forEach(type ->
+    private void createAll() {
+        SeatSectionType.getSectionTypes().forEach(type ->
                 IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
-                        .forEach(zone -> createSeats(type))
+                        .forEach(zone -> create(type))
         );
     }
 
 
-    private void createSeats(SectionType type) {
+    private void create(SeatSectionType type) {
         List<Seat> seatBatch = new ArrayList<>();
-        int totalCreated = 0;
 
         for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
                 Seat seat = Seat.of(String.valueOf(rowChar), number, type.getSeatType());
                 seatBatch.add(seat);
 
-                totalCreated = batchSaveHelper.saveIfFull(seatBatch, totalCreated, seatRepository);
+                if (batchHelper.isFull(seatBatch)) {
+                    seatCommandService.saveAll(seatBatch);
+                    seatBatch.clear();
+                }
+
             }
         }
 
-        totalCreated = batchSaveHelper.saveRemaining(seatBatch, totalCreated, seatRepository);
+        if (batchHelper.hasRemaining(seatBatch)) {
+            seatCommandService.saveAll(seatBatch);
+        }
     }
 
 }

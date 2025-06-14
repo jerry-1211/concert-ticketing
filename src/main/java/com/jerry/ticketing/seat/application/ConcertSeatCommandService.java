@@ -45,10 +45,18 @@ public class ConcertSeatCommandService {
     }
 
 
+    @Transactional
     public void confirmConcertSeat(String orderName) {
         List<Long> concertSeatIds = ConcertSeatIdExtractor.extractFromOrderName(orderName);
         List<ConcertSeat> concertSeats = concertSeatRepository.findByIdIn(concertSeatIds);
         concertSeats.forEach(ConcertSeat::confirm);
     }
+
+
+    @Transactional
+    public void saveAll(List<ConcertSeat> concertSeats) {
+        concertSeatRepository.saveAll(concertSeats);
+    }
+
 
 }

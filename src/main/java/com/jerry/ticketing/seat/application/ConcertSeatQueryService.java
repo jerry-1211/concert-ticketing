@@ -30,10 +30,16 @@ public class ConcertSeatQueryService {
         List<Long> seatIds = concertSeats.getSeatIds();
         List<Long> sectionIds = concertSeats.getSectionIds();
 
-        Map<Long, SeatDto> seatDtoMap = seatQueryService.findSeatByIds(seatIds, SeatDto::from);
-        Map<Long, SectionDto> sectionDtoMap = sectionQueryService.findSectionByIds(sectionIds, SectionDto::from);
+        Map<Long, SeatDto> seatDtoMap = seatQueryService.getSeatMap(seatIds, SeatDto::from);
+        Map<Long, SectionDto> sectionDtoMap = sectionQueryService.getSectionMap(sectionIds, SectionDto::from);
 
         return mapper.mapToDetailDto(concertSeats, seatDtoMap, sectionDtoMap);
+    }
+
+
+    @Transactional(readOnly = true)
+    public boolean hasNoConcertSeats(Long concertId) {
+        return concertSeatRepository.findByConcertId(concertId).isEmpty();
     }
 
 

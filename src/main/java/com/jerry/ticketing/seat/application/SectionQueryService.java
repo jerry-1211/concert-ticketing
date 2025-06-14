@@ -1,5 +1,7 @@
 package com.jerry.ticketing.seat.application;
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.SectionErrorCode;
 import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,7 @@ public class SectionQueryService {
     private final SectionRepository sectionRepository;
 
     @Transactional
-    public <T> Map<Long, T> findSectionByIds(List<Long> sectionIds, Function<Section, T> mapper) {
+    public <T> Map<Long, T> getSectionMap(List<Long> sectionIds, Function<Section, T> mapper) {
         List<Section> sections = sectionRepository.findAllById(sectionIds);
 
         return sections.stream()
@@ -28,4 +30,13 @@ public class SectionQueryService {
                         mapper
                 ));
     }
+
+
+    @Transactional
+    public Section getSection(Long concertId, String zone) {
+        return sectionRepository.findByConcertIdAndZone(concertId, zone)
+                .orElseThrow(() -> new BusinessException(SectionErrorCode.SECTION_NOT_FOUND));
+    }
+
+
 }
