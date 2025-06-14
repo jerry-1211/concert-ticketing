@@ -279,7 +279,6 @@ body {
 
 /* 좌석 상태별 스타일 */
 .seat.notable {
-    margin: 8px;
     background: #6c757d !important;
     color: white;
     cursor: not-allowed;
@@ -497,6 +496,5 @@ body {
 }
 
 .seat.selected {
-    margin: 8px;
     animation: pulse 0.3s ease-in-out;
 }
