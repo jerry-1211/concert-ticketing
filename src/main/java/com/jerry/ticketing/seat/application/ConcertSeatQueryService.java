@@ -9,6 +9,7 @@ import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,10 @@ public class ConcertSeatQueryService {
     }
 
 
+    //Todo: CollectionUtils로 변경
     @Transactional(readOnly = true)
     public boolean hasNoConcertSeats(Long concertId) {
-        return concertSeatRepository.findByConcertId(concertId).isEmpty();
+        return CollectionUtils.isEmpty(concertSeatRepository.findByConcertId(concertId));
     }
 
 

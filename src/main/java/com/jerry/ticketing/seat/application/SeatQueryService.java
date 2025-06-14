@@ -7,6 +7,7 @@ import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class SeatQueryService {
 
     @Transactional(readOnly = true)
     public boolean hasNoSeats() {
-        return seatRepository.count() == 0;
+        return CollectionUtils.isEmpty(seatRepository.findAll());
     }
 
 
