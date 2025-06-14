@@ -39,7 +39,7 @@ public class SeatManager {
 
         for (char rowChar = type.getStartRow().charAt(0); rowChar <= type.getEndRow().charAt(0); rowChar++) {
             for (int number = type.getStartNumber(); number <= type.getEndNumber(); number++) {
-                Seat seat = Seat.createSeat(String.valueOf(rowChar), number, type.getSeatType());
+                Seat seat = Seat.of(String.valueOf(rowChar), number, type.getSeatType());
                 seatBatch.add(seat);
 
                 totalCreated = batchSaveHelper.saveIfFull(seatBatch, totalCreated, seatRepository);

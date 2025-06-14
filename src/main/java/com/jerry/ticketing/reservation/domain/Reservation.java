@@ -54,20 +54,11 @@ public class Reservation {
     // 주문 Id
     @Column
     private String orderId;
-    
+
     // 주문자 명
     @Column
     private String orderName;
 
-    private Reservation(Long memberId, Long concertId, int totalAmount, ReservationStatus status, OffsetDateTime createdAt, OffsetDateTime expiresAt, int quantity) {
-        this.memberId = memberId;
-        this.concertId = concertId;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.quantity = quantity;
-    }
 
     public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalAmount, int quantity) {
         this.memberId = memberId;
@@ -80,18 +71,9 @@ public class Reservation {
         this.createdAt = OffsetDateTime.now();
     }
 
-    public static Reservation createReservation(Long memberId, Long concertId,
-                                                int totalAmount, ReservationStatus status,
-                                                OffsetDateTime createdAt, OffsetDateTime expiresAt, int quantity) {
 
-        return new Reservation(memberId, concertId, totalAmount, status, createdAt, expiresAt, quantity);
-
-    }
-
-
-    public static Reservation createReservation(Long memberId, Long concertId, String orderName,
-                                                OffsetDateTime expiresAt, int totalAmount, int quantity) {
-
+    public static Reservation of(Long memberId, Long concertId, String orderName,
+                                 OffsetDateTime expiresAt, int totalAmount, int quantity) {
         return new Reservation(memberId, concertId, orderName, expiresAt, totalAmount, quantity);
 
     }
@@ -102,6 +84,7 @@ public class Reservation {
         this.expiresAt = OffsetDateTime.now().plusMinutes(RESERVATION_TIMEOUT_MINUTES);
     }
 
+
     public void cancelReservation() {
         status = ReservationStatus.CANCELLED;
     }
@@ -110,4 +93,5 @@ public class Reservation {
     public void updateOrderId(String orderId) {
         this.orderId = orderId;
     }
+
 }

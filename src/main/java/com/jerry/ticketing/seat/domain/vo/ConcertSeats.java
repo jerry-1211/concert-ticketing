@@ -21,12 +21,12 @@ public class ConcertSeats {
 
     public void block(Long memberId) {
         this.concertSeats.forEach(v -> {
-            v.blockConcertSeat(memberId);
+            v.block(memberId);
         });
     }
 
     public void available() {
-        this.concertSeats.forEach(ConcertSeat::initConcertSeat);
+        this.concertSeats.forEach(ConcertSeat::release);
     }
 
     public boolean isNotSame(List<Long> ConcertSeatIds) {

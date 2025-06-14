@@ -51,14 +51,14 @@ class ConcertCommandServiceTest {
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),
                 "Test-Venue", 100_000, "Test-Description", 3);
 
-        savedConcert = Concert.createConcert(
+        savedConcert = Concert.of(
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
                 , "Test-Venue", 100_000, "Test-Description", 3);
     }
 
     @Test
     @DisplayName("콘서트 생성 시 정상적으로 저장하고 좌석을 초기화한 후 응답을 반환")
-    void shouldCreateConcert() {
+    void shouldOf() {
 
         // Given
         when(concertMapper.buildConcert(any(CreateConcertDto.Request.class))).thenReturn(savedConcert);

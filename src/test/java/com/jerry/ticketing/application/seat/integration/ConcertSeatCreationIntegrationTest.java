@@ -60,7 +60,7 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert = Concert.createConcert(
+        Concert concert = Concert.of(
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
                 , "Test-Venue", 100_000, "Test-Description", 3);
 
@@ -103,11 +103,11 @@ public class ConcertSeatCreationIntegrationTest {
         // Given
         seatInitializer.initializeSeats();
 
-        Concert concert1 = Concert.createConcert(
+        Concert concert1 = Concert.of(
                 "Test-Title1", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
                 , "Test-Venue1", 100_000, "Test-Description1", 3);
 
-        Concert concert2 = Concert.createConcert(
+        Concert concert2 = Concert.of(
                 "Test-Title2", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES)
                 , "Test-Venue2", 200_000, "Test-Description2", 3);
 

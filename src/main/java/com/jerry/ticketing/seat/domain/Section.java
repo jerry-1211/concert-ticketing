@@ -32,6 +32,7 @@ public class Section {
     @Column(nullable = false)
     private int remainingSeats;
 
+
     private Section(Long concertId, String zone, int capacity) {
         this.concertId = concertId;
         this.zone = zone;
@@ -39,9 +40,11 @@ public class Section {
         this.remainingSeats = capacity;
     }
 
-    public static Section initSection(Long concertId, String zone, int capacity) {
+
+    public static Section of(Long concertId, String zone, int capacity) {
         return new Section(concertId, zone, capacity);
     }
+
 
     // Todo: 남은 좌석 표현해주는 로직
     public int decreaseRemainingSeats() {

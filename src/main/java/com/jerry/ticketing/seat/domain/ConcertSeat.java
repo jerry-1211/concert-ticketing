@@ -56,32 +56,11 @@ public class ConcertSeat {
         this.sectionId = sectionId;
         this.amount = amount;
         this.status = ConcertSeatStatus.AVAILABLE;
-
     }
 
-    public static ConcertSeat creatConcertSeat(Long concertId, Long seatId, Long sectionId, int amount) {
+
+    public static ConcertSeat of(Long concertId, Long seatId, Long sectionId, int amount) {
         return new ConcertSeat(concertId, seatId, sectionId, amount);
-    }
-
-
-    public void initConcertSeat() {
-        this.status = ConcertSeatStatus.AVAILABLE;
-        this.blockedBy = null;
-        this.blockedAt = null;
-        this.blockedExpireAt = null;
-
-    }
-
-    public void blockConcertSeat(Long memberId) {
-        this.status = ConcertSeatStatus.BLOCKED;
-        this.blockedBy = memberId;
-        this.blockedAt = OffsetDateTime.now();
-        this.blockedExpireAt = OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
-    }
-
-    public void confirmConcertSeat() {
-        this.status = ConcertSeatStatus.RESERVED;
-        this.blockedExpireAt = OffsetDateTime.now().plusYears(10);
     }
 
 
@@ -89,13 +68,38 @@ public class ConcertSeat {
         return this.status == ConcertSeatStatus.AVAILABLE;
     }
 
+
     public boolean isNotAvailable() {
         return !isAvailable();
     }
 
+
+    public void confirm() {
+        this.status = ConcertSeatStatus.RESERVED;
+        this.blockedExpireAt = OffsetDateTime.now().plusYears(10);
+    }
+
+
+    public void release() {
+        this.status = ConcertSeatStatus.AVAILABLE;
+        this.blockedBy = null;
+        this.blockedAt = null;
+        this.blockedExpireAt = null;
+    }
+
+
+    public void block(Long memberId) {
+        this.status = ConcertSeatStatus.BLOCKED;
+        this.blockedBy = memberId;
+        this.blockedAt = OffsetDateTime.now();
+        this.blockedExpireAt = OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
+    }
+
+
     // TODO: 가격 계산 (추후 일급 객체로 리팩토링 필요)
-    public static int calculateTotalPrice(List<ConcertSeat> concertSeats) {
+    public static int calculateTotalAmount(List<ConcertSeat> concertSeats) {
         int amount = concertSeats.get(0).getAmount();
         return amount * concertSeats.size();
     }
+
 }

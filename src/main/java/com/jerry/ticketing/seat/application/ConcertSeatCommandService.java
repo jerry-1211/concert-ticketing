@@ -48,7 +48,7 @@ public class ConcertSeatCommandService {
     public void confirmConcertSeat(String orderName) {
         List<Long> concertSeatIds = ConcertSeatIdExtractor.extractFromOrderName(orderName);
         List<ConcertSeat> concertSeats = concertSeatRepository.findByIdIn(concertSeatIds);
-        concertSeats.forEach(ConcertSeat::confirmConcertSeat);
+        concertSeats.forEach(ConcertSeat::confirm);
     }
 
 }

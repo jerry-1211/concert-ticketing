@@ -43,7 +43,7 @@ public class SectionManager {
         List<Section> sections = types.stream()
                 .flatMap(type ->
                         IntStream.rangeClosed(type.getStartZone().charAt(0), type.getEndZone().charAt(0))
-                                .mapToObj(zone -> Section.initSection(concert.getId(), String.valueOf((char) zone), type.getCapacity())))
+                                .mapToObj(zone -> Section.of(concert.getId(), String.valueOf((char) zone), type.getCapacity())))
                 .toList();
 
         sectionRepository.saveAll(sections);

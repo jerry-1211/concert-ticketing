@@ -36,7 +36,7 @@ class ConcertApiControllerTest {
 
     @Test
     @DisplayName("콘서트 생성 성공 테스트")
-    void createConcert_Success() throws Exception {
+    void of_Success() throws Exception {
         // Given
         CreateConcertDto.Request request = CreateConcertDto.Request.of(
                 "Test-Title", OffsetDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES),

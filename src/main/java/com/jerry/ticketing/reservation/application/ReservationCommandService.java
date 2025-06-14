@@ -9,8 +9,6 @@ import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
-import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
-import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
 import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +33,7 @@ public class ReservationCommandService {
         Member member = memberQueryService.findMemberById(request.getMemberId(), Function.identity());
         Concert concert = concertQueryService.findConcertById(request.getConcertId(), Function.identity());
 
-        Reservation reservation = Reservation.createReservation(
+        Reservation reservation = Reservation.of(
                 member.getId(), concert.getId(),
                 request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 

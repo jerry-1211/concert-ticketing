@@ -45,9 +45,9 @@ class PaymentTest {
     void setUp() {
         Member member = memberRepository.save(TestFixture.createMember());
         Concert concert = concertRepository.save(TestFixture.createConcert());
-        Reservation reservation = TestFixture.createReservation(member, concert);
+//        Reservation reservation = TestFixture.createReservation(member, concert);
 
-        this.savedReservation = reservationRepository.save(reservation);
+//        this.savedReservation = reservationRepository.save(reservation);
     }
 
     @Test

@@ -43,8 +43,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
     }
 
-    public static Member createMember(String name, Address address,
-                                      String email, String password, String phoneNumber) {
+    public static Member of(String name, Address address,
+                            String email, String password, String phoneNumber) {
         return new Member(name, address, email, password, phoneNumber);
     }
 }

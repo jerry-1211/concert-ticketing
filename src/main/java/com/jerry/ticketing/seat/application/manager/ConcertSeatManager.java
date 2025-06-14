@@ -34,9 +34,7 @@ public class ConcertSeatManager {
     private final BatchSaveHelper batchSaveHelper;
 
     /**
-     * ConcertSeat을 Section, Concert, Seat에 매핑
-     *
-     * @param
+     * 콘서트 좌석 43,000석 생성 로직
      */
     public void createIfNotExists(Long concertId) {
         if (concertSeatRepository.findByConcertId(concertId).isEmpty()) {
@@ -73,7 +71,7 @@ public class ConcertSeatManager {
                 Seat seat = seatRepository.findById(seatId.getAndIncrement())
                         .orElseThrow(() -> new BusinessException(SeatErrorCode.SEAT_NOT_FOUND));
 
-                ConcertSeat concertSeat = ConcertSeat.creatConcertSeat(concert.getId(), seat.getId(), section.getId(), type.concertSeatAmount(concert.getPrice()));
+                ConcertSeat concertSeat = ConcertSeat.of(concert.getId(), seat.getId(), section.getId(), type.concertSeatAmount(concert.getPrice()));
                 concertSeatBatch.add(concertSeat);
 
                 totalCreated = batchSaveHelper.saveIfFull(concertSeatBatch, totalCreated, concertSeatRepository);
