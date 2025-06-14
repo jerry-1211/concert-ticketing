@@ -1,130 +1,500 @@
-.seat-container {
-    margin: 20px;
+/* 폰트 import */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+/* 기본 스타일 */
+* {
+    box-sizing: border-box;
 }
 
-.section {
-    margin-bottom: 30px;
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
 }
 
-.zone-buttons, .row-buttons {
-    margin: 10px 0;
+/* 헤더 네비게이션 */
+.header-nav {
+    margin-bottom: 20px;
 }
 
-.btn {
-    margin: 2px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-}
-
-.btn.active {
-    background: #007bff;
-    color: white;
-}
-
-.seat-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-    max-width: 600px;
-    margin: 20px 0;
-}
-
-.seat {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    background: #f5f5f5;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-}
-
-/* 상태별 스타일 */
-.seat.notable {
-    background: #948f8f;
-    color: #fffdfa;
-    cursor: not-allowed;
-    position: relative;
-}
-
-.seat.notable::before {
-    content: '×';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 20px;
-    color: #fffdfa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.seat.selected {
-    background: #28a745;
-    color: white;
-}
-
-.seat.vip {
-    border-color: #dc3545;
-}
-
-.seat.standard {
-    border-color: #ffc107;
-}
-
-.seat.economy {
-    border-color: #6c757d;
-}
-
-.selected-seats {
-    margin: 20px 0;
-}
-
-.reserve-btn {
-    padding: 12px 24px;
-    background: #007bff;
+.back-btn {
+    background: #6c757d;
     color: white;
     border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
 }
 
-.reserve-btn:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
+.back-btn:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
 }
 
-.legend {
-    margin: 20px 0;
+.back-btn i {
+    margin-right: 5px;
 }
 
-.legend-item {
-    display: inline-block;
-    margin-right: 20px;
+/* 메인 컨테이너 */
+.seat-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
 }
 
-.seat.disabled {
-    cursor: not-allowed !important;
-    filter: grayscale(100%);
+/* 페이지 제목 */
+.seat-container h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 30px 0;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.seat-container h2 i {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+/* 티켓 정보 */
+.ticket-info {
+    background: #e3f2fd;
+    border: 1px solid #bbdefb;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #1565c0;
+    display: flex;
+    align-items: center;
+}
+
+.ticket-info i {
+    color: #1565c0;
+    margin-right: 8px;
 }
 
 .ticket-info.max-reached {
     background-color: #fff3cd;
     border: 1px solid #ffeaa7;
-    border-radius: 4px;
-    padding: 8px;
+    color: #856404;
 }
 
+/* 콘서트 제목 */
+.concert-title {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.concert-title p {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.concert-title p:first-child {
+    font-size: 18px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+.concert-title i {
+    color: #007bff;
+    margin-right: 8px;
+    width: 16px;
+}
+
+/* 범례 */
+.legend {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.legend-item .seat {
+    margin: 8px;
+    border-radius: 3px;
+}
+
+/* 섹션 */
+.section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #fafafa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+}
+
+.section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+}
+
+.section h3 i {
+    color: #007bff;
+    margin-right: 8px;
+}
+
+/* 버튼 그룹 */
+.zone-buttons, .row-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.btn {
+    padding: 10px 16px;
+    border: 1px solid #dee2e6;
+    background: white;
+    color: #495057;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 60px;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #f8f9fa;
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* 좌석 정보 */
+.seat-info {
+    background: #e8f4fd;
+    border: 1px solid #b3d9f7;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #0c5aa6;
+    font-weight: 500;
+}
+
+/* 좌석 그리드 - 더 넓은 간격 */
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    gap: 12px; /* 더 넓은 간격 */
+    max-width: 100%; /* 전체 너비도 약간 증가 */
+    margin: 20px 0;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+}
+
+/* 좌석 크기도 약간 키우기 */
+.seat {
+    width: 40px; /* 기존 35px에서 40px로 */
+    height: 40px; /* 기존 35px에서 40px로 */
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px; /* 기존 11px에서 12px로 */
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.seat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 좌석 타입별 색상 */
+.seat.vip {
+    border-color: #dc3545;
+    background: #fff5f5;
+}
+
+.seat.vip:hover {
+    background: #ffe6e6;
+}
+
+.seat.standard {
+    border-color: #ffc107;
+    background: #fffbf0;
+}
+
+.seat.standard:hover {
+    background: #fff8e1;
+}
+
+.seat.economy {
+    border-color: #6c757d;
+    background: #f8f9fa;
+}
+
+.seat.economy:hover {
+    background: #e9ecef;
+}
+
+/* 좌석 상태별 스타일 */
+.seat.notable {
+    background: #6c757d !important;
+    color: white;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.seat.notable:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.seat.notable::before {
+    content: '✕';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.seat.selected {
+    background: #28a745 !important;
+    color: white;
+    border-color: #28a745;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(40, 167, 69, 0.3);
+}
+
+.seat.disabled {
+    cursor: not-allowed !important;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+/* 선택된 좌석 표시 */
+.selected-seats {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.selected-seats h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+}
+
+.selected-seats h3 i {
+    color: #28a745;
+    margin-right: 8px;
+}
+
+.selected-count {
+    font-size: 16px;
+    font-weight: 500;
+    color: #007bff;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.selected-count i {
+    color: #007bff;
+    margin-right: 5px;
+}
+
+#selectedSeatsList {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    min-height: 60px;
+}
+
+#selectedSeatsList p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #495057;
+}
+
+#selectedSeatsList p:last-child {
+    font-weight: 600;
+    color: #e74c3c;
+    font-size: 16px;
+}
+
+/* 예약 버튼 */
+.reserve-btn {
+    width: 100%;
+    padding: 15px 24px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reserve-btn i {
+    margin-right: 8px;
+}
+
+.reserve-btn:hover:not(:disabled) {
+    background: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.reserve-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 경고 메시지 */
 .warning {
     color: #856404;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .max-reached {
     color: #d63384;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 0.9em;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .seat-container {
+        padding: 20px 15px;
+    }
+
+    .seat-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .legend {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .zone-buttons, .row-buttons {
+        justify-content: center;
+    }
+
+    .seat-grid {
+        grid-template-columns: repeat(8, 1fr);
+        max-width: 100%;
+    }
+
+    .seat {
+        width: 30px;
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .section {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .seat-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2px;
+    }
+
+    .seat {
+        width: 25px;
+        height: 25px;
+        font-size: 9px;
+    }
+}
+
+/* 로딩 상태 */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.seat.selected {
+    animation: pulse 0.3s ease-in-out;
 }
