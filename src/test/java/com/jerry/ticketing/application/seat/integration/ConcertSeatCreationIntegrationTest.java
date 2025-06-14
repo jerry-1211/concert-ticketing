@@ -2,7 +2,7 @@ package com.jerry.ticketing.application.seat.integration;
 
 import com.jerry.ticketing.seat.application.initializer.ConcertInitializationService;
 import com.jerry.ticketing.seat.application.manager.SeatManager;
-import com.jerry.ticketing.seat.domain.enums.SectionType;
+import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
@@ -133,9 +133,9 @@ public class ConcertSeatCreationIntegrationTest {
 
 
     private static int calculateTotalSeats() {
-        int totalVipSeats = SectionType.VIP.getCapacity() * 6;
-        int totalStandardSeats = SectionType.STANDARD.getCapacity() * 6;
-        int totalEconomySeats = SectionType.ECONOMY.getCapacity() * 14;
+        int totalVipSeats = SeatSectionType.VIP.getCapacity() * 6;
+        int totalStandardSeats = SeatSectionType.STANDARD.getCapacity() * 6;
+        int totalEconomySeats = SeatSectionType.ECONOMY.getCapacity() * 14;
         return totalVipSeats + totalStandardSeats + totalEconomySeats;
     }
 

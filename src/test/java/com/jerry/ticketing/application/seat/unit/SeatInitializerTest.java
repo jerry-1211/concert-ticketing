@@ -1,7 +1,7 @@
 package com.jerry.ticketing.application.seat.unit;
 
 import com.jerry.ticketing.seat.application.manager.SeatManager;
-import com.jerry.ticketing.seat.infrastructure.batch.BatchSaveHelper;
+import com.jerry.ticketing.seat.infrastructure.batch.BatchHelper;
 import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class SeatInitializerTest {
     private SeatRepository seatRepository;
 
     @Mock
-    private BatchSaveHelper batchSaveHelper;
+    private BatchHelper batchHelper;
 
     @InjectMocks
     private SeatManager seatFactory;
