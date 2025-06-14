@@ -1,13 +1,308 @@
-/* 기본 스타일링을 위한 CSS 파일 */
+/* 폰트 import */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+/* 기본 스타일 */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin: 0;
+    padding: 40px 20px;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-h2 {
-    color: #d32f2f;
+/* 실패 컨테이너 */
+.fail-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
 }
 
-#code, #message {
-    margin: 10px 0;
+/* 실패 아이콘 */
+.fail-icon {
+    margin-bottom: 30px;
+}
+
+.fail-icon i {
+    font-size: 4rem;
+    color: #dc3545;
+    animation: shakeX 0.8s ease-out;
+}
+
+/* 실패 메시지 */
+.fail-message h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #dc3545;
+    margin: 0 0 15px 0;
+}
+
+.fail-message p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin: 0 0 40px 0;
+}
+
+/* 오류 정보 카드 */
+.error-info-card {
+    background: #fff5f5;
+    border: 1px solid #f5c6cb;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.error-info-card h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #721c24;
+    margin: 0 0 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 오류 행 */
+.error-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 0;
+    border-bottom: 1px solid #f5c6cb;
+}
+
+.error-row:last-child {
+    border-bottom: none;
+}
+
+.error-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #721c24;
+    min-width: 120px;
+}
+
+.error-label i {
+    width: 20px;
+    margin-right: 8px;
+    color: #dc3545;
+}
+
+.error-value {
+    font-weight: 500;
+    color: #495057;
+    text-align: right;
+    flex: 1;
+    word-break: break-word;
+}
+
+/* 액션 버튼 */
+.action-buttons {
+    margin: 30px 0;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-primary, .btn-secondary {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.3);
+}
+
+/* 도움말 섹션 */
+.help-section {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.help-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #495057;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.help-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.help-item i {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-top: 5px;
+    min-width: 24px;
+}
+
+.help-item strong {
+    color: #495057;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.help-item p {
+    color: #6c757d;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* 애니메이션 */
+@keyframes shakeX {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fail-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+
+    .fail-container {
+        padding: 40px 25px;
+    }
+
+    .fail-message h1 {
+        font-size: 1.6rem;
+    }
+
+    .fail-icon i {
+        font-size: 3rem;
+    }
+
+    .error-info-card {
+        padding: 25px 20px;
+    }
+
+    .error-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .error-value {
+        text-align: left;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .help-content {
+        gap: 15px;
+    }
+
+    .help-item {
+        gap: 12px;
+    }
+
+    .help-item i {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .fail-container {
+        padding: 30px 20px;
+    }
+
+    .error-info-card, .help-section {
+        padding: 20px 15px;
+    }
+}
+
+/* 유틸리티 클래스 */
+.me-2 {
+    margin-right: 8px;
 }

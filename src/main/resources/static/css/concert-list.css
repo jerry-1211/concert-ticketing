@@ -1,0 +1,255 @@
+/* 폰트 import */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+/* 기본 body 스타일 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* 메인 컨테이너 */
+.container {
+    background: white;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+/* 페이지 헤더 */
+.d-flex.justify-content-between.align-items-center {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+/* 새 콘서트 등록 버튼 */
+.btn-primary {
+    background-color: #007bff !important;
+    border: 1px solid #007bff !important;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 콘서트 카드 */
+.card {
+    border: 1px solid #e9ecef !important;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+    margin-bottom: 20px;
+}
+
+.card::before {
+    display: none;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #007bff !important;
+}
+
+/* 카드 바디 */
+.card-body {
+    padding: 20px !important;
+}
+
+/* 카드 제목 */
+.card-title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+    margin-bottom: 15px !important;
+    line-height: 1.4;
+}
+
+/* 카드 텍스트 */
+.card-text {
+    margin-bottom: 8px !important;
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.card-text i {
+    width: 16px;
+    margin-right: 8px;
+    color: #999;
+    font-size: 12px;
+}
+
+/* 가격 스타일 */
+.text-primary {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #e74c3c !important;
+    margin: 15px 0 !important;
+}
+
+/* 설명 텍스트 */
+.card-text:last-of-type {
+    color: #666 !important;
+    line-height: 1.5;
+    margin-bottom: 15px !important;
+    font-size: 13px;
+}
+
+/* 티켓 정보 */
+.d-flex.justify-content-between {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.d-flex.justify-content-between small {
+    font-weight: 400;
+    color: #666;
+    font-size: 12px;
+}
+
+/* 예약 버튼 */
+.btn-outline-primary {
+    background: white !important;
+    border: 1px solid #007bff !important;
+    color: #007bff !important;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #007bff !important;
+    border-color: #007bff !important;
+    color: white !important;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 빈 상태 알림 */
+.alert-info {
+    background: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    padding: 40px 20px !important;
+    text-align: center;
+    color: #666 !important;
+}
+
+.alert-info::before {
+    content: '📋';
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.alert-info h4 {
+    color: #333 !important;
+    font-weight: 600;
+    margin-bottom: 8px !important;
+    font-size: 1.1rem;
+}
+
+.alert-info p {
+    color: #666 !important;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* 배경 장식 제거 */
+body::before {
+    display: none;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 20px 15px;
+    }
+
+    .d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        align-items: stretch !important;
+        text-align: center;
+    }
+
+    .btn-primary {
+        margin-top: 15px;
+        width: 100%;
+    }
+}
+
+/* 애니메이션 제거 */
+.card {
+    animation: none;
+}
+
+/* 호버 효과 단순화 */
+.card-body:hover .card-title {
+    color: #007bff !important;
+    transition: color 0.2s ease;
+}
+
+/* 스크롤바 기본값 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 그리드 레이아웃 개선 */
+.row {
+    margin: 0 -10px;
+}
+
+.col-md-6, .col-lg-4 {
+    padding: 0 10px;
+}
+
+/* 카드 간격 조정 */
+.mb-4 {
+    margin-bottom: 20px !important;
+}

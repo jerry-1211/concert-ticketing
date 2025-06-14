@@ -5,41 +5,78 @@
     <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
     <link rel="stylesheet" type="text/css" href="/css/payment-success-styles.css"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>토스페이먼츠 샘플 프로젝트</title>
+    <title>결제 완료 - 콘서트 예약</title>
 </head>
 
 <body>
-<div class="box_section" style="width: 600px">
-    <img width="100px" src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png"/>
-    <h2>결제를 완료했어요</h2>
+<!-- 결제 성공 메인 섹션 -->
+<div class="success-container">
+    <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+    </div>
 
-    <div class="p-grid typography--p" style="margin-top: 50px">
-        <div class="p-grid-col text--left"><b>결제금액</b></div>
-        <div class="p-grid-col text--right" id="amount"></div>
+    <div class="success-message">
+        <h1>결제가 완료되었습니다!</h1>
+        <p>콘서트 예약이 성공적으로 처리되었습니다.</p>
     </div>
-    <div class="p-grid typography--p" style="margin-top: 10px">
-        <div class="p-grid-col text--left"><b>주문번호</b></div>
-        <div class="p-grid-col text--right" id="orderId"></div>
+
+    <!-- 결제 정보 카드 -->
+    <div class="payment-info-card">
+        <h2><i class="fas fa-receipt me-2"></i>결제 정보</h2>
+
+        <div class="info-row">
+            <div class="info-label">
+                <i class="fas fa-won-sign"></i>
+                <span>결제 금액</span>
+            </div>
+            <div class="info-value" id="amount"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">
+                <i class="fas fa-hashtag"></i>
+                <span>주문 번호</span>
+            </div>
+            <div class="info-value" id="orderId"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">
+                <i class="fas fa-key"></i>
+                <span>결제 키</span>
+            </div>
+            <div class="info-value payment-key" id="paymentKey"></div>
+        </div>
     </div>
-    <div class="p-grid typography--p" style="margin-top: 10px">
-        <div class="p-grid-col text--left"><b>paymentKey</b></div>
-        <div class="p-grid-col text--right" id="paymentKey" style="white-space: initial; width: 250px"></div>
-    </div>
-    <div class="p-grid" style="margin-top: 30px">
-        <button class="button p-grid-col5" id="main-button">메인 페이지 이동</button>
+
+    <!-- 액션 버튼 -->
+    <div class="action-buttons">
+        <button class="btn-primary" id="main-button">
+            <i class="fas fa-home me-2"></i>
+            콘서트 목록으로 돌아가기
+        </button>
     </div>
 </div>
 
-<div class="box_section" style="width: 600px; text-align: left">
-    <b>Response Data :</b>
-    <div id="response" style="white-space: initial"></div>
+<!-- 개발자 정보 섹션 -->
+<div class="developer-info">
+    <div class="dev-header">
+        <h3><i class="fas fa-code me-2"></i>개발자 정보</h3>
+        <button class="toggle-btn" id="toggleResponse">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </div>
+    <div class="response-data" id="responseContainer" style="display: none;">
+        <div class="response-header">
+            <span><i class="fas fa-database me-2"></i>Response Data</span>
+        </div>
+        <div class="response-content" id="response"></div>
+    </div>
 </div>
 
 <script src="/js/payment-success-script.js"></script>
 </body>
 </html>
-
-
-
