@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class DetailConcertSeatDto {
+public class DetailedConcertSeatDto {
     private Long seatId;
     private String row;
     private SeatType seatType;
@@ -23,8 +23,8 @@ public class DetailConcertSeatDto {
     private String zone;
     private int remainingSeats;
 
-    public static DetailConcertSeatDto from(SeatDto seat, ConcertSeatDto concertSeat, SectionDto section) {
-        return DetailConcertSeatDto.builder()
+    public static DetailedConcertSeatDto from(SeatDto seat, ConcertSeatDto concertSeat, SectionDto section) {
+        return DetailedConcertSeatDto.builder()
                 .seatId(seat.getSeatId())
                 .row(seat.getSeatRow())
                 .seatType(seat.getSeatType())

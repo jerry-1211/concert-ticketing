@@ -4,7 +4,7 @@ package com.jerry.ticketing.seat.application;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
-import com.jerry.ticketing.seat.application.dto.web.ConcertSeatBlockDto;
+import com.jerry.ticketing.seat.application.dto.web.BlockConcertSeatDto;
 import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import com.jerry.ticketing.seat.util.ConcertSeatIdExtractor;
@@ -23,7 +23,7 @@ public class ConcertSeatCommandService {
     private final ConcertSeatRepository concertSeatRepository;
 
     @Transactional
-    public List<ConcertSeat> blockSeats(ConcertSeatBlockDto.Request request) {
+    public List<ConcertSeat> blockSeats(BlockConcertSeatDto.Request request) {
 
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()));

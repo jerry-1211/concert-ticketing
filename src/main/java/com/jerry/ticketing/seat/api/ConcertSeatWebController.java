@@ -4,8 +4,8 @@ package com.jerry.ticketing.seat.api;
 import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
 import com.jerry.ticketing.seat.application.ConcertSeatQueryService;
-import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
-import com.jerry.ticketing.seat.domain.enums.SectionType;
+import com.jerry.ticketing.seat.application.dto.web.DetailedConcertSeatDto;
+import com.jerry.ticketing.seat.domain.enums.SeatSection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,11 +45,11 @@ public class ConcertSeatWebController {
 
 
     @GetMapping("/api/seats")
-    public ResponseEntity<List<DetailConcertSeatDto>> getSeats(@RequestParam Long concertId,
-                                                               @RequestParam String zone,
-                                                               @RequestParam String row) {
+    public ResponseEntity<List<DetailedConcertSeatDto>> getSeats(@RequestParam Long concertId,
+                                                                 @RequestParam String zone,
+                                                                 @RequestParam String row) {
 
-        return ResponseEntity.ok(concertSeatQueryService.findDetailedConcertSeatsByLocation(concertId, zone, row));
+        return ResponseEntity.ok(concertSeatQueryService.getDetailedConcertSeat(concertId, zone, row));
     }
 
 

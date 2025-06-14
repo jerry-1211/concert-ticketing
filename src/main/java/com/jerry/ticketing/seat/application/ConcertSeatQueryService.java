@@ -1,6 +1,6 @@
 package com.jerry.ticketing.seat.application;
 
-import com.jerry.ticketing.seat.application.dto.web.DetailConcertSeatDto;
+import com.jerry.ticketing.seat.application.dto.web.DetailedConcertSeatDto;
 import com.jerry.ticketing.seat.application.dto.domain.SeatDto;
 import com.jerry.ticketing.seat.application.dto.domain.SectionDto;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
@@ -24,7 +24,7 @@ public class ConcertSeatQueryService {
 
 
     @Transactional(readOnly = true)
-    public List<DetailConcertSeatDto> findDetailedConcertSeatsByLocation(Long concertId, String zone, String row) {
+    public List<DetailedConcertSeatDto> getDetailedConcertSeat(Long concertId, String zone, String row) {
         ConcertSeats concertSeats = new ConcertSeats(concertSeatRepository.findByJoinConditions(concertId, zone, row));
 
         List<Long> seatIds = concertSeats.getSeatIds();
