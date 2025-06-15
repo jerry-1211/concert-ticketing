@@ -2,15 +2,86 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>결제 실패 - 콘서트 예약</title>
     <link rel="stylesheet" href="/css/payment-fail-styles.css">
-
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
-<h2> 결제 실패 </h2>
-<p id="code"></p>
-<p id="message"></p>
+<!-- 결제 실패 메인 섹션 -->
+<div class="fail-container">
+    <div class="fail-icon">
+        <i class="fas fa-times-circle"></i>
+    </div>
+
+    <div class="fail-message">
+        <h1>결제에 실패했습니다</h1>
+        <p>결제 처리 중 문제가 발생했습니다. 다시 시도해주세요.</p>
+    </div>
+
+    <!-- 오류 정보 카드 -->
+    <div class="error-info-card">
+        <h2><i class="fas fa-exclamation-triangle me-2"></i>오류 정보</h2>
+
+        <div class="error-row">
+            <div class="error-label">
+                <i class="fas fa-code"></i>
+                <span>오류 코드</span>
+            </div>
+            <div class="error-value" id="code"></div>
+        </div>
+
+        <div class="error-row">
+            <div class="error-label">
+                <i class="fas fa-info-circle"></i>
+                <span>실패 사유</span>
+            </div>
+            <div class="error-value" id="message"></div>
+        </div>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="action-buttons">
+        <button class="btn-secondary" onclick="history.back()">
+            <i class="fas fa-arrow-left me-2"></i>
+            이전 페이지로
+        </button>
+        <button class="btn-primary" onclick="window.location.href='/concerts'">
+            <i class="fas fa-home me-2"></i>
+            콘서트 목록으로
+        </button>
+    </div>
+
+    <!-- 도움말 섹션 -->
+    <div class="help-section">
+        <h3><i class="fas fa-question-circle me-2"></i>도움이 필요하신가요?</h3>
+        <div class="help-content">
+            <div class="help-item">
+                <i class="fas fa-credit-card"></i>
+                <div>
+                    <strong>카드 정보 확인</strong>
+                    <p>카드 번호, 유효기간, CVC 번호를 다시 확인해주세요.</p>
+                </div>
+            </div>
+            <div class="help-item">
+                <i class="fas fa-wifi"></i>
+                <div>
+                    <strong>네트워크 연결</strong>
+                    <p>인터넷 연결 상태를 확인하고 다시 시도해주세요.</p>
+                </div>
+            </div>
+            <div class="help-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <strong>고객센터 문의</strong>
+                    <p>문제가 지속되면 고객센터로 문의해주세요.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/js/payment-fail-script.js"></script>
 </body>
 </html>

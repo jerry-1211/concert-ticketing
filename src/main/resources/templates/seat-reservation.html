@@ -2,9 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://js.tosspayments.com/v2/standard"></script>
     <title>좌석 예약</title>
     <link rel="stylesheet" href="/css/seat-reservation-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -12,35 +14,53 @@
     const MAX_TICKETS_PER_USER = /*[[${concert.maxTicketsPerUser}]]*/ 4;
 </script>
 
-
 <div class="seat-container">
-    <h2>콘서트 좌석 예약</h2>
+    <!-- 뒤로가기 버튼 -->
+    <div class="header-nav">
+        <button class="back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> 뒤로가기
+        </button>
+    </div>
+
+    <h2><i class="fas fa-chair"></i> 콘서트 좌석 예약</h2>
 
     <!-- 최대 선택 가능 좌석 수 표시 -->
     <div class="ticket-info">
-        <p>최대 <span th:text="${concert.maxTicketsPerUser}"></span>매까지 예약 가능합니다.</p>
+        <i class="fas fa-info-circle"></i>
+        <span>최대 <strong th:text="${concert.maxTicketsPerUser}"></strong>매까지 예약 가능합니다.</span>
     </div>
 
     <div class="concert-title">
-        <p><span th:text="${concert.title}"></span> 콘서트 예약</p>
-        <p> 콘서트 설명 : <span th:text="${concert.description}"></span></p>
+        <p><i class="fas fa-music"></i> <span th:text="${concert.title}"></span> 콘서트 예약</p>
+        <p><i class="fas fa-align-left"></i> 콘서트 설명 : <span th:text="${concert.description}"></span></p>
     </div>
 
     <div class="legend">
         <div class="legend-item">
-            <span class="seat vip" style="width: 20px; height: 20px;"></span> VIP (1000석)
+            <span class="seat vip" style="width: 20px; height: 20px;"></span>
+            <span>VIP석</span>
         </div>
         <div class="legend-item">
-            <span class="seat standard" style="width: 20px; height: 20px;"></span> STANDARD (1500석)
+            <span class="seat standard" style="width: 20px; height: 20px;"></span>
+            <span>STANDARD석</span>
         </div>
         <div class="legend-item">
-            <span class="seat economy" style="width: 20px; height: 20px;"></span> ECONOMY (2000석)
+            <span class="seat economy" style="width: 20px; height: 20px;"></span>
+            <span>ECONOMY석</span>
+        </div>
+        <div class="legend-item">
+            <span class="seat notable" style="width: 20px; height: 20px;"></span>
+            <span>예약불가</span>
+        </div>
+        <div class="legend-item">
+            <span class="seat selected" style="width: 20px; height: 20px;"></span>
+            <span>선택됨</span>
         </div>
     </div>
 
     <!-- Zone 선택 -->
     <div class="section">
-        <h3>1. Zone 선택</h3>
+        <h3><i class="fas fa-map-marked-alt"></i> 1. Zone 선택</h3>
         <div class="zone-buttons" id="zoneButtons">
             <!-- JavaScript로 동적 생성 -->
         </div>
@@ -48,7 +68,7 @@
 
     <!-- Row 선택 -->
     <div class="section" id="rowSection" style="display: none;">
-        <h3>2. Row 선택</h3>
+        <h3><i class="fas fa-list-ol"></i> 2. Row 선택</h3>
         <div class="row-buttons" id="rowButtons">
             <!-- JavaScript로 동적 생성 -->
         </div>
@@ -56,7 +76,7 @@
 
     <!-- 좌석 선택 -->
     <div class="section" id="seatSection" style="display: none;">
-        <h3>3. 좌석 선택</h3>
+        <h3><i class="fas fa-chair"></i> 3. 좌석 선택</h3>
         <div class="seat-info" id="seatInfo"></div>
         <div class="seat-grid" id="seatGrid">
             <!-- JavaScript로 동적 생성 -->
@@ -65,13 +85,14 @@
 
     <!-- 선택된 좌석 표시 -->
     <div class="selected-seats">
-        <h3>선택된 좌석</h3>
+        <h3><i class="fas fa-check-circle"></i> 선택된 좌석</h3>
         <div class="selected-count">
+            <i class="fas fa-ticket-alt"></i>
             <span id="selectedCount">0</span> / <span th:text="${concert.maxTicketsPerUser}">4</span> 선택됨
         </div>
         <div id="selectedSeatsList"></div>
         <button class="reserve-btn" id="reserveBtn" disabled>
-            결제하기
+            <i class="fas fa-credit-card"></i> 결제하기
         </button>
     </div>
 </div>

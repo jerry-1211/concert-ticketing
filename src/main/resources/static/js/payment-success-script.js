@@ -48,3 +48,24 @@ paymentKeyElement.textContent = urlParams.get("paymentKey");
 document.getElementById('main-button').addEventListener('click', function () {
     window.location.href = '/concerts';
 });
+
+
+// 기존 코드는 그대로 두고, 맨 아래에 추가
+document.getElementById('toggleResponse').addEventListener('click', function () {
+    const responseContainer = document.getElementById('responseContainer');
+    const toggleBtn = this;
+
+    if (responseContainer.style.display === 'none') {
+        responseContainer.style.display = 'block';
+        toggleBtn.classList.add('active');
+    } else {
+        responseContainer.style.display = 'none';
+        toggleBtn.classList.remove('active');
+    }
+});
+
+// 개발자 정보 헤더 클릭 시에도 토글
+document.querySelector('.dev-header').addEventListener('click', function () {
+    document.getElementById('toggleResponse').click();
+});
+
