@@ -28,6 +28,8 @@ public class ConcertSeatQueryService {
     public List<DetailedConcertSeatDto> getDetailedConcertSeat(Long concertId, String zone, String row) {
         ConcertSeats concertSeats = new ConcertSeats(concertSeatRepository.findByJoinConditions(concertId, zone, row));
 
+        //  findConcertSeatsBySearchCondition
+
         List<Long> seatIds = concertSeats.getSeatIds();
         List<Long> sectionIds = concertSeats.getSectionIds();
 

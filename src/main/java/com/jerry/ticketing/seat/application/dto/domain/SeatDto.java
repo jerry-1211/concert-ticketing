@@ -5,6 +5,7 @@ import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.domain.enums.SeatType;
 import lombok.Builder;
 import lombok.Getter;
+import org.apache.logging.log4j.util.Strings;
 
 @Getter
 @Builder
@@ -24,4 +25,7 @@ public class SeatDto {
                 .build();
     }
 
+   public static SeatDto empty() {
+       return new SeatDto(0L, Strings.EMPTY, 0, SeatType.STANDARD);
+   }
 }

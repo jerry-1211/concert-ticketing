@@ -17,7 +17,7 @@ public class DetailConcertSeatMapper {
 
         return concertSeats.item().stream()
                 .map(cs -> DetailedConcertSeatDto.from(
-                        seatDtoMap.get(cs.getSeatId()),
+                        seatDtoMap.getOrDefault(cs.getSeatId(), SeatDto.empty()),
                         ConcertSeatDto.from(cs),
                         sectionDtoMap.get(cs.getSectionId())
                 ))

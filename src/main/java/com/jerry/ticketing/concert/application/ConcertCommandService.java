@@ -25,9 +25,6 @@ public class ConcertCommandService {
 
         concertSeatInitializer.initializeSectionAndConcertSeats(saveConcert.getId());
 
-        return CreateConcertDto.Response.from(saveConcert);
-
+        return CreateConcertDto.toResponse(saveConcert);
     }
-
-
 }

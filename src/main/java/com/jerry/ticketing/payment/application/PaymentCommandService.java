@@ -1,5 +1,6 @@
 package com.jerry.ticketing.payment.application;
 
+import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
 import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
@@ -26,6 +27,7 @@ public class PaymentCommandService {
     private final PaymentQueryService paymentQueryService;
     private final TossPaymentClient tossPaymentClient;
     private final ReservationQueryService reservationQueryService;
+    private final TossPaymentConfig tossPaymentConfig;
 
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {

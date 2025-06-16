@@ -1,7 +1,9 @@
 package com.jerry.ticketing.concert.application.dto.web;
 
 import com.jerry.ticketing.concert.domain.Concert;
+import jakarta.persistence.Convert;
 import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,18 +68,19 @@ public class CreateConcertDto {
         private String description;
         private int maxTicketsPerUser;
 
-        public static CreateConcertDto.Response from(Concert concert) {
-            return CreateConcertDto.Response.builder()
-                    .id(concert.getId())
-                    .title(concert.getTitle())
-                    .dateTime(concert.getDateTime())
-                    .venue(concert.getVenue())
-                    .price(concert.getPrice())
-                    .description(concert.getDescription())
-                    .maxTicketsPerUser(concert.getMaxTicketsPerUser())
-                    .build();
-        }
+
     }
 
+    public static CreateConcertDto.Response toResponse(Concert concert) {
 
+        return CreateConcertDto.Response.builder()
+           .id(concert.getId())
+           .title(concert.getTitle())
+           .dateTime(concert.getDateTime())
+           .venue(concert.getVenue())
+           .price(concert.getPrice())
+           .description(concert.getDescription())
+           .maxTicketsPerUser(concert.getMaxTicketsPerUser())
+           .build();
+    }
 }

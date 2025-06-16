@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class ConcertMapper {
 
     public Concert from(CreateConcertDto.Request request) {
+
         return Concert.of(
                 request.getTitle(),
                 request.getDateTime(),

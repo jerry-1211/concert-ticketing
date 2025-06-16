@@ -80,13 +80,13 @@ public class Reservation {
 
 
     public void confirmReservation() {
-        status = ReservationStatus.CONFIRMED;
+        this.status = ReservationStatus.CONFIRMED;
         this.expiresAt = OffsetDateTime.now().plusMinutes(RESERVATION_TIMEOUT_MINUTES);
     }
 
 
     public void cancelReservation() {
-        status = ReservationStatus.CANCELLED;
+        this.status = ReservationStatus.CANCELLED;
     }
 
 

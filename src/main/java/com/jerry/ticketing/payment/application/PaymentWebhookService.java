@@ -17,13 +17,34 @@ public class PaymentWebhookService {
     private final PaymentCommandService paymentCommandService;
     private final ReservationCommandService reservationCommandService;
     private final ConcertSeatCommandService concertSeatCommandService;
+    private static final String DONE = "DONE";
 
     public void handle(WebhookPaymentDto.Request request) {
         WebhookPaymentDto.Request.PaymentData data = request.getData();
 
-        if (data.getStatus().equals("DONE")) {
+        if (DONE.equals(data.getStatus())) {
             finalizeOrder(data);
         }
+//
+//        if (data.getStatus().equals(DONE)) {
+//            finalizeOrder(data);
+//        }
+//
+//        if (data.getStatus().equals(DONE)) {
+//            finalizeOrder(data);
+//        }
+//
+//        if (data.getStatus().equals(DONE)) {
+//            finalizeOrder(data);
+//        }
+//
+//        if (data.getStatus().equals(DONE)) {
+//            finalizeOrder(data);
+//        }
+
+//        if(DONE.equals(data.getStatus())) {
+//            finalizeOrder(data);
+//        }
 
     }
 
