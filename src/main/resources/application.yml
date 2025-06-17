@@ -41,7 +41,6 @@ spring:
               - profile
               - email
 
-
 toss:
   payments:
     test-secret-api-key: ${TOSS_PAYMENTS_SECRET_KEY}
@@ -49,5 +48,6 @@ toss:
     fail-url: ${TOSS_FAIL_URL}
     base-url: ${TOSS_BASE_URL}
 
-
-
+google:
+  oauth2:
+    authorized-redirect-uri: ${GOOGLE_AUTHORIZED_REDIRECT_URI}
