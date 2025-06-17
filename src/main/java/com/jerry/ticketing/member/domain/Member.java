@@ -1,8 +1,12 @@
 package com.jerry.ticketing.member.domain;
 
 
+import com.jerry.ticketing.member.domain.enums.MemberRole;
+import com.jerry.ticketing.member.domain.enums.Provider;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -28,23 +32,66 @@ public class Member {
     private String email;
 
     // 멤버 패스워드
-    @Column(nullable = false)
+    @Column
     private String password;
 
     // 멤버 전화번호
+    @Column
     private String phoneNumber;
 
+    // 멤버 역할
+    @Enumerated(EnumType.STRING)
+    private MemberRole memberRole;
 
-    private Member(String name, Address address, String email, String password, String phoneNumber) {
-        this.address = address;
+    // 로그인 방식
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    // 구글 제공 고유 Id
+    @Column
+    private String providerId;
+
+    // 프로필
+    @Column
+    private String profileImage;
+
+    // 회원가입 시간
+    private OffsetDateTime createdAt;
+
+    // 회원수정 시간
+    private OffsetDateTime updatedAt;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = OffsetDateTime.now();
+        updatedAt = OffsetDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = OffsetDateTime.now();
+    }
+
+    public static Member ofGoogle(String name, String email, String providerId, String profileImage) {
+        Member member = new Member();
+        member.name = name;
+        member.email = email;
+        member.provider = Provider.GOOGLE;
+        member.providerId = providerId;
+        member.profileImage = profileImage;
+        member.memberRole = MemberRole.USER;
+        return member;
+    }
+
+
+    public boolean isGoogleUser() {
+        return provider == Provider.GOOGLE;
+    }
+
+    public void updateGoogleInfo(String name, String profileImage) {
         this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.profileImage = profileImage;
     }
 
-    public static Member of(String name, Address address,
-                            String email, String password, String phoneNumber) {
-        return new Member(name, address, email, password, phoneNumber);
-    }
 }

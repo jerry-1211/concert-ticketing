@@ -18,16 +18,16 @@ public class TestFixture {
 
 
     // 멤버 데이터 생성
-    public static Member createMember() {
-        return createMember("Jerry");
-    }
-
-    public static Member createMember(String name) {
-        return Member.of(
-                name, Address.of("경기도", "고양시"),
-                "jerry@naver.com", "password", "010-2304-4302");
-    }
-
+//    public static Member createMember() {
+//        return createMember("Jerry");
+//    }
+//
+//    public static Member createMember(String name) {
+//        return Member.of(
+//                name, Address.of("경기도", "고양시"),
+//                "jerry@naver.com", "password", "010-2304-4302");
+//    }
+//
 
     // 콘서트 데이터 생성
     public static Concert createConcert() {

@@ -31,13 +31,13 @@ class ReservationTest {
     private ConcertRepository concertRepository;
 
     @BeforeEach
-    void setUp() {
-        Member member = TestFixture.createMember();
-        Concert concert = TestFixture.createConcert();
-
-        memberRepository.save(member);
-        concertRepository.save(concert);
-    }
+//    void setUp() {
+////        Member member = TestFixture.createMember();
+//        Concert concert = TestFixture.createConcert();
+//
+//        memberRepository.save(member);
+//        concertRepository.save(concert);
+//    }
 
     @Test
     @DisplayName("예약 생성 및 저장 검증")
