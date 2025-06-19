@@ -11,15 +11,15 @@ public class CreateReservationDto {
     @NoArgsConstructor
     public static class Request {
 
-        private Long memberId;
+        private String token;
         private Long concertId;
         private String orderName;
         private OffsetDateTime expireAt;
         private int totalAmount;
         private int quantity;
 
-        public Request(Long memberId, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
-            this.memberId = memberId;
+        public Request(String token, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
+            this.token = token;
             this.concertId = concertId;
             this.orderName = orderName;
             this.expireAt = expireAt;
