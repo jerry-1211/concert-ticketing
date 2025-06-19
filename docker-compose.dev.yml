@@ -10,16 +10,30 @@ services:
     ports:
       - "${SERVER_PORT}:8080"
     restart: "no"
+    env_file:
+      - .env
     depends_on: # app이 mysql 보다 늦게 실행되도록 설정
       - mysql
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+
       TOSS_PAYMENTS_SECRET_KEY: ${TOSS_PAYMENTS_SECRET_KEY}
       TOSS_SUCCESS_URL: ${TOSS_SUCCESS_URL}
       TOSS_FAIL_URL: ${TOSS_FAIL_URL}
       TOSS_BASE_URL: ${TOSS_BASE_URL}
+
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI}
+      GOOGLE_AUTHORIZATION_URI: ${GOOGLE_AUTHORIZATION_URI}
+
+      GOOGLE_AUTHORIZED_REDIRECT_URI: ${GOOGLE_AUTHORIZED_REDIRECT_URI}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+
 
     deploy:
       resources:
@@ -28,7 +42,7 @@ services:
         reservations:
           memory: 2G
 
-  mysql:  # h2 서비스를 mysql로 교체
+  mysql:
     image: mysql:latest
     container_name: mysql-container
     ports:
@@ -38,8 +52,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - mysql_data:/var/lib/mysql
-    healthcheck:  # MySQL이 완전히 준비될 때까지 대기
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    healthcheck: # 완전히 준비될 때까지 대기
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
       retries: 10
 
@@ -51,7 +65,7 @@ services:
     network_mode: host
     environment:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-    command: ["http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}"]
+    command: [ "http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}" ]
     depends_on:
       - app
 

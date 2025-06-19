@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        .google-btn {
+            background-color: #4285f4;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .google-btn:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+<h2>로그인</h2>
+
+<!-- 일반 로그인 폼 -->
+<form id="loginForm">
+    <div>
+        <label>이메일:</label>
+        <input type="email" id="email" required>
+    </div>
+    <div>
+        <label>비밀번호:</label>
+        <input type="password" id="password" required>
+    </div>
+    <button type="submit">로그인</button>
+</form>
+
+<hr>
+
+<a href="/member/login/google" class="google-btn">
+    🔍 Google로 로그인
+</a>
+
+<script>
+    // 일반 로그인 처리
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email, password})
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                localStorage.setItem('accessToken', result.data.accessToken);
+                window.location.href = '/dashboard';
+            } else {
+                alert('로그인 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('로그인 오류:', error);
+            alert('로그인 중 오류가 발생했습니다.');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,14 +1,17 @@
 spring:
   application:
     name: concert
+
   output:
     ansi:
       enabled: always
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 드라이버로 변경
+
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -20,10 +23,28 @@ spring:
         jdbc:
           batch_size: 30
     defer-datasource-initialization: true
+
   sql:
     init:
       mode: always
       data-locations: classpath:data.sql
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
+            scope:
+              - profile
+              - email
+        provider:
+          google:
+            authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
+
+
 
 toss:
   payments:
@@ -32,5 +53,11 @@ toss:
     fail-url: ${TOSS_FAIL_URL}
     base-url: ${TOSS_BASE_URL}
 
+google:
+  oauth2:
+    authorized-redirect-uri: ${GOOGLE_AUTHORIZED_REDIRECT_URI}
 
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}

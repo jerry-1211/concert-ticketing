@@ -43,8 +43,8 @@ class PaymentTest {
 
     @BeforeEach
     void setUp() {
-        Member member = memberRepository.save(TestFixture.createMember());
-        Concert concert = concertRepository.save(TestFixture.createConcert());
+//        Member member = memberRepository.save(TestFixture.createMember());
+//        Concert concert = concertRepository.save(TestFixture.createConcert());
 //        Reservation reservation = TestFixture.createReservation(member, concert);
 
 //        this.savedReservation = reservationRepository.save(reservation);
