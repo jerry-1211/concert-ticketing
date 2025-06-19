@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/member/login", "/member/login", "/api/auth/logout", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("api/webhook", "api/webhook/**", "/member/login", "/member/login", "/api/auth/logout", "/oauth2/**", "/login/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth2 -> oauth2

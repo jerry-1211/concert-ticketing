@@ -1,6 +1,7 @@
 package com.jerry.ticketing.member.domain;
 
 
+import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.domain.enums.MemberRole;
 import com.jerry.ticketing.member.domain.enums.Provider;
 import jakarta.persistence.*;
@@ -85,13 +86,23 @@ public class Member {
     }
 
 
-    public boolean isGoogleUser() {
-        return provider == Provider.GOOGLE;
-    }
-
     public void updateGoogleInfo(String name, String profileImage) {
         this.name = name;
         this.profileImage = profileImage;
+    }
+
+    public void updateProfile(UpdateProfile.Request request) {
+        if (request.getName() != null) {
+            this.name = request.getName();
+        }
+
+        if (request.getAddress() != null) {
+            this.address = request.getAddress();
+        }
+
+        if (request.getPhoneNumber() != null) {
+            this.phoneNumber = request.getPhoneNumber();
+        }
     }
 
 }

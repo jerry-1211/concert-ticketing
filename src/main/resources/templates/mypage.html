@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>마이페이지</h1>
+
+    <div class="profile-section">
+        <h2>프로필 정보</h2>
+        <div id="profileInfo">
+            <!-- 프로필 정보가 여기에 표시됩니다 -->
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <h2>메뉴</h2>
+        <div class="menu-buttons">
+            <button type="button" class="btn" onclick="goToReservations()">예약 내역 확인</button>
+            <button type="button" class="btn logout-btn" onclick="logout()">로그아웃</button>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <h2>프로필 수정</h2>
+        <form id="updateForm">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name">
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">전화번호</label>
+                <input type="text" id="phoneNumber" name="phoneNumber">
+            </div>
+
+            <div class="form-group">
+                <label for="profileImage">프로필 이미지 URL</label>
+                <input type="url" id="profileImage" name="profileImage">
+            </div>
+
+            <button type="submit" class="btn">수정하기</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 페이지 로드 시 마이페이지 정보 조회
+    window.addEventListener('DOMContentLoaded', loadMyPage);
+
+    async function loadMyPage() {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            alert('로그인이 필요합니다.');
+            window.location.href = '/login';
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/mypage', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                displayProfile(data);
+                fillUpdateForm(data);
+            } else {
+                alert('프로필 정보를 불러올 수 없습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다.');
+        }
+    }
+
+    function displayProfile(profile) {
+        const profileInfo = document.getElementById('profileInfo');
+        profileInfo.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="${profile.profileImage || '/default-profile.png'}"
+                         alt="프로필" class="profile-img">
+                </div>
+                <p><strong>이름:</strong> ${profile.name}</p>
+                <p><strong>이메일:</strong> ${profile.email}</p>
+                <p><strong>전화번호:</strong> ${profile.phoneNumber || '미등록'}</p>
+                <p><strong>로그인 방식:</strong> ${profile.provider}</p>
+                <p><strong>가입일:</strong> ${new Date(profile.createdAt).toLocaleDateString()}</p>
+            `;
+    }
+
+    function fillUpdateForm(profile) {
+        document.getElementById('name').value = profile.name || '';
+        document.getElementById('phoneNumber').value = profile.phoneNumber || '';
+        document.getElementById('profileImage').value = profile.profileImage || '';
+    }
+
+    // 프로필 수정 폼 제출
+    document.getElementById('updateForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem('accessToken');
+        const formData = new FormData(e.target);
+        const updateData = {
+            name: formData.get('name'),
+            phoneNumber: formData.get('phoneNumber'),
+            profileImage: formData.get('profileImage')
+        };
+
+        try {
+            const response = await fetch('/api/mypage/profile', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            });
+
+            if (response.ok) {
+                const updatedProfile = await response.json();
+                alert('프로필이 수정되었습니다.');
+                displayProfile(updatedProfile);
+            } else {
+                alert('프로필 수정에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다.');
+        }
+    });
+
+    async function logout() {
+        try {
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            localStorage.clear();
+            sessionStorage.clear();
+
+            window.location.replace('/member/login');
+
+        } catch (error) {
+            console.error('로그아웃 실패:', error);
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace('/');
+        }
+    }
+
+    // 예약 내역 페이지로 이동
+    function goToReservations() {
+        window.location.href = '/mypage/reservations';
+    }
+
+</script>
+</body>
+</html>
