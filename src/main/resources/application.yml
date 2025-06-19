@@ -40,6 +40,11 @@ spring:
             scope:
               - profile
               - email
+        provider:
+          google:
+            authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
+
+
 
 toss:
   payments:
@@ -51,3 +56,8 @@ toss:
 google:
   oauth2:
     authorized-redirect-uri: ${GOOGLE_AUTHORIZED_REDIRECT_URI}
+
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
