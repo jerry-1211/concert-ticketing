@@ -28,7 +28,7 @@ public class ConcertSeatWebController {
 
         ConcertDto concert = concertQueryService.getConcertById(concertId, ConcertDto::from);
         model.addAttribute("concert", concert);
-        return "seat-reservation";
+        return "ticketing/seat-reservation";
     }
 
 

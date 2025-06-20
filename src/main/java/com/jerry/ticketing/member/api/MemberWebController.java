@@ -13,6 +13,6 @@ public class MemberWebController {
     @GetMapping("/oauth2/callback")
     public String callback(@RequestParam("token") String token,
                            @RequestParam("type") String type) {
-        return "callback";
+        return "auth/oauth-callback";
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 처리 중...</title>
+    <link rel="stylesheet" href="/css/auth/oauth-callback.css">
+</head>
+<body>
+<div class="processing-container">
+    <div class="logo">Jerry Project CONCERT ticketing</div>
+
+    <!-- 로딩 아이콘 -->
+    <div class="processing-icon" id="loadingIcon">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- 성공 아이콘 -->
+    <div class="success-animation" id="successIcon">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" fill="none" cx="26" cy="26" r="25"/>
+            <path class="checkmark__check" fill="none" d="m14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+    </div>
+
+    <!-- 에러 아이콘 -->
+    <div class="error-icon" id="errorIcon">❌</div>
+
+    <h1 class="processing-text" id="statusTitle">Google 로그인 처리 중</h1>
+    <p class="processing-subtitle" id="statusSubtitle">잠시만 기다려주세요<span class="dots"></span></p>
+    <div class="encouraging-text" id="encouragingText">로그인 화이팅! 🎵</div>
+</div>
+
+<script src="/js/auth/oauth-callback.js"></script>
+</body>
+</html>

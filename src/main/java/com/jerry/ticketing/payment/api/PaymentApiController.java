@@ -41,7 +41,7 @@ public class PaymentApiController {
     public String failPayment(HttpServletRequest request, Model model) {
         model.addAttribute("code", request.getParameter("code"));
         model.addAttribute("message", request.getParameter("message"));
-        return "fail";
+        return "payment/payment-fail";
     }
 
 }

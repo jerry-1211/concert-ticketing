@@ -24,14 +24,14 @@ public class ConcertWebController {
     public String showAllConcerts(Model model) {
         List<ConcertDto> concerts = concertQueryService.getAllConcerts(ConcertDto::from);
         model.addAttribute("concerts", concerts);
-        return "concert-list";
+        return "concert/concert-list";
     }
 
 
     @GetMapping("/new")
     public String creatConcertForm(Model model) {
         model.addAttribute("createConcertRequest", new CreateConcertDto.Request());
-        return "concert-new";
+        return "concert/concert-new";
     }
 
 }

@@ -12,13 +12,13 @@ public class MyPageWebController {
 
     @GetMapping
     public String myPage() {
-        return "mypage";
+        return "member/profile";
     }
 
 
     @GetMapping("/reservations")
     public String myReservation() {
-        return "myreservation";
+        return "member/my-reservations";
     }
 
 }
