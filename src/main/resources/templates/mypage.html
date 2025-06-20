@@ -5,96 +5,333 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
     <style>
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin-left: 18%;
+            margin-right: 18%;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            margin-top: 5%;
+            background: linear-gradient(135deg, #f8f5ff 0%, #ede7ff 100%);
+            padding: 60px 30px 40px;
+            position: relative;
+            border-radius: 12px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 11px;
+            left: 28px;
+            background: rgba(124, 58, 237, 0.1);
+            border: none;
+            color: #7c3aed;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: rgba(124, 58, 237, 0.15);
         }
 
         .profile-section {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #f3f0ff;
+        }
+
+        .profile-text h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .profile-text p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .main-content {
+            padding: 40px 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+            padding-left: 4px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .menu-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.1);
+            border-color: #e5e7eb;
+        }
+
+        .menu-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .icon-purple {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: white;
+        }
+
+        .icon-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .icon-red {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .menu-content {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .menu-description {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .edit-section {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edit-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 14px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fafafa;
+            transition: all 0.3s ease;
         }
 
-        .btn {
-            padding: 10px 20px;
-            background: #007bff;
+        .form-group input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.05);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .btn:hover {
-            background: #0056b3;
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
         }
 
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
+        @media (max-width: 768px) {
+            body {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .header {
+                padding: 50px 20px 30px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .menu-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+
+            .menu-content {
+                text-align: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>마이페이지</h1>
-
-    <div class="profile-section">
-        <h2>프로필 정보</h2>
-        <div id="profileInfo">
-            <!-- 프로필 정보가 여기에 표시됩니다 -->
-        </div>
+<div class="header">
+    <a href="/" class="back-btn">←</a>
+    <div class="profile-section" id="profileHeader">
+        <!-- 프로필 헤더가 여기에 표시됩니다 -->
     </div>
+</div>
 
-    <div class="profile-section">
-        <h2>메뉴</h2>
-        <div class="menu-buttons">
-            <button type="button" class="btn" onclick="goToReservations()">예약 내역 확인</button>
-            <button type="button" class="btn logout-btn" onclick="logout()">로그아웃</button>
+<div class="main-content">
+    <div class="section-title">서비스</div>
+    <div class="menu-list">
+        <a href="/mypage/reservations" class="menu-card">
+            <div class="menu-icon icon-blue">🎫</div>
+            <div class="menu-content">
+                <div class="menu-title">예약 내역</div>
+                <div class="menu-description">나의 콘서트 예약 현황을 확인하고 관리할 수 있습니다.</div>
+            </div>
+        </a>
+
+        <div>
+            <a href="#" class="menu-card" onclick="toggleEdit(); return false;">
+                <div class="menu-icon icon-purple">✏️</div>
+                <div class="menu-content">
+                    <div class="menu-title">프로필 수정</div>
+                    <div class="menu-description">개인정보와 프로필 이미지를 변경할 수 있습니다.</div>
+                </div>
+            </a>
+
+            <div class="edit-section" id="editSection">
+                <div class="edit-title">프로필 수정</div>
+                <form id="updateForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">이름</label>
+                            <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">전화번호</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력하세요">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileImage">프로필 이미지 URL</label>
+                        <input type="url" id="profileImage" name="profileImage" placeholder="이미지 URL을 입력하세요">
+                    </div>
+                    <button type="submit" class="submit-btn">변경사항 저장</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="profile-section">
-        <h2>프로필 수정</h2>
-        <form id="updateForm">
-            <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name">
+        <a href="#" class="menu-card" onclick="logout(); return false;">
+            <div class="menu-icon icon-red">🚪</div>
+            <div class="menu-content">
+                <div class="menu-title">로그아웃</div>
+                <div class="menu-description">현재 계정에서 안전하게 로그아웃합니다.</div>
             </div>
-
-            <div class="form-group">
-                <label for="phoneNumber">전화번호</label>
-                <input type="text" id="phoneNumber" name="phoneNumber">
-            </div>
-
-            <div class="form-group">
-                <label for="profileImage">프로필 이미지 URL</label>
-                <input type="url" id="profileImage" name="profileImage">
-            </div>
-
-            <button type="submit" class="btn">수정하기</button>
-        </form>
+        </a>
     </div>
 </div>
 
@@ -131,17 +368,13 @@
     }
 
     function displayProfile(profile) {
-        const profileInfo = document.getElementById('profileInfo');
-        profileInfo.innerHTML = `
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="${profile.profileImage || '/default-profile.png'}"
-                         alt="프로필" class="profile-img">
+        const profileHeader = document.getElementById('profileHeader');
+        profileHeader.innerHTML = `
+                <img src="${profile.profileImage || '/default-profile.png'}" alt="프로필" class="profile-img">
+                <div class="profile-text">
+                    <h2>${profile.name}</h2>
+                    <p>${profile.email}</p>
                 </div>
-                <p><strong>이름:</strong> ${profile.name}</p>
-                <p><strong>이메일:</strong> ${profile.email}</p>
-                <p><strong>전화번호:</strong> ${profile.phoneNumber || '미등록'}</p>
-                <p><strong>로그인 방식:</strong> ${profile.provider}</p>
-                <p><strong>가입일:</strong> ${new Date(profile.createdAt).toLocaleDateString()}</p>
             `;
     }
 
@@ -149,6 +382,15 @@
         document.getElementById('name').value = profile.name || '';
         document.getElementById('phoneNumber').value = profile.phoneNumber || '';
         document.getElementById('profileImage').value = profile.profileImage || '';
+    }
+
+    function toggleEdit() {
+        const editSection = document.getElementById('editSection');
+        if (editSection.style.display === 'none' || editSection.style.display === '') {
+            editSection.style.display = 'block';
+        } else {
+            editSection.style.display = 'none';
+        }
     }
 
     // 프로필 수정 폼 제출
@@ -177,6 +419,7 @@
                 const updatedProfile = await response.json();
                 alert('프로필이 수정되었습니다.');
                 displayProfile(updatedProfile);
+                toggleEdit();
             } else {
                 alert('프로필 수정에 실패했습니다.');
             }
@@ -198,8 +441,7 @@
 
             localStorage.clear();
             sessionStorage.clear();
-
-            window.location.replace('/member/login');
+            window.location.replace('/');
 
         } catch (error) {
             console.error('로그아웃 실패:', error);
@@ -208,12 +450,6 @@
             window.location.replace('/');
         }
     }
-
-    // 예약 내역 페이지로 이동
-    function goToReservations() {
-        window.location.href = '/mypage/reservations';
-    }
-
 </script>
 </body>
 </html>
