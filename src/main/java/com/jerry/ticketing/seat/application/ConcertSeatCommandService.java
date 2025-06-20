@@ -2,6 +2,7 @@ package com.jerry.ticketing.seat.application;
 
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
+import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import com.jerry.ticketing.seat.application.dto.web.BlockConcertSeatDto;
@@ -21,6 +22,8 @@ public class ConcertSeatCommandService {
 
     private final ConcertSeatBlockValidator concertSeatBlockValidator;
     private final ConcertSeatRepository concertSeatRepository;
+    private final SectionCommandService sectionCommandService;
+    private final SectionQueryService sectionQueryService;
 
     @Transactional
     public List<ConcertSeat> blockSeats(BlockConcertSeatDto.Request request) {
@@ -49,7 +52,12 @@ public class ConcertSeatCommandService {
     public void confirm(String orderName) {
         List<Long> concertSeatIds = ConcertSeatIdExtractor.extractFromOrderName(orderName);
         List<ConcertSeat> concertSeats = concertSeatRepository.findByIdIn(concertSeatIds);
-        concertSeats.forEach(ConcertSeat::confirm);
+
+        for (ConcertSeat concertSeat : concertSeats) {
+            concertSeat.confirm();
+            Section section = sectionQueryService.getSection(concertSeat.getSectionId());
+            sectionCommandService.decrease(section);
+        }
     }
 
 

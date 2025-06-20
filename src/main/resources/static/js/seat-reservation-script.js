@@ -47,6 +47,7 @@ async function selectZone(zone) {
     // Row 섹션 표시 및 로드
     document.getElementById('rowSection').style.display = 'block';
     document.getElementById('seatSection').style.display = 'none';
+    document.getElementById('remainingSeats').style.display = 'none';
     updateSelectedSeats();
 
     try {
@@ -94,13 +95,21 @@ async function selectRow(row) {
 function displaySeats(seats) {
     const seatGrid = document.getElementById('seatGrid');
     const seatInfo = document.getElementById('seatInfo');
+    const seatSection = document.getElementById('seatSection');
+
 
     seatGrid.innerHTML = '';
 
     if (seats.length > 0) {
         const seatType = seats[0].seatType.toLowerCase();
         const totalAmount = seats[0].totalAmount;
+        const remainingSeats = seats[0].remainingSeats;
+        const zone = seats[0].zone;
+
         seatInfo.innerHTML = `<p>${selectedZone}-${selectedRow} (${seatType.toUpperCase()}) - ${totalAmount}원</p>`;
+        document.getElementById('remainingSeats').innerHTML = `${zone} Zone - ${remainingSeats}좌석 남음 🔥`;
+        document.getElementById('remainingSeats').style.display = 'block';
+
 
         seats.forEach(seat => {
             const seatElement = document.createElement('div');

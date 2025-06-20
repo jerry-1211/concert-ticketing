@@ -48,12 +48,11 @@ public class Section {
     }
 
 
-    // Todo: 남은 좌석 표현해주는 로직
-    public int decreaseRemainingSeats() {
+    public void decreaseRemainingSeats() {
         if (this.remainingConcertSeats <= 0) {
             throw new BusinessException(SectionErrorCode.SECTION_SOLD_OUT);
         }
-        return --remainingConcertSeats;
+        --remainingConcertSeats;
     }
 
     public boolean hasAvailableSeats() {
