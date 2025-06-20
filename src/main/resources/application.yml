@@ -24,11 +24,6 @@ spring:
           batch_size: 30
     defer-datasource-initialization: true
 
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:data.sql
-
   security:
     oauth2:
       client:
