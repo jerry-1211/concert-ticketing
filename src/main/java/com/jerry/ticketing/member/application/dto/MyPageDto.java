@@ -14,7 +14,6 @@ import java.time.OffsetDateTime;
 public class MyPageDto {
 
     private String name;
-    private Address address;
     private String email;
     private String phoneNumber;
     private Provider provider;
@@ -25,8 +24,8 @@ public class MyPageDto {
     public static MyPageDto from(Member member) {
         return MyPageDto.builder()
                 .name(member.getName())
-                .address(member.getAddress())
                 .email(member.getEmail())
+                .phoneNumber(member.getPhoneNumber())
                 .provider(member.getProvider())
                 .profileImage(member.getProfileImage())
                 .createdAt(member.getCreatedAt())

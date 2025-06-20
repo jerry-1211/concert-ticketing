@@ -20,10 +20,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 멤버 주소
-    @Embedded
-    private Address address;
-
     // 멤버 이름
     @Column(nullable = false)
     private String name;
@@ -31,10 +27,6 @@ public class Member {
     // 멤버 이메일
     @Column(nullable = false)
     private String email;
-
-    // 멤버 패스워드
-    @Column
-    private String password;
 
     // 멤버 전화번호
     @Column
@@ -96,9 +88,6 @@ public class Member {
             this.name = request.getName();
         }
 
-        if (request.getAddress() != null) {
-            this.address = request.getAddress();
-        }
 
         if (request.getPhoneNumber() != null) {
             this.phoneNumber = request.getPhoneNumber();
