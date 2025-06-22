@@ -66,9 +66,11 @@ function showLoading() {
 function showLoginButton() {
     const googleBtn = document.getElementById('googleLoginBtn');
     const testBtn = document.getElementById('testBtn');
+    const loginSubtitle = document.getElementById('login-subtitle');
     const mypageBtn = document.getElementById('mypageBtn');
 
     if (googleBtn) googleBtn.style.display = 'flex';
+    if (loginSubtitle) loginSubtitle.style.display = 'flex';
     if (testBtn) testBtn.style.display = 'none';
     if (mypageBtn) mypageBtn.style.display = 'none';
 
@@ -77,9 +79,11 @@ function showLoginButton() {
 function showTestButton() {
     const googleBtn = document.getElementById('googleLoginBtn');
     const testBtn = document.getElementById('testBtn');
+    const loginSubtitle = document.getElementById('login-subtitle');
     const mypageBtn = document.getElementById('mypageBtn');
 
     if (googleBtn) googleBtn.style.display = 'none';
+    if (loginSubtitle) loginSubtitle.style.display = 'none';
     if (testBtn) testBtn.style.display = 'flex';
     if (mypageBtn) mypageBtn.style.display = 'flex';
 }

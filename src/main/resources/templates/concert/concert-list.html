@@ -10,11 +10,32 @@
 
 </head>
 <body>
+
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>콘서트 목록</h1>
-        <a href="/concerts/new" class="btn btn-primary">새 콘서트 등록</a>
+        <!-- 왼쪽: 홈 버튼 -->
+        <div class="flex-shrink-0">
+            <a href="/" class="btn btn-outline-primary btn-sm btn btn-outline-secondary">
+                <i class="fas fa-home me-1 home-button"></i>홈으로
+            </a>
+        </div>
+
+        <!-- 중앙: 콘서트 목록 제목 -->
+        <div class="flex-grow-1 text-center">
+            <h1 class="h2 fw-bold mb-0">
+                콘서트 목록
+            </h1>
+        </div>
+
+        <!-- 오른쪽: 새 콘서트 등록 -->
+        <div class="flex-shrink-0">
+            <a href="/concerts/new" class="btn btn-primary rounded-pill">
+                <i class="fas fa-plus me-1"></i>새 콘서트 등록
+            </a>
+        </div>
     </div>
+
 
     <div th:if="${concerts.isEmpty()}" class="alert alert-info text-center">
         <h4>등록된 콘서트가 없습니다.</h4>

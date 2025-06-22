@@ -46,7 +46,8 @@ body {
 .subtitle {
     color: #6b7280;
     font-size: 14px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
 .google-btn {
@@ -129,9 +130,10 @@ body {
 }
 
 .test-btn {
+    margin-top: 50px;
     width: 280px;
     padding: 14px 20px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #3e5af6 0%, #5468fb 100%);
     color: white;
     border: none;
     border-radius: 25px;
@@ -143,19 +145,20 @@ body {
     justify-content: center;
     gap: 10px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 4px 15px rgba(62, 90, 246, 0.3);
 }
 
 .test-btn:hover {
-    background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+
 }
 
 .mypage-btn {
     width: 280px;
     padding: 14px 20px;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     color: white;
     border: none;
     border-radius: 25px;
@@ -167,14 +170,14 @@ body {
     justify-content: center;
     gap: 10px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    margin-top: 30px;
 }
 
 .mypage-btn:hover {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
 }
 
 @media (max-width: 500px) {
