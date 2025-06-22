@@ -1,7 +1,7 @@
 package com.jerry.ticketing.global.auth.jwt;
 
-import com.jerry.ticketing.global.auth.adopter.MemberDetails;
 import com.jerry.ticketing.global.auth.config.JwtConfig;
+import com.jerry.ticketing.global.auth.oauth.CustomOauth2User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +26,11 @@ public class JwtTokenProvider {
     }
 
 
-    public String generateToken(MemberDetails memberDetails) {
+    public String generateToken(CustomOauth2User customOauth2User) {
         Date expiryDate = new Date(System.currentTimeMillis() + jwtConfig.getExpiration());
 
         return Jwts.builder()
-                .setSubject(memberDetails.getUsername())
+                .setSubject(customOauth2User.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -49,7 +49,7 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getUserEmailFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

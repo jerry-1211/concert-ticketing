@@ -1,6 +1,6 @@
 package com.jerry.ticketing.global.auth.oauth;
 
-import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class CustomOauth2User implements OAuth2User {
 
     @Getter
-    private final Member member;
+    private final MemberDto member;
     private final Map<String, Object> attributes;
     private final String nameAttributeKey;
 
@@ -32,15 +32,14 @@ public class CustomOauth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        Object name = attributes.get(nameAttributeKey);
-        return name != null ? (String) name : " ";
+        return member.getName();
     }
 
     public String getEmail() {
         return member.getEmail();
     }
 
-    public Long getId() {
-        return member.getId();
+    public String getProviderId() {
+        return (String) attributes.get(nameAttributeKey);
     }
 }

@@ -2,9 +2,8 @@ package com.jerry.ticketing.global.auth.oauth;
 
 
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
-import com.jerry.ticketing.member.domain.Member;
-import com.jerry.ticketing.member.domain.enums.Provider;
-import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.member.application.MemberQueryService;
+import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -22,8 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-
-    private final MemberRepository memberRepository;
+    private final MemberQueryService memberQueryService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -32,18 +30,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
         GoogleUserInfo googleUserInfo = new GoogleUserInfo(attributes);
-        Member member = saveOrUpdate(googleUserInfo);
+        MemberDto member = saveOrUpdate(googleUserInfo);
         return new CustomOauth2User(member, attributes, "sub");
     }
 
 
-    private Member saveOrUpdate(GoogleUserInfo googleUserInfo) {
-        Member member = memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
-                .map(existingMember -> {
-                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture());
-                    return existingMember;
-                }).orElse(Member.ofGoogle(googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture()));
-
-        return memberRepository.save(member);
+    private MemberDto saveOrUpdate(GoogleUserInfo googleUserInfo) {
+        return memberQueryService.updateGoogleInfo(googleUserInfo);
     }
 }

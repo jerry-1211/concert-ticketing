@@ -33,8 +33,8 @@ public class ReservationCommandService {
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
 
-        String userName = jwtTokenProvider.getUserNameFromToken(request.getToken());
-        Member member = memberQueryService.getMemberByEmail(userName);
+        String userEmail = jwtTokenProvider.getUserEmailFromToken(request.getToken());
+        Member member = memberQueryService.getMemberByEmail(userEmail, Function.identity());
         Concert concert = concertQueryService.getConcertById(request.getConcertId(), Function.identity());
 
         Reservation reservation = Reservation.of(

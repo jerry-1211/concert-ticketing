@@ -1,7 +1,6 @@
 package com.jerry.ticketing.global.auth.oauth;
 
 
-import com.jerry.ticketing.global.auth.adopter.MemberDetails;
 import com.jerry.ticketing.global.auth.config.OAuth2Config;
 import com.jerry.ticketing.global.auth.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,10 +26,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 
         CustomOauth2User principal = (CustomOauth2User) authentication.getPrincipal();
-        MemberDetails memberDetails = new MemberDetails(principal.getMember());
 
-
-        String token = jwtTokenProvider.generateToken(memberDetails);
+        String token = jwtTokenProvider.generateToken(principal);
 
         String targetUrl = UriComponentsBuilder.fromUriString(oAuth2Config.getAuthorizedRedirectUri())
                 .queryParam("token", token)

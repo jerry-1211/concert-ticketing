@@ -1,6 +1,7 @@
 package com.jerry.ticketing.member.api;
 
 
+import com.jerry.ticketing.global.auth.oauth.CustomOauth2User;
 import com.jerry.ticketing.member.application.MyPageService;
 import com.jerry.ticketing.member.application.dto.MyPageDto;
 import com.jerry.ticketing.member.application.dto.ReservationListDto;
@@ -20,7 +21,7 @@ public class MyPageApiController {
 
     @GetMapping
     public ResponseEntity<MyPageDto> getMyPage(Authentication authentication) {
-        String email = authentication.getName();
+        String email = ((CustomOauth2User) authentication.getPrincipal()).getEmail();
         MyPageDto myPage = myPageService.getMyPage(email);
 
         return ResponseEntity.ok(myPage);
@@ -30,7 +31,7 @@ public class MyPageApiController {
     public ResponseEntity<MyPageDto> updateProfile(Authentication authentication,
                                                    @RequestBody UpdateProfile.Request request) {
 
-        String email = authentication.getName();
+        String email = ((CustomOauth2User) authentication.getPrincipal()).getEmail();
         MyPageDto updateProfile = myPageService.updateMyPage(email, request);
 
         return ResponseEntity.ok(updateProfile);
@@ -39,10 +40,8 @@ public class MyPageApiController {
 
     @GetMapping("/reservation")
     public ResponseEntity<List<ReservationListDto>> getMyReservation(Authentication authentication) {
-        String email = authentication.getName();
-
+        String email = ((CustomOauth2User) authentication.getPrincipal()).getEmail();
         List<ReservationListDto> reservations = myPageService.getMyReservation(email);
-
 
         return ResponseEntity.ok(reservations);
     }
