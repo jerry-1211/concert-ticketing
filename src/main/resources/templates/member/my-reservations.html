@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예약 내역</title>
+    <link rel="stylesheet" href="/css/member/my-reservations.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🎫 예약 내역</h1>
+        <a href="/mypage" class="btn">마이페이지로 돌아가기</a>
+    </div>
+
+    <div id="loadingMessage" class="loading">
+        예약 내역을 불러오는 중...
+    </div>
+
+    <div id="errorMessage" class="error" style="display: none;">
+        예약 내역을 불러올 수 없습니다.
+    </div>
+
+    <div id="reservationGrid" class="reservation-grid">
+        <!-- 예약 내역이 여기에 표시됩니다 -->
+    </div>
+
+    <div id="noReservations" class="no-reservations" style="display: none;">
+        <div>📋</div>
+        <h3>예약 내역이 없습니다</h3>
+        <p>첫 번째 콘서트를 예약해보세요!</p>
+        <a href="/concerts" class="btn">콘서트 보러가기</a>
+    </div>
+</div>
+
+<script src="/js/member/my-reservations.js"></script>
+</body>
+</html>

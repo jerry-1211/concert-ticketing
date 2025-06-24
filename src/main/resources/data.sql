@@ -1,8 +1,0 @@
--- -- Member 데이터 (5개)
--- INSERT INTO member (name, email, password, phone_number, city, street)
--- VALUES
---     ('김토스', 'kimtoss@example.com', 'password123', '010-1234-5678', '서울시 강남구', '테헤란로 123'),
---     ('이페이', 'leepay@example.com', 'password456', '010-2345-6789', '서울시 서초구', '서초대로 456'),
---     ('박카드', 'parkcard@example.com', 'password789', '010-3456-7890', '서울시 송파구', '올림픽로 789'),
---     ('최뱅크', 'choibank@example.com', 'password321', '010-4567-8901', '서울시 마포구', '홍대입구 321'),
---     ('정모바일', 'jungmobile@example.com', 'password654', '010-5678-9012', '서울시 종로구', '종로3가 654');

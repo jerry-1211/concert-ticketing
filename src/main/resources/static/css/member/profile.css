@@ -1,0 +1,269 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-left: 18%;
+    margin-right: 18%;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    color: #333;
+}
+
+.header {
+    margin-top: 5%;
+    background: linear-gradient(135deg, #f8f5ff 0%, #ede7ff 100%);
+    padding: 60px 30px 40px;
+    position: relative;
+    border-radius: 12px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 11px;
+    left: 28px;
+    background: rgba(124, 58, 237, 0.1);
+    border: none;
+    color: #7c3aed;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: rgba(124, 58, 237, 0.15);
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f0f0f0;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #f3f0ff;
+}
+
+.profile-text h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.profile-text p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.main-content {
+    padding: 40px 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 24px;
+    padding-left: 4px;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.1);
+    border-color: #e5e7eb;
+}
+
+.menu-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.icon-purple {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: white;
+}
+
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.icon-red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.menu-content {
+    flex: 1;
+}
+
+.menu-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+}
+
+.menu-description {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.edit-section {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    margin-top: 16px;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.edit-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #7c3aed;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.05);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
+}
+
+@media (max-width: 768px) {
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .header {
+        padding: 50px 20px 30px;
+    }
+
+    .main-content {
+        padding: 30px 20px;
+    }
+
+    .menu-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .menu-content {
+        text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

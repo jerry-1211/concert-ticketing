@@ -38,5 +38,11 @@ public class SectionQueryService {
                 .orElseThrow(() -> new BusinessException(SectionErrorCode.SECTION_NOT_FOUND));
     }
 
+    @Transactional
+    public Section getSection(Long sectionId) {
+        return sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new BusinessException(SectionErrorCode.SECTION_NOT_FOUND));
+    }
+
 
 }

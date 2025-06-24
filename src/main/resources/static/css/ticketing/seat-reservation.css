@@ -498,3 +498,24 @@ body {
 .seat.selected {
     animation: pulse 0.3s ease-in-out;
 }
+
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#remainingSeats {
+    color: #e67676;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
+}
+
+#remainingSeats::before {
+    content: "🎫 ";
+}

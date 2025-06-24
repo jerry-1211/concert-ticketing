@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="/css/member/profile.css">
+</head>
+<body>
+<div class="header">
+    <a href="/" class="back-btn">←</a>
+    <div class="profile-section" id="profileHeader">
+        <!-- 프로필 헤더가 여기에 표시됩니다 -->
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="section-title">서비스</div>
+    <div class="menu-list">
+        <a href="/mypage/reservations" class="menu-card">
+            <div class="menu-icon icon-blue">🎫</div>
+            <div class="menu-content">
+                <div class="menu-title">예약 내역</div>
+                <div class="menu-description">나의 콘서트 예약 현황을 확인하고 관리할 수 있습니다.</div>
+            </div>
+        </a>
+
+        <div>
+            <a href="#" class="menu-card" onclick="toggleEdit(); return false;">
+                <div class="menu-icon icon-purple">✏️</div>
+                <div class="menu-content">
+                    <div class="menu-title">프로필 수정</div>
+                    <div class="menu-description">개인정보와 프로필 이미지를 변경할 수 있습니다.</div>
+                </div>
+            </a>
+
+            <div class="edit-section" id="editSection">
+                <div class="edit-title">프로필 수정</div>
+                <form id="updateForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">이름</label>
+                            <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">전화번호</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력하세요">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileImage">프로필 이미지 URL</label>
+                        <input type="url" id="profileImage" name="profileImage" placeholder="이미지 URL을 입력하세요">
+                    </div>
+                    <button type="submit" class="submit-btn">변경사항 저장</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="#" class="menu-card" onclick="logout(); return false;">
+            <div class="menu-icon icon-red">🚪</div>
+            <div class="menu-content">
+                <div class="menu-title">로그아웃</div>
+                <div class="menu-description">현재 계정에서 안전하게 로그아웃합니다.</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script src="/js/member/profile.js"></script>
+</body>
+</html>

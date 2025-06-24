@@ -3,6 +3,7 @@ package com.jerry.ticketing.reservation.application;
 
 import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.global.auth.jwt.JwtTokenProvider;
 import com.jerry.ticketing.member.application.MemberQueryService;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.reservation.domain.Reservation;
@@ -27,10 +28,13 @@ public class ReservationCommandService {
     private final ReservationRepository reservationRepository;
     private final MemberQueryService memberQueryService;
     private final ConcertQueryService concertQueryService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
-        Member member = memberQueryService.getMemberById(request.getMemberId(), Function.identity());
+
+        String userEmail = jwtTokenProvider.getUserEmailFromToken(request.getToken());
+        Member member = memberQueryService.getMemberByEmail(userEmail, Function.identity());
         Concert concert = concertQueryService.getConcertById(request.getConcertId(), Function.identity());
 
         Reservation reservation = Reservation.of(

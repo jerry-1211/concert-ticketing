@@ -1,6 +1,7 @@
 package com.jerry.ticketing.member.domain;
 
 
+import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.domain.enums.MemberRole;
 import com.jerry.ticketing.member.domain.enums.Provider;
 import jakarta.persistence.*;
@@ -19,10 +20,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 멤버 주소
-    @Embedded
-    private Address address;
-
     // 멤버 이름
     @Column(nullable = false)
     private String name;
@@ -30,10 +27,6 @@ public class Member {
     // 멤버 이메일
     @Column(nullable = false)
     private String email;
-
-    // 멤버 패스워드
-    @Column
-    private String password;
 
     // 멤버 전화번호
     @Column
@@ -85,13 +78,20 @@ public class Member {
     }
 
 
-    public boolean isGoogleUser() {
-        return provider == Provider.GOOGLE;
-    }
-
     public void updateGoogleInfo(String name, String profileImage) {
         this.name = name;
         this.profileImage = profileImage;
+    }
+
+    public void updateProfile(UpdateProfile.Request request) {
+        if (request.getName() != null) {
+            this.name = request.getName();
+        }
+
+
+        if (request.getPhoneNumber() != null) {
+            this.phoneNumber = request.getPhoneNumber();
+        }
     }
 
 }

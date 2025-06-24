@@ -11,6 +11,8 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
         const totalAmount = result.totalAmount;
         const expireAt = result.expireAt;
         const seatNames = selectedSeats.map(seat => `${seat.zone}-${seat.row}-${seat.concertSeatId}`).join(', ');
+        const accessToken = localStorage.getItem('accessToken');
+
 
         const response = await fetch('/api/reservation', {
             method: 'POST',
@@ -18,7 +20,7 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                memberId: 1, // 하드 코딩
+                token: accessToken, // 하드 코딩
                 concertId: concertId,
                 orderName: `${blockedSeatIds} - ${seatNames}`,
                 expireAt: expireAt,

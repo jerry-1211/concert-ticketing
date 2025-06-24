@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 
@@ -22,7 +23,12 @@ public class ReservationQueryService {
     public <T> T getReservation(Long reservationId, Function<Reservation, T> mapper) {
         return mapper.apply(reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND)));
+    }
 
+
+    @Transactional(readOnly = true)
+    public List<Reservation> getReservation(Long memberId) {
+        return reservationRepository.findByMemberId(memberId);
     }
 
 }

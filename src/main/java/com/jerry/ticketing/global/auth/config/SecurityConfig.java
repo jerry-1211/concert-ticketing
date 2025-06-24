@@ -33,10 +33,14 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/member/login", "/member/login", "/api/auth/logout", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("/", "/js/**", "/css/**").permitAll()
+                        .requestMatchers("/api/webhook/**", "/api/auth/logout").permitAll()
+                        .requestMatchers("/member/login/**").permitAll()  // 명시적 분리
+                        .requestMatchers("/oauth2/**", "/login/oauth2/code/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService))
                         .successHandler(auth2AuthenticationSuccessHandler)
