@@ -43,7 +43,6 @@ public class MemberQueryService {
                     return MemberDto.from(existingMember);
                 }).orElseGet(() -> {
                             Member newMember = Member.ofGoogle(googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture());
-
                             return MemberDto.from(memberRepository.save(newMember));
                         }
                 );

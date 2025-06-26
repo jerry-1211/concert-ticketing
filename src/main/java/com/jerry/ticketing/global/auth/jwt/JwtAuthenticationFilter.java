@@ -26,10 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-
         String path = request.getRequestURI();
 
-        // OAuth2 관련 경로는 JWT 필터를 건너뛰기
         return path.startsWith("/oauth2/") ||
                 path.startsWith("/login/oauth2/") ||
                 path.startsWith("/member/login/") ||
@@ -38,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.startsWith("/css/") ||
                 path.startsWith("/api/webhook/") ||
                 "/api/auth/logout".equals(path);
-
     }
 
 

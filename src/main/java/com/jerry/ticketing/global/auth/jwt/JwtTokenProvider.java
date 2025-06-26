@@ -21,7 +21,6 @@ public class JwtTokenProvider {
 
     public Key getSigningKey() {
         byte[] bytes = jwtConfig.getSecret().getBytes(StandardCharsets.UTF_8);
-
         return Keys.hmacShaKeyFor(bytes);
     }
 
@@ -37,6 +36,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -48,6 +48,7 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
 
     public String getUserEmailFromToken(String token) {
         Claims claims = Jwts.parserBuilder()

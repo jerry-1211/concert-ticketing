@@ -13,5 +13,4 @@ import org.springframework.stereotype.Component;
 public class JwtConfig {
     private String secret;
     private long expiration;
-
 }
