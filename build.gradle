@@ -30,14 +30,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'de.codecentric:spring-boot-admin-starter-server:3.1.0'
+    implementation 'de.codecentric:spring-boot-admin-starter-client:3.1.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
-
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 
     runtimeOnly 'com.mysql:mysql-connector-j'  // 프로덕션용 MySQL
