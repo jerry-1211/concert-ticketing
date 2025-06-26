@@ -1,4 +1,4 @@
-package com.jerry.ticketing.global;
+package com.jerry.ticketing.global.exception;
 
 import lombok.AllArgsConstructor;
 
