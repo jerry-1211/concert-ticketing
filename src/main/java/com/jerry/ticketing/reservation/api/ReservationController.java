@@ -5,10 +5,12 @@ import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+@Profile("!test")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reservation")
