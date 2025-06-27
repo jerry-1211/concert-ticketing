@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/member")
-public class MemberWebController {
+public class MemberOauthWebController {
 
     @GetMapping("/oauth2/callback")
     public String callback(@RequestParam("token") String token,

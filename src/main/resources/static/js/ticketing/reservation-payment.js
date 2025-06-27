@@ -20,7 +20,7 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                token: accessToken, // 하드 코딩
+                token: accessToken || null,
                 concertId: concertId,
                 orderName: `${blockedSeatIds} - ${seatNames}`,
                 expireAt: expireAt,
@@ -65,28 +65,35 @@ async function processPayment(result) {
             })
         });
 
-        const paymentData = await response.json();
 
-        await payment.requestPayment({
-            method: "CARD",
-            amount: {
-                currency: "KRW",
-                value: totalAmount,
-            },
-            orderId: paymentData.orderId,
-            orderName: orderName,
-            successUrl: paymentData.successUrl,
-            failUrl: paymentData.failUrl,
-            customerEmail: paymentData.customerEmail,
-            customerName: paymentData.customerName,
-            customerMobilePhone: paymentData.customerMobilePhone,
-            card: {
-                useEscrow: false,
-                flowMode: "DEFAULT",
-                useCardPoint: false,
-                useAppCardOnly: false,
-            },
-        });
+        const responseText = await response.text();
+
+        if (responseText.trim().length > 0) {
+            const paymentData = JSON.parse(responseText);
+
+            await payment.requestPayment({
+                method: "CARD",
+                amount: {
+                    currency: "KRW",
+                    value: totalAmount,
+                },
+                orderId: paymentData.orderId,
+                orderName: orderName,
+                successUrl: paymentData.successUrl,
+                failUrl: paymentData.failUrl,
+                customerEmail: paymentData.customerEmail,
+                customerName: paymentData.customerName,
+                customerMobilePhone: paymentData.customerMobilePhone,
+                card: {
+                    useEscrow: false,
+                    flowMode: "DEFAULT",
+                    useCardPoint: false,
+                    useAppCardOnly: false,
+                },
+            });
+        }
+
+
     } catch (error) {
         console.error("결제 요청 실패: ", error);
         throw error;

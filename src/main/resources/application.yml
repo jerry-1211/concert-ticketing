@@ -6,6 +6,9 @@ spring:
     ansi:
       enabled: always
 
+  profiles:
+    active: test
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -39,7 +42,36 @@ spring:
           google:
             authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
 
+  boot:
+    admin:
+      context-path: /admin
+      client:
+        url: "http://localhost:8080/admin"
+        auto-registration: true
+        instance:
+          name: "Ticketing Application"
+          service-url: "http://localhost:8080"
 
+
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 50
+    accept-count: 200
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: concert
 
 toss:
   payments:

@@ -184,7 +184,7 @@ async function reserveSeats() {
     const request = {
         concertId: concertId,
         concertSeatIds: selectedSeats.map(seat => seat.concertSeatId),
-        memberId: 1 // 실제로는 로그인된 사용자 ID를 사용
+        memberId: 1 // Todo: 실제로는 로그인된 사용자 ID를 사용
     };
 
     try {

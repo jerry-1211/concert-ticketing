@@ -1,6 +1,7 @@
 name: ticketing-project
 services:
   app:
+    container_name: ticketing-app-container
     image: eclipse-temurin:17-jdk-jammy
     platform: linux/amd64
     volumes:
@@ -9,7 +10,7 @@ services:
     command: sh -c "java -jar *[!plain].jar"
     ports:
       - "${SERVER_PORT}:8080"
-    restart: "no"
+    restart: always
     env_file:
       - .env
     depends_on: # app이 mysql 보다 늦게 실행되도록 설정
@@ -34,13 +35,16 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
 
-
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 12G
+          cpus: '4.0'
         reservations:
-          memory: 2G
+          memory: 8G
+          cpus: '2.0'
+      replicas: 1
+
 
   mysql:
     image: mysql:latest
@@ -68,6 +72,21 @@ services:
     command: [ "http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}" ]
     depends_on:
       - app
+
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor-container
+    ports:
+      - "8090:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    restart: unless-stopped
 
 
 volumes:

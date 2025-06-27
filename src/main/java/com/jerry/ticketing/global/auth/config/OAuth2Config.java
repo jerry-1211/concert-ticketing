@@ -12,5 +12,4 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "google.oauth2")
 public class OAuth2Config {
     private String authorizedRedirectUri;
-    
 }

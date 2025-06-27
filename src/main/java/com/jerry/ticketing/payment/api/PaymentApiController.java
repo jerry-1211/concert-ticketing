@@ -7,11 +7,13 @@ import com.jerry.ticketing.payment.infrastructure.config.TossPaymentConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Profile("!test")
 @RequestMapping("/api/payment")
 @RequiredArgsConstructor
 public class PaymentApiController {

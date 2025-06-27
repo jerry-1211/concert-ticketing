@@ -1,8 +1,6 @@
 package com.jerry.ticketing.domain;
 
 import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.member.domain.Address;
-import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.domain.enums.SeatType;
