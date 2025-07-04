@@ -5,6 +5,8 @@ import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Profile("!test")
+@Slf4j
 public class PaymentWebhookService {
 
     private final PaymentCommandService paymentCommandService;
