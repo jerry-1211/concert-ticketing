@@ -1,14 +1,18 @@
 package com.jerry.ticketing.seat.application;
 
 
+import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.SeatErrorCode;
+import com.jerry.ticketing.redis.ConcertSeatCacheService;
+import com.jerry.ticketing.seat.application.manager.ConcertSeatTransactionService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import com.jerry.ticketing.seat.application.dto.web.BlockConcertSeatDto;
-import com.jerry.ticketing.global.validation.ConcertSeatBlockValidator;
 import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
 import com.jerry.ticketing.seat.util.ConcertSeatIdExtractor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,24 +22,25 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ConcertSeatCommandService {
 
-    private final ConcertSeatBlockValidator concertSeatBlockValidator;
     private final ConcertSeatRepository concertSeatRepository;
     private final SectionCommandService sectionCommandService;
     private final SectionQueryService sectionQueryService;
+    private final ConcertSeatCacheService concertSeatCacheService;
+    private final ConcertSeatTransactionService concertSeatTransactionService;
 
-    @Transactional
+
     public List<ConcertSeat> blockSeats(BlockConcertSeatDto.Request request) {
 
-        ConcertSeats concertSeats = ConcertSeats.from(
-                concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()));
-
-        concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
-
-        concertSeats.block(request.getMemberId());
-
-        return concertSeats.item();
+        if (concertSeatCacheService.AllConcertSeatsNotCached(request.getConcertId(), request.getConcertSeatIds())) {
+            ConcertSeats concertSeats = concertSeatTransactionService.block(request);
+            concertSeatCacheService.saveToCache(concertSeats.item());
+            return concertSeats.item();
+        } else {
+            throw new BusinessException(SeatErrorCode.SEAT_ALREADY_BLOCKED);
+        }
     }
 
 
