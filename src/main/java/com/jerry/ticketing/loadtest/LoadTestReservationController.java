@@ -1,4 +1,4 @@
-package com.jerry.ticketing.test;
+package com.jerry.ticketing.loadtest;
 
 
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reservation")
-public class TestReservationController {
+public class LoadTestReservationController {
 
     private final ReservationRepository reservationRepository;
 
