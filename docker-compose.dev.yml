@@ -15,6 +15,7 @@ services:
       - .env
     depends_on: # app이 mysql 보다 늦게 실행되도록 설정
       - mysql
+      - redis
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
@@ -74,11 +75,22 @@ services:
       - app
 
 
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+
+  
+  
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor-container
     ports:
-      - "8090:8080"
+      - "${CADVISOR_PORT}:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -91,3 +103,4 @@ services:
 
 volumes:
   mysql_data:  # h2-data 대신 mysql_data로 변경
+  redis_data:
