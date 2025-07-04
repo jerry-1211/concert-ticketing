@@ -6,6 +6,9 @@ import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.global.auth.jwt.JwtTokenProvider;
 import com.jerry.ticketing.member.application.MemberQueryService;
 import com.jerry.ticketing.member.domain.Member;
+import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
+import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
+import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
 import com.jerry.ticketing.global.exception.BusinessException;
@@ -26,6 +29,7 @@ import java.util.function.Function;
 public class ReservationCommandService {
 
     private final ReservationRepository reservationRepository;
+    private final ReservationQueryService reservationQueryService;
     private final MemberQueryService memberQueryService;
     private final ConcertQueryService concertQueryService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -63,8 +67,14 @@ public class ReservationCommandService {
         List<Reservation> reservations = reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING);
 
         reservations.forEach(Reservation::cancelReservation);
-
     }
 
+    @Transactional
+    public ReservationDto updateOrderId(CreatePaymentDto.Request request) {
+        Reservation reservation = reservationQueryService.getReservation(request.getReservationId(), Function.identity());
+        String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
+        reservation.updateOrderId(orderId);
+        return ReservationDto.from(reservation);
+    }
 
 }

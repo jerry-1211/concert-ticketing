@@ -34,7 +34,7 @@ public class PaymentApiController {
             @RequestBody ConfirmPaymentDto.Request request) {
 
         CreatePaymentDto.Response response = paymentCommandService.confirmPayment(request);
-        response.setPaymentUrls(tossPaymentConfig);
+//        response.setPaymentUrls(tossPaymentConfig);
         return ResponseEntity.ok(response);
     }
 

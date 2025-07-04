@@ -1,6 +1,5 @@
 package com.jerry.ticketing.payment.application;
 
-import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
@@ -9,33 +8,29 @@ import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
-import com.jerry.ticketing.reservation.application.ReservationQueryService;
-import com.jerry.ticketing.reservation.domain.Reservation;
+import com.jerry.ticketing.reservation.application.ReservationCommandService;
+import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.function.Function;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentCommandService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentQueryService paymentQueryService;
+    private final ReservationCommandService reservationCommandService;
     private final TossPaymentClient tossPaymentClient;
-    private final ReservationQueryService reservationQueryService;
 
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
 
-        Reservation reservation = reservationQueryService.getReservation(request.getReservationId(), Function.identity());
-
-        String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
-        reservation.updateOrderId(orderId);
-
-        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getId(), orderId));
+        ReservationDto reservation = reservationCommandService.updateOrderId(request);
+        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId()));
 
         return paymentQueryService.getDetailedPayment(savedPayment.getId());
     }
