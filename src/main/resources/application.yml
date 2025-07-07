@@ -49,6 +49,21 @@ spring:
           google:
             authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
 
+  rabbitmq:
+    host: rabbitmq
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+        default-requeue-rejected: false
+    publisher-confirm-type: correlated
+
   boot:
     admin:
       context-path: /admin
@@ -85,6 +100,9 @@ management:
   metrics:
     tags:
       application: concert
+
+
+
 
 toss:
   payments:
