@@ -40,6 +40,9 @@ public class CreatePaymentDto {
         private String failUrl;
 
 
+        @Setter
+        private String profile;
+
         public void setPaymentUrls(TossPaymentConfig tossPaymentConfig) {
             this.successUrl = tossPaymentConfig.getSuccessUrl();
             this.failUrl = tossPaymentConfig.getFailUrl();
