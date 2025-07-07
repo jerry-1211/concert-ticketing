@@ -1,13 +1,14 @@
 package com.jerry.ticketing.payment.application;
 
 import com.jerry.ticketing.payment.domain.Payment;
-import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
+import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.rabbitmq.PaymentEventPublisher;
 import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class PaymentCommandService {
     private final PaymentRepository paymentRepository;
     private final PaymentQueryService paymentQueryService;
     private final ReservationCommandService reservationCommandService;
+    private final PaymentEventPublisher paymentEventPublisher;
     private final TossPaymentClient tossPaymentClient;
 
     @Transactional
@@ -38,13 +40,11 @@ public class PaymentCommandService {
 
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
-
         tossPaymentClient.confirmPayment(request);
+        paymentEventPublisher.publishConfirmEvent(request);
 
-        Payment payment = paymentRepository.findByOrderIdWithLock(request.getOrderId())
+        Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
-
-        payment.updateConfirm(request.getPaymentKey());
 
         return paymentQueryService.getDetailedPayment(payment.getId());
     }
@@ -54,10 +54,7 @@ public class PaymentCommandService {
      */
     @Transactional
     public void updatePaymentOnCompleted(WebhookPaymentDto.Request.PaymentData data) {
-        Payment payment = paymentRepository.findByOrderIdWithLock(data.getOrderId())
-                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
-
-        payment.completed(data);
+        paymentEventPublisher.publishWebhookEvent(data);
     }
 
 

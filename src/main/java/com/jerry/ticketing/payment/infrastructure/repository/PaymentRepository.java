@@ -9,9 +9,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface PaymentRepository extends JpaRepository<Payment,Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT p FROM Payment p WHERE p.orderId = :orderId")
     Optional<Payment> findByOrderIdWithLock(@Param(("orderId")) String orderId);
+
+    Optional<Payment> findByOrderId(String orderId);
 }
