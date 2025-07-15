@@ -31,9 +31,6 @@ public class PaymentEventConsumer {
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.updateConfirm(request.getPaymentKey());
-
-        log.info("소비자 handleConfirmEvent 받았다 ");
-
     }
 
     @RabbitHandler
@@ -43,7 +40,6 @@ public class PaymentEventConsumer {
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.completed(data);
-        log.info("소비자 handleWebhookEvent 받았다 ");
     }
 
 }
