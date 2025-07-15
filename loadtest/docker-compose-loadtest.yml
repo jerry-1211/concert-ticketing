@@ -1,0 +1,56 @@
+name: load-test
+
+services:
+  # Time Series Database
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb-container
+    restart: always
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+    volumes:
+      - influxdb:/var/lib/influxdb
+
+  # Monitoring Dashboard
+  grafana:
+    image: grafana/grafana:11.2.3
+    container_name: grafana-container
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana:/var/lib/grafana
+    depends_on:
+      - influxdb
+
+  # Load Testing Tool
+  k6:
+    image: grafana/k6:latest
+    container_name: k6-container
+    user: root
+    ports:
+      - "5665:5665"
+    command: [
+      "run",
+      "--out", "web-dashboard=host=0.0.0.0",
+      "--out", "influxdb=http://influxdb:8086/k6",
+      "--out", "json=/app/results/result.json",
+      "/app/tests/integration-load-test.js"
+    ]
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    volumes:
+      - ./load-tests/tests:/app/tests
+      - ./load-tests/result:/app/results
+      - ./load-tests:/app
+    depends_on:
+      - influxdb
+
+volumes:
+  influxdb:
+  grafana:

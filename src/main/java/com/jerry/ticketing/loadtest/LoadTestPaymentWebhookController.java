@@ -1,6 +1,5 @@
-package com.jerry.ticketing.payment.api.webhook;
+package com.jerry.ticketing.loadtest;
 
-import com.jerry.ticketing.payment.application.PaymentWebhookService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/webhook")
-@Profile("!test")
+@Profile("test")
 @RequiredArgsConstructor
-public class PaymentWebhookController {
+public class LoadTestPaymentWebhookController {
 
-    private final PaymentWebhookService paymentWebhookService;
+    private final LoadTestPaymentWebhookService loadTestPaymentWebhookService;
 
     /**
      * Toss 결제 완료 후 토스 서버로 부터 받는 webhook 입니다.
@@ -26,7 +25,7 @@ public class PaymentWebhookController {
     public ResponseEntity<Void> handleWebhook(
             @RequestBody WebhookPaymentDto.Request request) {
 
-        paymentWebhookService.handle(request);
+        loadTestPaymentWebhookService.handle(request);
 
         return ResponseEntity.ok().build();
     }

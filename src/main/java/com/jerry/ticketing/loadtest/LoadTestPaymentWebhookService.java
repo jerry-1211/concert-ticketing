@@ -1,24 +1,22 @@
-package com.jerry.ticketing.payment.application;
+package com.jerry.ticketing.loadtest;
 
-
-import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
+import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional
-@Profile("!test")
+@Profile("test")
 @RequiredArgsConstructor
-public class PaymentWebhookService {
-
-    private final PaymentCommandService paymentCommandService;
+public class LoadTestPaymentWebhookService {
+    private final LoadTestPaymentCommandService loadTestPaymentCommandService;
     private final ReservationCommandService reservationCommandService;
     private final ConcertSeatCommandService concertSeatCommandService;
+
 
     public void handle(WebhookPaymentDto.Request request) {
         WebhookPaymentDto.Request.PaymentData data = request.getData();
@@ -34,7 +32,7 @@ public class PaymentWebhookService {
      * 토스로부터 Web hook 후 처리
      */
     private void finalizeOrder(WebhookPaymentDto.Request.PaymentData data) {
-        paymentCommandService.updatePaymentOnCompleted(data);
+        loadTestPaymentCommandService.updatePaymentOnCompleted(data);
         reservationCommandService.confirm(data.getOrderId());
         concertSeatCommandService.confirm(data.getOrderName());
     }

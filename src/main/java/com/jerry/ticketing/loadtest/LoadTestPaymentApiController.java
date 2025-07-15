@@ -24,6 +24,7 @@ public class LoadTestPaymentApiController {
     public ResponseEntity<CreatePaymentDto.Response> createPayment(@Valid @RequestBody CreatePaymentDto.Request request) {
         CreatePaymentDto.Response response = loadTestPaymentCommandService.createPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
+        response.setProfile("test");
         return ResponseEntity.ok(response);
     }
 

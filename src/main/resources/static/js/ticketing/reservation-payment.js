@@ -67,10 +67,9 @@ async function processPayment(result) {
 
 
         const responseText = await response.text();
+        const paymentData = JSON.parse(responseText);
 
-        if (responseText.trim().length > 0) {
-            const paymentData = JSON.parse(responseText);
-
+        if (paymentData.profile !== "test") {
             await payment.requestPayment({
                 method: "CARD",
                 amount: {

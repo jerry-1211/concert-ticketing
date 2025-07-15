@@ -1,41 +1,27 @@
 name: ticketing-project
+
 services:
+  # Application
   app:
     container_name: ticketing-app-container
     image: eclipse-temurin:17-jdk-jammy
     platform: linux/amd64
+    working_dir: /app
+    command: java -XX:TieredStopAtLevel=1 -XX:NativeMemoryTracking=summary -jar ticketing.jar
+    restart: always
     volumes:
       - ./build/libs:/app
-    working_dir: /app
-    command: sh -c "java -jar *[!plain].jar"
     ports:
       - "${SERVER_PORT}:8080"
-    restart: always
     env_file:
       - .env
-    depends_on: # app이 mysql 보다 늦게 실행되도록 설정
+    depends_on:
       - mysql
       - redis
+      - rabbitmq
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-
-      TOSS_PAYMENTS_SECRET_KEY: ${TOSS_PAYMENTS_SECRET_KEY}
-      TOSS_SUCCESS_URL: ${TOSS_SUCCESS_URL}
-      TOSS_FAIL_URL: ${TOSS_FAIL_URL}
-      TOSS_BASE_URL: ${TOSS_BASE_URL}
-
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI}
-      GOOGLE_AUTHORIZATION_URI: ${GOOGLE_AUTHORIZATION_URI}
-
-      GOOGLE_AUTHORIZED_REDIRECT_URI: ${GOOGLE_AUTHORIZED_REDIRECT_URI}
-
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRATION: ${JWT_EXPIRATION}
-
+      JAVA_HOME: /opt/java/openjdk
+      PATH: /opt/java/openjdk/bin:$PATH
     deploy:
       resources:
         limits:
@@ -44,63 +30,82 @@ services:
         reservations:
           memory: 8G
           cpus: '2.0'
-      replicas: 1
 
-
+  # Database
   mysql:
     image: mysql:latest
     container_name: mysql-container
+    restart: always
     ports:
       - "${MYSQL_PORT}:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    env_file:
+      - .env
     volumes:
       - mysql_data:/var/lib/mysql
-    healthcheck: # 완전히 준비될 때까지 대기
+    healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
       retries: 10
 
-  ngrok:
-    image: ngrok/ngrok
-    container_name: ngrok-container
+  # Message Queue
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq-container
+    restart: always
     ports:
-      - "${NGROK_PORT}:4040"
-    network_mode: host
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_PORT_UI}:15672"
     environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-    command: [ "http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}" ]
-    depends_on:
-      - app
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
-
+  # Cache
   redis:
     image: redis:latest
     container_name: redis-container
     restart: always
     ports:
       - "${REDIS_PORT}:6379"
+    env_file:
+      - .env
     volumes:
       - redis_data:/data
 
-  
-  
+  # Tunneling
+  ngrok:
+    image: ngrok/ngrok
+    container_name: ngrok-container
+    network_mode: host
+    command: [ "http", "--url=${NGROK_DOMAIN}", "host.docker.internal:${SERVER_PORT}" ]
+    ports:
+      - "${NGROK_PORT}:4040"
+    env_file:
+      - .env
+    depends_on:
+      - app
+
+  # Monitoring
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor-container
+    privileged: true
+    restart: unless-stopped
     ports:
       - "${CADVISOR_PORT}:8080"
+    env_file:
+      - .env
     volumes:
       - /:/rootfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
-    privileged: true
-    restart: unless-stopped
-
 
 volumes:
-  mysql_data:  # h2-data 대신 mysql_data로 변경
+  mysql_data:
   redis_data:
+  rabbitmq_data:
