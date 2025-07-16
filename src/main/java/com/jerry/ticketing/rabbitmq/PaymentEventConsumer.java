@@ -14,6 +14,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+
 @Component
 @RequiredArgsConstructor
 @RabbitListener(queues = "payment.process.queue")
@@ -36,10 +38,11 @@ public class PaymentEventConsumer {
     @RabbitHandler
     @Transactional
     public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
         Payment payment = paymentRepository.findByOrderId(data.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
-        payment.completed(data);
+        payment.complete(data, dateTime);
     }
 
 }

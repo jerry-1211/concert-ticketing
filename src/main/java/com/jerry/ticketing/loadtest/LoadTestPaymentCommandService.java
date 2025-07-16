@@ -16,6 +16,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+
 
 @Service
 @Profile("test")
@@ -29,9 +31,9 @@ public class LoadTestPaymentCommandService {
 
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
-
+        OffsetDateTime dateTime = OffsetDateTime.now();
         ReservationDto reservation = reservationCommandService.updateOrderId(request);
-        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId()));
+        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId(), dateTime));
 
         return paymentQueryService.getDetailedPayment(savedPayment.getId());
     }
@@ -41,7 +43,7 @@ public class LoadTestPaymentCommandService {
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
 
         paymentEventPublisher.publishConfirmEvent(request);
-        
+
         Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 

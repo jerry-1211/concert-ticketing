@@ -12,7 +12,6 @@ public class WebhookPaymentDto {
         private String createdAt;
         private PaymentData data;
 
-
         @Getter
         @NoArgsConstructor
         public static class PaymentData {
@@ -24,23 +23,17 @@ public class WebhookPaymentDto {
             private String method;
             private int totalAmount;
 
-            public PaymentData(String lastTransactionKey, String paymentKey, String orderId, String orderName, String status, String method, int totalAmount) {
-                this.lastTransactionKey = lastTransactionKey;
-                this.paymentKey = paymentKey;
-                this.orderId = orderId;
-                this.orderName = orderName;
-                this.status = status;
-                this.method = method;
-                this.totalAmount = totalAmount;
+            public static PaymentData of(String lastTransactionKey, String orderName,
+                                         String method, int totalAmount) {
+                PaymentData paymentData = new PaymentData();
+                paymentData.lastTransactionKey = lastTransactionKey;
+                paymentData.orderName = orderName;
+                paymentData.method = method;
+                paymentData.totalAmount = totalAmount;
+                return paymentData;
             }
-        }
 
-        public Request(String eventType, String createdAt, PaymentData data) {
-            this.eventType = eventType;
-            this.createdAt = createdAt;
-            this.data = data;
         }
-
     }
 }
 

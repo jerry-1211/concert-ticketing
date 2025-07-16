@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +32,9 @@ public class PaymentCommandService {
 
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
-
+        OffsetDateTime dateTime = OffsetDateTime.now();
         ReservationDto reservation = reservationCommandService.updateOrderId(request);
-        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId()));
+        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId(), dateTime));
 
         return paymentQueryService.getDetailedPayment(savedPayment.getId());
     }
