@@ -2,6 +2,7 @@ package com.jerry.ticketing.seat.domain.vo;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class ConcertSeats {
@@ -45,6 +46,11 @@ public class ConcertSeats {
                 .map(ConcertSeat::getSectionId)
                 .distinct()
                 .toList();
+    }
+
+    public static int calculateTotalAmount(ConcertSeats concertSeats) {
+        int amount = concertSeats.item().get(0).getAmount();
+        return amount * concertSeats.item().size();
     }
 
 

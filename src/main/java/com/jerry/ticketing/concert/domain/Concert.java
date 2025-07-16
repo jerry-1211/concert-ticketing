@@ -8,7 +8,6 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 public class Concert {
 
     // 콘서트 id
