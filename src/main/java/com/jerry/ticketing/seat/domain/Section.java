@@ -55,7 +55,4 @@ public class Section {
         --remainingConcertSeats;
     }
 
-    public boolean hasAvailableSeats() {
-        return this.remainingConcertSeats > 0;
-    }
 }
