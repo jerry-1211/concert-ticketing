@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.function.Function;
 
 @Service
@@ -36,13 +37,15 @@ public class MemberQueryService {
 
     @Transactional
     public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
 
         return memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
                 .map(existingMember -> {
-                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture());
+                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
                     return MemberDto.from(existingMember);
                 }).orElseGet(() -> {
-                            Member newMember = Member.ofGoogle(googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture());
+                            Member newMember = Member.ofGoogle(googleUserInfo.getName(),
+                                    googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
                             return MemberDto.from(memberRepository.save(newMember));
                         }
                 );

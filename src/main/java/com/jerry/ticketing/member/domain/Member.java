@@ -55,18 +55,7 @@ public class Member {
     private OffsetDateTime updatedAt;
 
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = OffsetDateTime.now();
-        updatedAt = OffsetDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now();
-    }
-
-    public static Member ofGoogle(String name, String email, String providerId, String profileImage) {
+    public static Member ofGoogle(String name, String email, String providerId, String profileImage, OffsetDateTime dateTime) {
         Member member = new Member();
         member.name = name;
         member.email = email;
@@ -74,23 +63,39 @@ public class Member {
         member.providerId = providerId;
         member.profileImage = profileImage;
         member.memberRole = MemberRole.USER;
+        member.onCreate(dateTime);
         return member;
     }
 
-
-    public void updateGoogleInfo(String name, String profileImage) {
+    public void updateGoogleInfo(String name, String profileImage, OffsetDateTime dateTime) {
         this.name = name;
         this.profileImage = profileImage;
+        onUpdate(dateTime);
     }
 
     public void updateProfile(UpdateProfile.Request request) {
-        if (request.getName() != null) {
-            this.name = request.getName();
+        updateName(request.getName());
+        updatePhoneNumber(request.getPhoneNumber());
+    }
+
+    private void onCreate(OffsetDateTime dateTime) {
+        createdAt = dateTime;
+        updatedAt = dateTime;
+    }
+
+    private void onUpdate(OffsetDateTime dateTime) {
+        updatedAt = dateTime;
+    }
+
+    private void updatePhoneNumber(String PhoneNumber) {
+        if (PhoneNumber != null) {
+            this.phoneNumber = PhoneNumber;
         }
+    }
 
-
-        if (request.getPhoneNumber() != null) {
-            this.phoneNumber = request.getPhoneNumber();
+    private void updateName(String name) {
+        if (name != null) {
+            this.name = name;
         }
     }
 
