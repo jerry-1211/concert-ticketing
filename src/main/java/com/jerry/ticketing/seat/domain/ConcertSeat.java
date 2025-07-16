@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -15,6 +14,7 @@ public class ConcertSeat {
 
     public static final int BLOCKING_TIMEOUT_MINUTES = 15;
     public static final int BLOCKING_CHECK_INTERVAL_SECONDS = 30000;
+    public static final int CONCERT_SEAT_EXPIRE_AT = 10;
 
     // 콘서트 좌석 id
     @Id
@@ -74,9 +74,22 @@ public class ConcertSeat {
     }
 
 
+    public void block() {
+        this.status = ConcertSeatStatus.BLOCKED;
+    }
+
+
+    public void occupy(Long memberId, OffsetDateTime blockedAt) {
+        this.block();
+        this.blockedBy = memberId;
+        this.blockedAt = blockedAt;
+        this.blockedExpireAt = blockedAt.plusMinutes(BLOCKING_TIMEOUT_MINUTES);
+    }
+
+
     public void confirm() {
         this.status = ConcertSeatStatus.RESERVED;
-        this.blockedExpireAt = OffsetDateTime.now().plusYears(10);
+        this.blockedExpireAt = blockedAt.plusYears(CONCERT_SEAT_EXPIRE_AT);
     }
 
 
@@ -85,21 +98,6 @@ public class ConcertSeat {
         this.blockedBy = null;
         this.blockedAt = null;
         this.blockedExpireAt = null;
-    }
-
-
-    public void block(Long memberId) {
-        this.status = ConcertSeatStatus.BLOCKED;
-        this.blockedBy = memberId;
-        this.blockedAt = OffsetDateTime.now();
-        this.blockedExpireAt = OffsetDateTime.now().plusMinutes(BLOCKING_TIMEOUT_MINUTES);
-    }
-
-
-    // TODO: 가격 계산 (추후 일급 객체로 리팩토링 필요)
-    public static int calculateTotalAmount(List<ConcertSeat> concertSeats) {
-        int amount = concertSeats.get(0).getAmount();
-        return amount * concertSeats.size();
     }
 
 }

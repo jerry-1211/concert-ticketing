@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ConcertSeatTransactionService {
@@ -17,12 +19,13 @@ public class ConcertSeatTransactionService {
 
 
     @Transactional
-    public ConcertSeats block(BlockConcertSeatDto.Request request) {
+    public ConcertSeats occupy(BlockConcertSeatDto.Request request) {
+        OffsetDateTime blockedAt = OffsetDateTime.now();
         ConcertSeats concertSeats = ConcertSeats.from(
                 concertSeatRepository.findByConcertIdAndIdIn(request.getConcertId(), request.getConcertSeatIds()));
 
         concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
-        concertSeats.block(request.getMemberId());
+        concertSeats.occupy(request.getMemberId(), blockedAt);
 
         return concertSeats;
     }

@@ -32,10 +32,10 @@ public class ConcertSeatCommandService {
     private final ConcertSeatTransactionService concertSeatTransactionService;
 
 
-    public List<ConcertSeat> blockSeats(BlockConcertSeatDto.Request request) {
+    public List<ConcertSeat> occupy(BlockConcertSeatDto.Request request) {
 
         if (concertSeatCacheService.AllConcertSeatsNotCached(request.getConcertId(), request.getConcertSeatIds())) {
-            ConcertSeats concertSeats = concertSeatTransactionService.block(request);
+            ConcertSeats concertSeats = concertSeatTransactionService.occupy(request);
             concertSeatCacheService.saveToCache(concertSeats.item());
             return concertSeats.item();
         } else {

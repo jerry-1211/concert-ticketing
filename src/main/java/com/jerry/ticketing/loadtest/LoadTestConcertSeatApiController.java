@@ -20,7 +20,7 @@ public class LoadTestConcertSeatApiController {
     @PostMapping("/blocks")
     public ResponseEntity<BlockConcertSeatDto.Response> blockSeats(@RequestBody BlockConcertSeatDto.Request request) {
 
-        List<ConcertSeat> blockedConcertSeats = seatBlockingService.blockSeats(request);
+        List<ConcertSeat> blockedConcertSeats = seatBlockingService.occupy(request);
         return ResponseEntity.ok(BlockConcertSeatDto.Response.from(blockedConcertSeats));
     }
 
