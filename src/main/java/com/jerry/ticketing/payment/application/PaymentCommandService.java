@@ -7,7 +7,7 @@ import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
-import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.payment.domain.port.PaymentRepository;
 import com.jerry.ticketing.rabbitmq.PaymentEventPublisher;
 import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
