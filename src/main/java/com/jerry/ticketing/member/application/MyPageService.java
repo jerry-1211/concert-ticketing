@@ -9,7 +9,7 @@ import com.jerry.ticketing.member.application.dto.MyPageDto;
 import com.jerry.ticketing.member.application.dto.ReservationListDto;
 import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.domain.Member;
-import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.member.domain.port.MemberRepository;
 import com.jerry.ticketing.reservation.application.ReservationQueryService;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import lombok.RequiredArgsConstructor;

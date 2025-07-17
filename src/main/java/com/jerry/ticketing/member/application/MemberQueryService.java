@@ -7,7 +7,7 @@ import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
-import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.member.domain.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
