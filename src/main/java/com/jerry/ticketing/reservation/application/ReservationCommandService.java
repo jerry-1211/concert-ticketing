@@ -36,6 +36,7 @@ public class ReservationCommandService {
 
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
 
         String userEmail = jwtTokenProvider.getUserEmailFromToken(request.getToken());
         Member member = memberQueryService.getMemberByEmail(userEmail, Function.identity());
@@ -43,7 +44,7 @@ public class ReservationCommandService {
 
         Reservation reservation = Reservation.of(
                 member.getId(), concert.getId(),
-                request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
+                request.getOrderName(), dateTime, request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         reservationRepository.save(reservation);
 

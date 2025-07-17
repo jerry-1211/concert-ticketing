@@ -60,21 +60,21 @@ public class Reservation {
     private String orderName;
 
 
-    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalAmount, int quantity) {
+    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt, OffsetDateTime expiresAt, int totalAmount, int quantity) {
         this.memberId = memberId;
         this.concertId = concertId;
         this.orderName = orderName;
+        this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.totalAmount = totalAmount;
         this.quantity = quantity;
         this.status = ReservationStatus.PENDING;
-        this.createdAt = OffsetDateTime.now();
     }
 
 
-    public static Reservation of(Long memberId, Long concertId, String orderName,
+    public static Reservation of(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt,
                                  OffsetDateTime expiresAt, int totalAmount, int quantity) {
-        return new Reservation(memberId, concertId, orderName, expiresAt, totalAmount, quantity);
+        return new Reservation(memberId, concertId, orderName, createdAt, expiresAt, totalAmount, quantity);
 
     }
 

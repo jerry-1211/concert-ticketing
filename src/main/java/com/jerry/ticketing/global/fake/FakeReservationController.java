@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.OffsetDateTime;
+
 @Profile("test")
 @RequiredArgsConstructor
 @RestController
@@ -25,8 +27,9 @@ public class FakeReservationController {
     public ResponseEntity<CreateReservationDto.Response> createReservation(
             @Valid @RequestBody CreateReservationDto.Request request) {
 
+        OffsetDateTime dateTime = OffsetDateTime.now();
         Reservation reservation = Reservation.of(
-                1L, request.getConcertId(), request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
+                1L, request.getConcertId(), request.getOrderName(), dateTime, request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         Reservation savedReservation = reservationRepository.save(reservation);
 

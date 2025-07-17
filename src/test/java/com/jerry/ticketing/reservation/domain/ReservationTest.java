@@ -16,7 +16,7 @@ class ReservationTest {
         // given
         OffsetDateTime dateTime = OffsetDateTime.now();
         Reservation reservation = Reservation.of(1L, 1L,
-                "ORDER-123", dateTime, 10_000, 3);
+                "ORDER-123", dateTime, dateTime, 10_000, 3);
 
         // when
         reservation.confirmReservation();
@@ -34,7 +34,7 @@ class ReservationTest {
         // given
         OffsetDateTime dateTime = OffsetDateTime.now();
         Reservation reservation = Reservation.of(1L, 1L,
-                "ORDER-123", dateTime, 10_000, 3);
+                "ORDER-123", dateTime, dateTime, 10_000, 3);
 
         // when
         reservation.cancelReservation();
@@ -51,7 +51,7 @@ class ReservationTest {
         OffsetDateTime dateTime = OffsetDateTime.now();
         String newOrderId = "New-ORDER-123";
         Reservation reservation = Reservation.of(1L, 1L,
-                "ORDER-123", dateTime, 10_000, 3);
+                "ORDER-123", dateTime, dateTime, 10_000, 3);
 
         // when
         reservation.updateOrderId(newOrderId);
