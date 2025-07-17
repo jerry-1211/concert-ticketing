@@ -1,4 +1,4 @@
-package com.jerry.ticketing.loadtest;
+package com.jerry.ticketing.fake;
 
 import com.jerry.ticketing.global.exception.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
@@ -7,7 +7,7 @@ import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.payment.domain.Payment;
-import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.payment.domain.port.PaymentRepository;
 import com.jerry.ticketing.rabbitmq.PaymentEventPublisher;
 import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
@@ -22,7 +22,7 @@ import java.time.OffsetDateTime;
 @Service
 @Profile("test")
 @RequiredArgsConstructor
-public class LoadTestPaymentCommandService {
+public class FakePaymentCommandService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentQueryService paymentQueryService;

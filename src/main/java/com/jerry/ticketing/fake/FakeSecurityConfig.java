@@ -1,4 +1,4 @@
-package com.jerry.ticketing.loadtest;
+package com.jerry.ticketing.fake;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @Profile("test")
 @EnableWebSecurity
-public class LoadTestSecurityConfig {
+public class FakeSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().anyRequest();

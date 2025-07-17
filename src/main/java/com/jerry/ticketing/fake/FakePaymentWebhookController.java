@@ -1,4 +1,4 @@
-package com.jerry.ticketing.loadtest;
+package com.jerry.ticketing.fake;
 
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/webhook")
 @Profile("test")
 @RequiredArgsConstructor
-public class LoadTestPaymentWebhookController {
+public class FakePaymentWebhookController {
 
-    private final LoadTestPaymentWebhookService loadTestPaymentWebhookService;
+    private final FakePaymentWebhookService fakePaymentWebhookService;
 
     /**
      * Toss 결제 완료 후 토스 서버로 부터 받는 webhook 입니다.
@@ -25,7 +25,7 @@ public class LoadTestPaymentWebhookController {
     public ResponseEntity<Void> handleWebhook(
             @RequestBody WebhookPaymentDto.Request request) {
 
-        loadTestPaymentWebhookService.handle(request);
+        fakePaymentWebhookService.handle(request);
 
         return ResponseEntity.ok().build();
     }

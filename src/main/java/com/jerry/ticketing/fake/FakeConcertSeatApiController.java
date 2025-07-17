@@ -1,4 +1,4 @@
-package com.jerry.ticketing.loadtest;
+package com.jerry.ticketing.fake;
 
 import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.application.dto.web.BlockConcertSeatDto;
@@ -14,7 +14,7 @@ import java.util.List;
 @Profile("test")
 @RequestMapping("/api/seats")
 @RequiredArgsConstructor
-public class LoadTestConcertSeatApiController {
+public class FakeConcertSeatApiController {
     private final ConcertSeatCommandService seatBlockingService;
 
     @PostMapping("/blocks")

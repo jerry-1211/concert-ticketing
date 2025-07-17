@@ -1,4 +1,4 @@
-package com.jerry.ticketing.loadtest;
+package com.jerry.ticketing.fake;
 
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @Profile("test")
 @RequestMapping("/api/payment")
 @RequiredArgsConstructor
-public class LoadTestPaymentApiController {
+public class FakePaymentApiController {
 
     private final TossPaymentConfig tossPaymentConfig;
-    private final LoadTestPaymentCommandService loadTestPaymentCommandService;
+    private final FakePaymentCommandService fakePaymentCommandService;
 
 
     @PostMapping("/request")
     public ResponseEntity<CreatePaymentDto.Response> createPayment(@Valid @RequestBody CreatePaymentDto.Request request) {
-        CreatePaymentDto.Response response = loadTestPaymentCommandService.createPayment(request);
+        CreatePaymentDto.Response response = fakePaymentCommandService.createPayment(request);
         response.setPaymentUrls(tossPaymentConfig);
         response.setProfile("test");
         return ResponseEntity.ok(response);
@@ -32,7 +32,7 @@ public class LoadTestPaymentApiController {
     public ResponseEntity<CreatePaymentDto.Response> tossPaymentSuccess(
             @RequestBody ConfirmPaymentDto.Request request) {
 
-        CreatePaymentDto.Response response = loadTestPaymentCommandService.confirmPayment(request);
+        CreatePaymentDto.Response response = fakePaymentCommandService.confirmPayment(request);
 
         return ResponseEntity.ok(response);
     }
