@@ -29,12 +29,6 @@ class MemberRepositoryAdapterTest {
         memberRepository = new MemberRepositoryAdapter(jpaRepository);
     }
 
-    @AfterEach
-    void tearDown() {
-        memberRepository.deleteAllInBatch();
-    }
-
-
     @Test
     @DisplayName("멤버를 저장 할 수 있다.")
     void saveMember() {
