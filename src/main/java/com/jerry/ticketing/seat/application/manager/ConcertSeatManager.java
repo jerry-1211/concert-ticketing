@@ -2,10 +2,10 @@ package com.jerry.ticketing.seat.application.manager;
 
 
 import com.jerry.ticketing.concert.application.ConcertQueryService;
-import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
-import com.jerry.ticketing.seat.application.ConcertSeatQueryService;
-import com.jerry.ticketing.seat.application.SeatQueryService;
-import com.jerry.ticketing.seat.application.SectionQueryService;
+import com.jerry.ticketing.seat.application.concertseat.ConcertSeatCommandService;
+import com.jerry.ticketing.seat.application.concertseat.ConcertSeatQueryService;
+import com.jerry.ticketing.seat.application.seat.SeatQueryService;
+import com.jerry.ticketing.seat.application.section.SectionQueryService;
 import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.seat.infrastructure.batch.BatchHelper;
 import com.jerry.ticketing.concert.domain.Concert;

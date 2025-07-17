@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
-    public static final int RESERVATION_TIMEOUT_MINUTES = 2;
+    public static final int RESERVATION_TIMEOUT = 2;
     public static final int PENDING_CHECK_INTERVAL_SECONDS = 30000;
 
 
@@ -78,20 +78,21 @@ public class Reservation {
 
     }
 
-
     public void confirmReservation() {
         status = ReservationStatus.CONFIRMED;
-        this.expiresAt = OffsetDateTime.now().plusMinutes(RESERVATION_TIMEOUT_MINUTES);
+        updateExpiresAt();
     }
-
 
     public void cancelReservation() {
         status = ReservationStatus.CANCELLED;
     }
 
-
     public void updateOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    private void updateExpiresAt() {
+        this.expiresAt = expiresAt.plusMinutes(RESERVATION_TIMEOUT);
     }
 
 }

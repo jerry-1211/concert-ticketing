@@ -3,7 +3,7 @@ package com.jerry.ticketing.member.application;
 
 import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.application.dto.MyPageDto;
 import com.jerry.ticketing.member.application.dto.ReservationListDto;

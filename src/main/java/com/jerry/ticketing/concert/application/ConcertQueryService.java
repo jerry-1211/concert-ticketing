@@ -2,7 +2,7 @@ package com.jerry.ticketing.concert.application;
 
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.concert.domain.port.ConcertRepository;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.ConcertErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

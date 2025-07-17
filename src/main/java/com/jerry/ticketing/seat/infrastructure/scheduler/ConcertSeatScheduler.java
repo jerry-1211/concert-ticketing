@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.infrastructure.scheduler;
 
 
-import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
+import com.jerry.ticketing.seat.application.concertseat.ConcertSeatCommandService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;

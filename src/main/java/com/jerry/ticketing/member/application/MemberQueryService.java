@@ -2,7 +2,7 @@ package com.jerry.ticketing.member.application;
 
 
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;

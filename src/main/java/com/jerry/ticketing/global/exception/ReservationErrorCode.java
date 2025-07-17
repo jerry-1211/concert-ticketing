@@ -1,6 +1,8 @@
 package com.jerry.ticketing.global.exception;
 
 
+import com.jerry.ticketing.global.exception.common.ErrorCode;
+
 public enum ReservationErrorCode implements ErrorCode {
     RESERVATION_NOT_FOUND("해당 예약을 찾을 수 없습니다.");
 

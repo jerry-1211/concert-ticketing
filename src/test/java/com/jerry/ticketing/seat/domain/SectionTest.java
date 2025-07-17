@@ -1,6 +1,6 @@
 package com.jerry.ticketing.seat.domain;
 
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

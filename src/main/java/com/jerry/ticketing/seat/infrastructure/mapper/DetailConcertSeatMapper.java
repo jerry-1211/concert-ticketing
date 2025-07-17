@@ -1,9 +1,9 @@
 package com.jerry.ticketing.seat.infrastructure.mapper;
 
-import com.jerry.ticketing.seat.application.dto.domain.ConcertSeatDto;
-import com.jerry.ticketing.seat.application.dto.domain.SeatDto;
-import com.jerry.ticketing.seat.application.dto.domain.SectionDto;
-import com.jerry.ticketing.seat.application.dto.web.DetailedConcertSeatDto;
+import com.jerry.ticketing.seat.application.concertseat.dto.ConcertSeatDto;
+import com.jerry.ticketing.seat.application.seat.dto.SeatDto;
+import com.jerry.ticketing.seat.application.section.dto.SectionDto;
+import com.jerry.ticketing.seat.application.concertseat.web.DetailedConcertSeatDto;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import org.springframework.stereotype.Component;
 
