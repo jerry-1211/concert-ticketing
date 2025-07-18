@@ -93,7 +93,7 @@ class SeatRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("id로 좌석을 찾을 수 있다.")
+    @DisplayName("모든 좌석을 찾을 수 있다.")
     void findAllSeats() {
         // given
         Seat seat1 = Seat.of("A", 10, SeatType.ECONOMY);
