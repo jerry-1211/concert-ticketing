@@ -1,10 +1,10 @@
 package com.jerry.ticketing.reservation.application;
 
 
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.reservation.domain.Reservation;
-import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
+import com.jerry.ticketing.reservation.domain.port.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

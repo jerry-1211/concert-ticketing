@@ -3,8 +3,8 @@ package com.jerry.ticketing.seat.api;
 
 import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
-import com.jerry.ticketing.seat.application.ConcertSeatQueryService;
-import com.jerry.ticketing.seat.application.dto.web.DetailedConcertSeatDto;
+import com.jerry.ticketing.seat.application.concertseat.ConcertSeatQueryService;
+import com.jerry.ticketing.seat.application.concertseat.web.DetailedConcertSeatDto;
 import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

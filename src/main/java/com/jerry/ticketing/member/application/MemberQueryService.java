@@ -2,16 +2,17 @@ package com.jerry.ticketing.member.application;
 
 
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
-import com.jerry.ticketing.member.infrastructure.repository.MemberRepository;
+import com.jerry.ticketing.member.domain.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.function.Function;
 
 @Service
@@ -36,13 +37,15 @@ public class MemberQueryService {
 
     @Transactional
     public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
 
         return memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
                 .map(existingMember -> {
-                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture());
+                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
                     return MemberDto.from(existingMember);
                 }).orElseGet(() -> {
-                            Member newMember = Member.ofGoogle(googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture());
+                            Member newMember = Member.ofGoogle(googleUserInfo.getName(),
+                                    googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
                             return MemberDto.from(memberRepository.save(newMember));
                         }
                 );

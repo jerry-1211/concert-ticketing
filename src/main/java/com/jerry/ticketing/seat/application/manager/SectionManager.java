@@ -5,7 +5,7 @@ import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.Section;
-import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
+import com.jerry.ticketing.seat.domain.port.SectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class SectionManager {
      * Section A-Z 까지의 구역을 만듭니다.
      */
     public void createIfNotExists(Long concertId) {
-        if (sectionRepository.findByConcertId(concertId).isEmpty()) {
+        if (sectionRepository.notExistsByConcertId(concertId)) {
             create(concertId);
         }
     }

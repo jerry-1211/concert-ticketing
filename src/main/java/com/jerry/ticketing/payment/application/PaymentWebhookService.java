@@ -3,7 +3,7 @@ package com.jerry.ticketing.payment.application;
 
 import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
-import com.jerry.ticketing.seat.application.ConcertSeatCommandService;
+import com.jerry.ticketing.seat.application.concertseat.ConcertSeatCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

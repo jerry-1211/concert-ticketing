@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
-    public static final int RESERVATION_TIMEOUT_MINUTES = 2;
+    public static final int RESERVATION_TIMEOUT = 2;
     public static final int PENDING_CHECK_INTERVAL_SECONDS = 30000;
 
 
@@ -60,38 +60,39 @@ public class Reservation {
     private String orderName;
 
 
-    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime expiresAt, int totalAmount, int quantity) {
+    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt, OffsetDateTime expiresAt, int totalAmount, int quantity) {
         this.memberId = memberId;
         this.concertId = concertId;
         this.orderName = orderName;
+        this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.totalAmount = totalAmount;
         this.quantity = quantity;
         this.status = ReservationStatus.PENDING;
-        this.createdAt = OffsetDateTime.now();
     }
 
 
-    public static Reservation of(Long memberId, Long concertId, String orderName,
+    public static Reservation of(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt,
                                  OffsetDateTime expiresAt, int totalAmount, int quantity) {
-        return new Reservation(memberId, concertId, orderName, expiresAt, totalAmount, quantity);
+        return new Reservation(memberId, concertId, orderName, createdAt, expiresAt, totalAmount, quantity);
 
     }
-
 
     public void confirmReservation() {
         status = ReservationStatus.CONFIRMED;
-        this.expiresAt = OffsetDateTime.now().plusMinutes(RESERVATION_TIMEOUT_MINUTES);
+        updateExpiresAt();
     }
-
 
     public void cancelReservation() {
         status = ReservationStatus.CANCELLED;
     }
 
-
     public void updateOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    private void updateExpiresAt() {
+        this.expiresAt = expiresAt.plusMinutes(RESERVATION_TIMEOUT);
     }
 
 }

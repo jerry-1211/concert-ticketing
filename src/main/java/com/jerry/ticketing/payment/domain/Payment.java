@@ -72,8 +72,8 @@ public class Payment {
         this.orderId = orderId;
     }
 
-    public static Payment createTossPayment(Long reservationId, String orderId) {
-        return new Payment(reservationId, PaymentMethod.TOSS_PAY, PaymentStatus.PENDING, OffsetDateTime.now(), orderId);
+    public static Payment createTossPayment(Long reservationId, String orderId, OffsetDateTime dateTime) {
+        return new Payment(reservationId, PaymentMethod.TOSS_PAY, PaymentStatus.PENDING, dateTime, orderId);
     }
 
     public void updateConfirm(String paymentKey) {
@@ -81,11 +81,11 @@ public class Payment {
         this.paymentKey = paymentKey;
     }
 
-    public void completed(WebhookPaymentDto.Request.PaymentData data) {
+    public void complete(WebhookPaymentDto.Request.PaymentData data, OffsetDateTime dateTime) {
         this.lastTransactionKey = data.getLastTransactionKey();
         this.orderName = data.getOrderName();
         this.method = data.getMethod();
         this.totalAmount = data.getTotalAmount();
-        paymentDate = OffsetDateTime.now();
+        paymentDate = dateTime;
     }
 }

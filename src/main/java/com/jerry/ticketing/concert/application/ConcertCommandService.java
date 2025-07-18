@@ -4,7 +4,7 @@ import com.jerry.ticketing.seat.application.initializer.ConcertInitializationSer
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.concert.infrastructure.mapper.ConcertMapper;
 import com.jerry.ticketing.concert.application.dto.web.CreateConcertDto;
-import com.jerry.ticketing.concert.infrastructure.repository.ConcertRepository;
+import com.jerry.ticketing.concert.domain.port.ConcertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,8 +1,8 @@
 package com.jerry.ticketing.seat.application.manager;
 
 
-import com.jerry.ticketing.seat.application.SeatCommandService;
-import com.jerry.ticketing.seat.application.SeatQueryService;
+import com.jerry.ticketing.seat.application.seat.SeatCommandService;
+import com.jerry.ticketing.seat.application.seat.SeatQueryService;
 import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.seat.infrastructure.batch.BatchHelper;
 import com.jerry.ticketing.seat.domain.Seat;

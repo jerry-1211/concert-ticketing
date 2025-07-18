@@ -3,14 +3,14 @@ package com.jerry.ticketing.payment.application;
 
 import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.concert.application.dto.domain.ConcertDto;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
 import com.jerry.ticketing.member.application.MemberQueryService;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.domain.PaymentDto;
 import com.jerry.ticketing.payment.domain.Payment;
-import com.jerry.ticketing.payment.infrastructure.repository.PaymentRepository;
+import com.jerry.ticketing.payment.domain.port.PaymentRepository;
 import com.jerry.ticketing.reservation.application.ReservationQueryService;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import lombok.RequiredArgsConstructor;

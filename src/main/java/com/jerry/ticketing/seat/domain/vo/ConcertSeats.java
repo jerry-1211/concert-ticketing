@@ -2,6 +2,7 @@ package com.jerry.ticketing.seat.domain.vo;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class ConcertSeats {
@@ -19,9 +20,9 @@ public class ConcertSeats {
         return new ConcertSeats(concertSeats);
     }
 
-    public void block(Long memberId) {
+    public void occupy(Long memberId, OffsetDateTime now) {
         this.concertSeats.forEach(v -> {
-            v.block(memberId);
+            v.occupy(memberId, now);
         });
     }
 
@@ -45,6 +46,11 @@ public class ConcertSeats {
                 .map(ConcertSeat::getSectionId)
                 .distinct()
                 .toList();
+    }
+
+    public static int calculateTotalAmount(ConcertSeats concertSeats) {
+        int amount = concertSeats.item().get(0).getAmount();
+        return amount * concertSeats.item().size();
     }
 
 

@@ -1,7 +1,7 @@
 package com.jerry.ticketing.seat.domain;
 
 
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.SectionErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,7 +55,4 @@ public class Section {
         --remainingConcertSeats;
     }
 
-    public boolean hasAvailableSeats() {
-        return this.remainingConcertSeats > 0;
-    }
 }

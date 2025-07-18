@@ -11,10 +11,10 @@ import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
-import com.jerry.ticketing.global.exception.BusinessException;
+import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
-import com.jerry.ticketing.reservation.infrastructure.repository.ReservationRepository;
+import com.jerry.ticketing.reservation.domain.port.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +36,7 @@ public class ReservationCommandService {
 
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
 
         String userEmail = jwtTokenProvider.getUserEmailFromToken(request.getToken());
         Member member = memberQueryService.getMemberByEmail(userEmail, Function.identity());
@@ -43,7 +44,7 @@ public class ReservationCommandService {
 
         Reservation reservation = Reservation.of(
                 member.getId(), concert.getId(),
-                request.getOrderName(), request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
+                request.getOrderName(), dateTime, request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         reservationRepository.save(reservation);
 
