@@ -17,9 +17,17 @@ public interface ConcertSeatJpaRepository extends JpaRepository<ConcertSeat, Lon
 
     List<ConcertSeat> findByExpireAtBeforeAndStatus(OffsetDateTime expireTime, ConcertSeatStatus status);
 
-    @Query("SELECT cs FROM ConcertSeat cs, Concert c, Section st, Seat s " +
-            "WHERE cs.concertId = c.id AND cs.sectionId = st.id  AND cs.seatId = s.id " +
-            "AND c.id = :concertId AND st.zone = :zone AND s.seatRow = :row")
+
+    @Query("SELECT cs FROM ConcertSeat cs " +
+            "WHERE cs.concertId = :concertId " +
+            "  AND cs.seatId IN ( " +
+            "    SELECT s.id FROM Seat s " +
+            "    WHERE s.seatRow = :row " +
+            "  ) " +
+            "  AND cs.sectionId IN ( " +
+            "    SELECT st.id FROM Section st " +
+            "    WHERE st.zone = :zone " +
+            "  )")
     List<ConcertSeat> findByJoinConditions(@Param("concertId") Long concertId,
                                            @Param("zone") String zone,
                                            @Param("row") String row);
