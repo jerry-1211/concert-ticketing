@@ -20,7 +20,7 @@ public class ConcertSeatDto {
     private ConcertSeatStatus status;
     private Long blockedBy;
     private OffsetDateTime blockedAt;
-    private OffsetDateTime blockedExpireAt;
+    private OffsetDateTime expireAt;
 
 
     public static ConcertSeatDto from(ConcertSeat concertSeat) {
@@ -33,7 +33,7 @@ public class ConcertSeatDto {
                 .status(concertSeat.getStatus())
                 .blockedBy(concertSeat.getBlockedBy())
                 .blockedAt(concertSeat.getBlockedAt())
-                .blockedExpireAt(concertSeat.getBlockedExpireAt())
+                .expireAt(concertSeat.getExpireAt())
                 .build();
     }
 

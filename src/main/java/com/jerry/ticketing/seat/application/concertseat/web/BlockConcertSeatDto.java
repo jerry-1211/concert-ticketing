@@ -39,7 +39,7 @@ public class BlockConcertSeatDto {
         public static BlockConcertSeatDto.Response from(List<ConcertSeat> blockedConcertSeats) {
             return BlockConcertSeatDto.Response.builder()
                     .blockedSeatIds(blockedConcertSeats.stream().map(ConcertSeat::getId).collect(Collectors.toList()))
-                    .expireAt(blockedConcertSeats.get(0).getBlockedExpireAt())
+                    .expireAt(blockedConcertSeats.get(0).getExpireAt())
                     .totalAmount(ConcertSeats.calculateTotalAmount(ConcertSeats.from(blockedConcertSeats)))
                     .build();
         }

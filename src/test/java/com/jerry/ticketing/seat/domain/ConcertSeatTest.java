@@ -58,7 +58,7 @@ class ConcertSeatTest {
 
         // then
         assertThat(concertSeat)
-                .extracting("status", "blockedBy", "blockedAt", "blockedExpireAt")
+                .extracting("status", "blockedBy", "blockedAt", "expireAt")
                 .containsExactlyInAnyOrder(
                         ConcertSeatStatus.BLOCKED, 1L, now, now.plusMinutes(ConcertSeat.BLOCKING_TIMEOUT_MINUTES)
                 );
@@ -78,7 +78,7 @@ class ConcertSeatTest {
 
         // then
         assertThat(concertSeat)
-                .extracting("status", "blockedExpireAt")
+                .extracting("status", "expireAt")
                 .containsExactlyInAnyOrder(
                         ConcertSeatStatus.RESERVED,
                         concertSeat.getBlockedAt().plusYears(ConcertSeat.CONCERT_SEAT_EXPIRE_AT)
@@ -97,7 +97,7 @@ class ConcertSeatTest {
 
         // then
         assertThat(concertSeat)
-                .extracting("status", "blockedBy", "blockedAt", "blockedExpireAt")
+                .extracting("status", "blockedBy", "blockedAt", "expireAt")
                 .containsExactlyInAnyOrder(
                         ConcertSeatStatus.AVAILABLE, null, null, null);
     }

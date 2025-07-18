@@ -20,9 +20,9 @@ public class ConcertSeats {
         return new ConcertSeats(concertSeats);
     }
 
-    public void occupy(Long memberId, OffsetDateTime blockedAt) {
+    public void occupy(Long memberId, OffsetDateTime now) {
         this.concertSeats.forEach(v -> {
-            v.occupy(memberId, blockedAt);
+            v.occupy(memberId, now);
         });
     }
 

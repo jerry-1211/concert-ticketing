@@ -48,7 +48,7 @@ public class ConcertSeat {
     private OffsetDateTime blockedAt;
 
     // 좌석 선점 시작 만료 시간
-    private OffsetDateTime blockedExpireAt;
+    private OffsetDateTime expireAt;
 
     private ConcertSeat(Long concertId, Long seatId, Long sectionId, int amount) {
         this.concertId = concertId;
@@ -79,17 +79,17 @@ public class ConcertSeat {
     }
 
 
-    public void occupy(Long memberId, OffsetDateTime blockedAt) {
+    public void occupy(Long memberId, OffsetDateTime now) {
         this.block();
         this.blockedBy = memberId;
-        this.blockedAt = blockedAt;
-        this.blockedExpireAt = blockedAt.plusMinutes(BLOCKING_TIMEOUT_MINUTES);
+        this.blockedAt = now;
+        this.expireAt = now.plusMinutes(BLOCKING_TIMEOUT_MINUTES);
     }
 
 
     public void confirm() {
         this.status = ConcertSeatStatus.RESERVED;
-        this.blockedExpireAt = blockedAt.plusYears(CONCERT_SEAT_EXPIRE_AT);
+        this.expireAt = blockedAt.plusYears(CONCERT_SEAT_EXPIRE_AT);
     }
 
 
@@ -97,7 +97,7 @@ public class ConcertSeat {
         this.status = ConcertSeatStatus.AVAILABLE;
         this.blockedBy = null;
         this.blockedAt = null;
-        this.blockedExpireAt = null;
+        this.expireAt = null;
     }
 
 }
