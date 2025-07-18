@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
 @DataJpaTest
-class TSectionRepositoryAdapterTest {
+class SectionRepositoryAdapterTest {
 
     @Autowired
     private SectionJpaRepository jpaRepository;

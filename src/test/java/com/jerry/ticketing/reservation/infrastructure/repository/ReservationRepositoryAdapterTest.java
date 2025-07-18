@@ -2,6 +2,7 @@ package com.jerry.ticketing.reservation.infrastructure.repository;
 
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
+import com.jerry.ticketing.reservation.domain.port.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class ReservationRepositoryAdapterTest {
     @Autowired
     private ReservationJpaRepository jpaRepository;
 
-    private ReservationRepositoryAdapter reservationRepository;
+    private ReservationRepository reservationRepository;
 
     @BeforeEach
     void setUp() {

@@ -2,6 +2,7 @@ package com.jerry.ticketing.seat.infrastructure.repository.concertseat;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
+import com.jerry.ticketing.seat.domain.port.ConcertSeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class ConcertSeatRepositoryAdapterTest {
     @Autowired
     private ConcertSeatJpaRepository jpaRepository;
 
-    private ConcertSeatRepositoryAdapter concertSeatRepository;
+    private ConcertSeatRepository concertSeatRepository;
 
     @BeforeEach
     void setUp() {

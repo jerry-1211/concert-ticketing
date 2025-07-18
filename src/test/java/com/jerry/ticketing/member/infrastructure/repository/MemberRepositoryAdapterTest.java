@@ -3,7 +3,7 @@ package com.jerry.ticketing.member.infrastructure.repository;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.MemberRole;
 import com.jerry.ticketing.member.domain.enums.Provider;
-import org.junit.jupiter.api.AfterEach;
+import com.jerry.ticketing.member.domain.port.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class MemberRepositoryAdapterTest {
     @Autowired
     private MemberJpaRepository jpaRepository;
 
-    private MemberRepositoryAdapter memberRepository;
+    private MemberRepository memberRepository;
 
     @BeforeEach
     void setUp() {

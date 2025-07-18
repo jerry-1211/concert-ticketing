@@ -3,6 +3,7 @@ package com.jerry.ticketing.payment.infrastructure.repository;
 import com.jerry.ticketing.payment.domain.Payment;
 import com.jerry.ticketing.payment.domain.enums.PaymentMethod;
 import com.jerry.ticketing.payment.domain.enums.PaymentStatus;
+import com.jerry.ticketing.payment.domain.port.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class PaymentRepositoryAdapterTest {
     @Autowired
     private PaymentJpaRepository jpaRepository;
 
-    private PaymentRepositoryAdapter paymentRepository;
+    private PaymentRepository paymentRepository;
 
     @BeforeEach
     void setUp() {

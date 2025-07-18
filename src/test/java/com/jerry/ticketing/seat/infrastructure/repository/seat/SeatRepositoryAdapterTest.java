@@ -2,6 +2,7 @@ package com.jerry.ticketing.seat.infrastructure.repository.seat;
 
 import com.jerry.ticketing.seat.domain.Seat;
 import com.jerry.ticketing.seat.domain.enums.SeatType;
+import com.jerry.ticketing.seat.domain.port.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class SeatRepositoryAdapterTest {
     @Autowired
     private SeatJpaRepository repository;
 
-    private SeatRepositoryAdapter seatRepository;
+    private SeatRepository seatRepository;
 
     @BeforeEach
     void setUp() {

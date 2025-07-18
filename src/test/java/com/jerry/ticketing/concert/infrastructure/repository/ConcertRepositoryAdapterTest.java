@@ -1,6 +1,7 @@
 package com.jerry.ticketing.concert.infrastructure.repository;
 
 import com.jerry.ticketing.concert.domain.Concert;
+import com.jerry.ticketing.concert.domain.port.ConcertRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +21,11 @@ class ConcertRepositoryAdapterTest {
     @Autowired
     private ConcertJpaRepository jpaRepository;
 
-    private ConcertRepositoryAdapter concertRepositoryAdapter;
+    private ConcertRepository concertRepository;
 
     @BeforeEach
     void setUp() {
-        concertRepositoryAdapter = new ConcertRepositoryAdapter(jpaRepository);
+        concertRepository = new ConcertRepositoryAdapter(jpaRepository);
     }
 
 
@@ -37,7 +38,7 @@ class ConcertRepositoryAdapterTest {
 
 
         // when
-        Concert savedConcert = concertRepositoryAdapter.save(concert);
+        Concert savedConcert = concertRepository.save(concert);
 
         // then
         assertThat(savedConcert)
@@ -51,10 +52,10 @@ class ConcertRepositoryAdapterTest {
         // given
         OffsetDateTime dateTime = OffsetDateTime.now();
         Concert concert = Concert.of("ColdPlay", dateTime, "일산 대화동", 100_000, "나의 최고의 POP 밴드", 10);
-        Concert savedConcert = concertRepositoryAdapter.save(concert);
+        Concert savedConcert = concertRepository.save(concert);
 
         // when // then
-        assertThat(concertRepositoryAdapter.findById(savedConcert.getId())).isNotEmpty();
+        assertThat(concertRepository.findById(savedConcert.getId())).isNotEmpty();
     }
 
 
@@ -65,11 +66,11 @@ class ConcertRepositoryAdapterTest {
         OffsetDateTime dateTime = OffsetDateTime.now();
         Concert concert1 = Concert.of("ColdPlay", dateTime, "일산 대화동", 100_000, "나의 최고의 POP 밴드", 10);
         Concert concert2 = Concert.of("아이유", dateTime, "강남 터미널", 40_000, "아이유의 밤 콘서트", 5);
-        concertRepositoryAdapter.save(concert1);
-        concertRepositoryAdapter.save(concert2);
+        concertRepository.save(concert1);
+        concertRepository.save(concert2);
 
         // when
-        List<Concert> allConcert = concertRepositoryAdapter.findAll();
+        List<Concert> allConcert = concertRepository.findAll();
 
         // then
         assertThat(allConcert).hasSize(2)
