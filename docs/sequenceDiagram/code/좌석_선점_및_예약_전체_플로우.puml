@@ -27,7 +27,7 @@ loop 각 좌석별
       - status: BLOCKED
       - blockedBy: memberId
       - blockedAt: now()
-      - blockedExpireAt: now()+15분
+      - expireAt: now()+15분
     end note
 end
 

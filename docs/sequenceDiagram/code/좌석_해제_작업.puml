@@ -17,11 +17,11 @@ note right of Scheduler
 end note
 
 == 2. 만료 좌석 조회 ==
-SeatService -> Repository: findByBlockedExpireAtBeforeAndStatus(now, BLOCKED)
+SeatService -> Repository:  findByExpireAtBeforeAndStatus(now, BLOCKED)
 Repository -> DB: 만료된 Blocked 좌석 검색
 note right of DB
   조건:
-  - blockedExpireAt < now
+  - expireAt < now
   - status = BLOCKED
 end note
 DB --> Repository: 만료 좌석 목록
@@ -35,7 +35,7 @@ loop 각 만료 좌석별 처리
     note right of DB
       해제된 좌석:
       - 다시 예약 가능
-      - blockedExpireAt 초기화
+      - expireAt 초기화
     end note
 end
 
