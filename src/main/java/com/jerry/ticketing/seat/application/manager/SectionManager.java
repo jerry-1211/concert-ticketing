@@ -5,7 +5,7 @@ import com.jerry.ticketing.concert.application.ConcertQueryService;
 import com.jerry.ticketing.seat.domain.enums.SeatSectionType;
 import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.seat.domain.Section;
-import com.jerry.ticketing.seat.infrastructure.repository.SectionRepository;
+import com.jerry.ticketing.seat.infrastructure.repository.section.SectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

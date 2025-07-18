@@ -3,7 +3,7 @@ package com.jerry.ticketing.seat.application.seat;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
 import com.jerry.ticketing.seat.domain.Seat;
-import com.jerry.ticketing.seat.infrastructure.repository.SeatRepository;
+import com.jerry.ticketing.seat.domain.port.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
