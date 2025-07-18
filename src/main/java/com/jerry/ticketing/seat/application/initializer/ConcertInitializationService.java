@@ -3,7 +3,7 @@ package com.jerry.ticketing.seat.application.initializer;
 
 import com.jerry.ticketing.seat.application.manager.ConcertSeatManager;
 import com.jerry.ticketing.seat.application.manager.SectionManager;
-import com.jerry.ticketing.seat.infrastructure.repository.section.SectionRepository;
+import com.jerry.ticketing.seat.domain.port.SectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
