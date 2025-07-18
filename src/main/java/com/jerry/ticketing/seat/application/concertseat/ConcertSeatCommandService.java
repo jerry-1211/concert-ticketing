@@ -11,7 +11,7 @@ import com.jerry.ticketing.seat.domain.Section;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import com.jerry.ticketing.seat.application.concertseat.web.BlockConcertSeatDto;
-import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
+import com.jerry.ticketing.seat.domain.port.ConcertSeatRepository;
 import com.jerry.ticketing.seat.util.ConcertSeatIdExtractor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +49,7 @@ public class ConcertSeatCommandService {
     public void releaseExpiredConcertSeats() {
         OffsetDateTime now = OffsetDateTime.now();
         ConcertSeats concertSeats = ConcertSeats.from(
-                concertSeatRepository.findByBlockedExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED));
+                concertSeatRepository.findByExpireAtBeforeAndStatus(now, ConcertSeatStatus.BLOCKED));
         concertSeats.available();
     }
 

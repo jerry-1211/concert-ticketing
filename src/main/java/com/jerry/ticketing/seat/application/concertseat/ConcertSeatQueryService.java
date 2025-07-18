@@ -7,7 +7,7 @@ import com.jerry.ticketing.seat.application.seat.dto.SeatDto;
 import com.jerry.ticketing.seat.application.section.dto.SectionDto;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.infrastructure.mapper.DetailConcertSeatMapper;
-import com.jerry.ticketing.seat.infrastructure.repository.ConcertSeatRepository;
+import com.jerry.ticketing.seat.domain.port.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
