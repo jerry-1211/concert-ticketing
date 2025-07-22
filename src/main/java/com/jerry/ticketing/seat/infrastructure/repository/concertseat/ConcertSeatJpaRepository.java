@@ -7,15 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface ConcertSeatJpaRepository extends JpaRepository<ConcertSeat, Long> {
 
     List<ConcertSeat> findByConcertId(Long id);
 
-    List<ConcertSeat> findByIdIn(List<Long> ids);
+    List<ConcertSeat> findByConcertIdAndSeatIdIn(Long concertIds, List<Long> seatIds);
 
     List<ConcertSeat> findByExpireAtBeforeAndStatus(OffsetDateTime expireTime, ConcertSeatStatus status);
+
+    List<ConcertSeat> findByIdIn(Collection<Long> ids);
 
 
     @Query("SELECT cs FROM ConcertSeat cs " +

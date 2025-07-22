@@ -30,8 +30,8 @@ public class ConcertSeats {
         this.concertSeats.forEach(ConcertSeat::release);
     }
 
-    public boolean isNotSame(List<Long> ConcertSeatIds) {
-        return this.concertSeats.size() != ConcertSeatIds.size();
+    public boolean isNotSame(ConcertSeats concertSeats, int seatCount) {
+        return this.concertSeats.size() != seatCount;
     }
 
     public List<Long> getSeatIds() {

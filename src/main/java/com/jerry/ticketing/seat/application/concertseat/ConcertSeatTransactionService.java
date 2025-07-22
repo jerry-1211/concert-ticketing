@@ -22,9 +22,10 @@ public class ConcertSeatTransactionService {
     public ConcertSeats occupy(BlockConcertSeatDto.Request request) {
         OffsetDateTime now = OffsetDateTime.now();
         ConcertSeats concertSeats = ConcertSeats.from(
-                concertSeatRepository.findByIdIn(request.getConcertSeatIds()));
+                concertSeatRepository.findByConcertIdAndSeatIdIn(request.getConcertId(), request.getSeatIds()));
 
-        concertSeatBlockValidator.validator(concertSeats, request.getConcertSeatIds());
+        int seatCount = request.getSeatIds().size();
+        concertSeatBlockValidator.validator(concertSeats, seatCount);
         concertSeats.occupy(request.getMemberId(), now);
 
         return concertSeats;

@@ -16,12 +16,12 @@ public class BlockConcertSeatDto {
     public static class Request {
 
         private Long concertId;
-        private List<Long> concertSeatIds;
+        private List<Long> seatIds;
         private Long memberId;
 
-        public Request(Long concertId, List<Long> concertSeatIds, Long memberId) {
+        public Request(Long concertId, List<Long> seatIds, Long memberId) {
             this.concertId = concertId;
-            this.concertSeatIds = concertSeatIds;
+            this.seatIds = seatIds;
             this.memberId = memberId;
         }
     }
