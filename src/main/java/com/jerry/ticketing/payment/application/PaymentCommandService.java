@@ -25,6 +25,8 @@ import java.time.OffsetDateTime;
 public class PaymentCommandService {
 
     private final PaymentRepository paymentRepository;
+    private final PaymentMessagePublisherPort paymentMessagePublisherPort;
+
     private final PaymentQueryService paymentQueryService;
     private final ReservationCommandService reservationCommandService;
     private final PaymentEventPublisher paymentEventPublisher;
@@ -43,7 +45,7 @@ public class PaymentCommandService {
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
         tossPaymentClient.confirmPayment(request);
-        paymentEventPublisher.publishConfirmEvent(request);
+        paymentMessagePublisherPort.publishConfirmEvent(request);
 
         Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
@@ -56,7 +58,7 @@ public class PaymentCommandService {
      */
     @Transactional
     public void updatePaymentOnCompleted(WebhookPaymentDto.Request.PaymentData data) {
-        paymentEventPublisher.publishWebhookEvent(data);
+        paymentMessagePublisherPort.publishWebhookEvent(data);
     }
 
 
