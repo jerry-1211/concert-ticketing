@@ -27,6 +27,7 @@ public class MemberQueryService {
                 .orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND)));
     }
 
+
     @Transactional
     public <T> T getMemberByEmail(String email, Function<Member, T> mapper) {
         return mapper.apply(
@@ -35,21 +36,25 @@ public class MemberQueryService {
         );
     }
 
+    
     @Transactional
-    public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo) {
-        OffsetDateTime dateTime = OffsetDateTime.now();
+    public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime) {
 
         return memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
-                .map(existingMember -> {
-                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
-                    return MemberDto.from(existingMember);
-                }).orElseGet(() -> {
-                            Member newMember = Member.ofGoogle(googleUserInfo.getName(),
-                                    googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
-                            return MemberDto.from(memberRepository.save(newMember));
-                        }
-                );
+                .map(existingMember -> updateExistingGoogleMember(googleUserInfo, dateTime, existingMember)
+                ).orElseGet(() -> createNewGoogleMember(googleUserInfo, dateTime));
     }
 
+
+    private static MemberDto updateExistingGoogleMember(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime, Member existingMember) {
+        existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
+        return MemberDto.from(existingMember);
+    }
+
+    private MemberDto createNewGoogleMember(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime) {
+        Member newMember = Member.ofGoogle(
+                googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
+        return MemberDto.from(memberRepository.save(newMember));
+    }
 
 }

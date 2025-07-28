@@ -27,4 +27,16 @@ public class GoogleUserInfo {
         return (String) attribute.get("picture");
     }
 
+
+    public static GoogleUserInfo of(String id, String name, String email, String picture) {
+        Map<String, Object> attributes = Map.of(
+                "sub", id,
+                "name", name,
+                "email", email,
+                "picture", picture
+        );
+
+        return new GoogleUserInfo(attributes);
+    }
+
 }
