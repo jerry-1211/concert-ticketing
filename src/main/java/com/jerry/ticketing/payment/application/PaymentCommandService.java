@@ -6,9 +6,10 @@ import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
+import com.jerry.ticketing.payment.domain.port.PaymentMessagePublisherPort;
+import com.jerry.ticketing.payment.domain.port.PaymentEventConsumerPort;
 import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.payment.domain.port.PaymentRepository;
-import com.jerry.ticketing.global.infrastructure.rabbitmq.PaymentEventPublisher;
 import com.jerry.ticketing.reservation.application.ReservationCommandService;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,14 @@ import java.time.OffsetDateTime;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PaymentCommandService {
+public class PaymentCommandService implements PaymentEventConsumerPort {
 
     private final PaymentRepository paymentRepository;
     private final PaymentMessagePublisherPort paymentMessagePublisherPort;
 
     private final PaymentQueryService paymentQueryService;
     private final ReservationCommandService reservationCommandService;
-    private final PaymentEventPublisher paymentEventPublisher;
+
     private final TossPaymentClient tossPaymentClient;
 
     @Transactional
@@ -62,4 +63,22 @@ public class PaymentCommandService {
     }
 
 
+    @Override
+    @Transactional
+    public void handleConfirmEvent(ConfirmPaymentDto.Request request) {
+        Payment payment = paymentRepository.findByOrderId(request.getOrderId())
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
+
+        payment.updateConfirm(request.getPaymentKey());
+    }
+
+    @Override
+    @Transactional
+    public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
+        Payment payment = paymentRepository.findByOrderId(data.getOrderId())
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
+
+        payment.complete(data, dateTime);
+    }
 }
