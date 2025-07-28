@@ -2,7 +2,6 @@ package com.jerry.ticketing.global.infrastructure.rabbitmq;
 
 import com.jerry.ticketing.payment.application.dto.web.ConfirmPaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
-import com.jerry.ticketing.payment.domain.port.PaymentMessagePublisherPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +20,7 @@ class PaymentMessagePublisherAdapterTest {
     private RabbitTemplate rabbitTemplate;
 
     @InjectMocks
-    private PaymentMessagePublisherPort publisherPort;
+    private PaymentMessagePublisherAdapter paymentMessagePublisher;
 
 
     @Test
@@ -31,7 +30,7 @@ class PaymentMessagePublisherAdapterTest {
         ConfirmPaymentDto.Request request = new ConfirmPaymentDto.Request("paymentkey123", "orderId123", "10000");
 
         // when
-        publisherPort.publishConfirmEvent(request);
+        paymentMessagePublisher.publishConfirmEvent(request);
 
         // then
         verify(rabbitTemplate).convertAndSend(eq("payment.exchange"), eq("payment.confirm"), eq(request));
@@ -48,7 +47,7 @@ class PaymentMessagePublisherAdapterTest {
         );
 
         // when
-        publisherPort.publishWebhookEvent(data);
+        paymentMessagePublisher.publishWebhookEvent(data);
 
         // then
         verify(rabbitTemplate).convertAndSend(eq("payment.exchange"), eq("payment.webhook"), eq(data));
