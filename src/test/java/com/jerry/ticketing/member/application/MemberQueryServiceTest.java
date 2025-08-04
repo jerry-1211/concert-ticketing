@@ -3,6 +3,7 @@ package com.jerry.ticketing.member.application;
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.global.exception.common.BusinessException;
+import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
@@ -175,5 +176,29 @@ class MemberQueryServiceTest {
                 .containsExactlyInAnyOrder(memberDto.getName(), memberDto.getEmail(), memberDto.getProviderId(), memberDto.getProfileImage(), dateTime);
     }
 
+
+    @Test
+    @DisplayName("매개변수(이메일,프로필 업데이트)를 기반으로 멤버의 프로필을 업데이트 한다.")
+    void updateMemberProfileByEmailAndUpdateProfile() {
+        // given
+        OffsetDateTime dateTime = OffsetDateTime.now();
+        String email = "email-123";
+        String name = "name-987";
+        String phoneNumber = "010-1234-5678";
+
+        Member member = Member.ofGoogle("name-123", email, "ProviderId-123", "picture-123", dateTime);
+        UpdateProfile request = UpdateProfile.of(name, phoneNumber);
+
+        given(memberRepository.findByEmail(email)).willReturn(Optional.of(member));
+
+        // when
+        Member updatedMember = memberQueryService.updateProfile(email, request);
+
+        //then
+        assertThat(updatedMember)
+                .extracting("name", "phoneNumber")
+                .containsExactlyInAnyOrder(name, phoneNumber);
+
+    }
 
 }

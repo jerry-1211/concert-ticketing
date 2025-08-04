@@ -59,7 +59,7 @@ class MemberRepositoryAdapterTest {
         Member savedMember = memberRepository.save(member);
 
         // then
-        assertThat(savedMember.getId()).isNotNull();
+        assertThat(memberRepository.findById(savedMember.getId())).isNotNull();
     }
 
     @Test

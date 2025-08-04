@@ -4,6 +4,7 @@ package com.jerry.ticketing.member.application;
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
+import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
@@ -36,13 +37,21 @@ public class MemberQueryService {
         );
     }
 
-    
+
     @Transactional
     public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime) {
 
         return memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
                 .map(existingMember -> updateExistingGoogleMember(googleUserInfo, dateTime, existingMember)
                 ).orElseGet(() -> createNewGoogleMember(googleUserInfo, dateTime));
+    }
+
+
+    @Transactional
+    public Member updateProfile(String email, UpdateProfile request) {
+        Member member = getMemberByEmail(email, Function.identity());
+        member.updateProfile(request);
+        return member;
     }
 
 
