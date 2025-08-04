@@ -4,10 +4,10 @@ services:
   # Application
   app:
     container_name: ticketing-app-container
-    image: eclipse-temurin:17-jdk-jammy
-    platform: linux/amd64
     working_dir: /app
-    command: java -XX:TieredStopAtLevel=1 -XX:NativeMemoryTracking=summary -jar ticketing.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - ./build/libs:/app
