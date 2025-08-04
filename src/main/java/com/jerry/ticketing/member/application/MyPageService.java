@@ -6,7 +6,7 @@ import com.jerry.ticketing.concert.domain.Concert;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
 import com.jerry.ticketing.member.application.dto.MyPageDto;
-import com.jerry.ticketing.member.application.dto.ReservationListDto;
+import com.jerry.ticketing.member.application.dto.MyReservationListDto;
 import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.port.MemberRepository;

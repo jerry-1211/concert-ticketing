@@ -73,7 +73,7 @@ public class Member {
         onUpdate(dateTime);
     }
 
-    public void updateProfile(UpdateProfile.Request request) {
+    public void updateProfile(UpdateProfile request) {
         updateName(request.getName());
         updatePhoneNumber(request.getPhoneNumber());
     }
