@@ -35,7 +35,4 @@ public class MemberRepositoryAdapter implements MemberRepository {
         return jpaRepository.findByProviderAndProviderId(provider, providerId);
     }
 
-    public void deleteAllInBatch() {
-        jpaRepository.deleteAllInBatch();
-    }
 }

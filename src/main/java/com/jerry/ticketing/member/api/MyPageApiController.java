@@ -29,7 +29,7 @@ public class MyPageApiController {
 
     @PutMapping("/profile")
     public ResponseEntity<MyPageDto> updateProfile(Authentication authentication,
-                                                   @RequestBody UpdateProfile.Request request) {
+                                                   @RequestBody UpdateProfile request) {
 
         String email = ((CustomOauth2User) authentication.getPrincipal()).getEmail();
         MyPageDto updateProfile = myPageService.updateMyPage(email, request);
