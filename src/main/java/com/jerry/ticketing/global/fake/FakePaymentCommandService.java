@@ -32,7 +32,7 @@ public class FakePaymentCommandService {
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
         OffsetDateTime dateTime = OffsetDateTime.now();
-        ReservationDto reservation = reservationCommandService.updateOrderId(request);
+        ReservationDto reservation = reservationCommandService.updateOrderId(request.getReservationId());
         Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId(), dateTime));
 
         return paymentQueryService.getDetailedPayment(savedPayment.getId());
