@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class MyPageService {
+public class MyPage {
 
     private final MemberQueryService memberQueryService;
     private final ReservationQueryService reservationQueryService;
@@ -44,13 +44,16 @@ public class MyPageService {
 
     private List<MyReservationListDto> getMyReservationListDto(List<Reservation> reservations) {
         List<MyReservationListDto> myReservations = new ArrayList<>();
+        addMyReservation(reservations, myReservations);
+        return myReservations;
+    }
 
+    private void addMyReservation(List<Reservation> reservations, List<MyReservationListDto> myReservations) {
         for (Reservation reservation : reservations) {
             Concert concert = concertQueryService.getConcertById(reservation.getConcertId(), Function.identity());
             MyReservationListDto myReservationListDto = MyReservationListDto.from(reservation, concert);
             myReservations.add(myReservationListDto);
         }
-        return myReservations;
     }
 
 }

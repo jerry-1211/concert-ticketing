@@ -27,7 +27,7 @@ import static org.mockito.BDDMockito.given;
 
 
 @ExtendWith(MockitoExtension.class)
-class MyPageServiceTest {
+class MyPageTest {
 
     @Mock
     private MemberQueryService memberQueryService;
@@ -39,7 +39,7 @@ class MyPageServiceTest {
     private ConcertQueryService concertQueryService;
 
     @InjectMocks
-    private MyPageService myPageService;
+    private MyPage myPage;
 
 
     @Test
@@ -56,7 +56,7 @@ class MyPageServiceTest {
         given(memberQueryService.getMemberByEmail(email, Function.identity())).willReturn(member);
 
         // when
-        MyPageDto myPage = myPageService.getMyPage(email);
+        MyPageDto myPage = this.myPage.getMyPage(email);
 
         // then
         assertThat(myPage)
@@ -88,7 +88,7 @@ class MyPageServiceTest {
         given(concertQueryService.getConcertById(anyLong(), any(Function.class))).willReturn(concert);
 
         // when
-        List<MyReservationListDto> myReservation = myPageService.getMyReservation("kj@gmail.com");
+        List<MyReservationListDto> myReservation = myPage.getMyReservation("kj@gmail.com");
 
         // then
         assertThat(myReservation)
@@ -113,7 +113,7 @@ class MyPageServiceTest {
         given(memberQueryService.updateProfile(anyString(), any(UpdateProfile.class))).willReturn(member);
 
         // when
-        MyPageDto myPage = myPageService.updateMyPage("email-123", request);
+        MyPageDto myPage = this.myPage.updateMyPage("email-123", request);
 
         // then
         assertThat(myPage)
