@@ -1,16 +1,14 @@
 package com.jerry.ticketing.seat.domain.vo;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
+import lombok.RequiredArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ConcertSeats {
     private final List<ConcertSeat> concertSeats;
-
-    public ConcertSeats(List<ConcertSeat> concertSeats) {
-        this.concertSeats = concertSeats;
-    }
 
     public List<ConcertSeat> item() {
         return this.concertSeats;
