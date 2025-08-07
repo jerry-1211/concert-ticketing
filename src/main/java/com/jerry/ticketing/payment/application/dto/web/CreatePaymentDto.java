@@ -18,11 +18,16 @@ public class CreatePaymentDto {
         private int totalAmount;
         private String orderName;
 
-        public Request(Long reservationId, int totalAmount, String orderName) {
+        private Request(Long reservationId, int totalAmount, String orderName) {
             this.reservationId = reservationId;
             this.totalAmount = totalAmount;
             this.orderName = orderName;
         }
+
+        public static Request of(Long reservationId, int totalAmount, String orderName) {
+            return new Request(reservationId, totalAmount, orderName);
+        }
+
     }
 
 
@@ -47,7 +52,6 @@ public class CreatePaymentDto {
             this.successUrl = tossPaymentConfig.getSuccessUrl();
             this.failUrl = tossPaymentConfig.getFailUrl();
         }
-
 
         public static CreatePaymentDto.Response from(PaymentDto payment, MemberDto member, ConcertDto concert) {
             return CreatePaymentDto.Response.builder()

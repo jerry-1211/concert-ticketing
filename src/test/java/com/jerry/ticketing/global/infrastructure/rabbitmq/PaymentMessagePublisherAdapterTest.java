@@ -27,7 +27,7 @@ class PaymentMessagePublisherAdapterTest {
     @DisplayName("publishConfirmEvent 메서드에서 RabbitMQ의 호출을 확인한다.")
     void checkRabbitMQCallInPublishConfirmEventMethod() {
         // given
-        ConfirmPaymentDto.Request request = new ConfirmPaymentDto.Request("paymentkey123", "orderId123", "10000");
+        ConfirmPaymentDto.Request request = ConfirmPaymentDto.Request.of("paymentkey123", "orderId123", 10000);
 
         // when
         paymentMessagePublisher.publishConfirmEvent(request);

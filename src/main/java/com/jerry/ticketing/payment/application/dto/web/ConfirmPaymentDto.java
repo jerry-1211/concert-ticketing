@@ -12,12 +12,16 @@ public class ConfirmPaymentDto {
     public static class Request {
         private String paymentKey;
         private String orderId;
-        private String amount;
+        private int amount;
 
-        public Request(String paymentKey, String orderId, String amount) {
+        private Request(String paymentKey, String orderId, int amount) {
             this.paymentKey = paymentKey;
             this.orderId = orderId;
             this.amount = amount;
+        }
+
+        public static Request of(String paymentKey, String orderId, int amount) {
+            return new Request(paymentKey, orderId, amount);
         }
     }
 

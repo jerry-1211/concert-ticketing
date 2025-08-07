@@ -27,7 +27,7 @@ class PaymentEventConsumerAdapterTest {
     @DisplayName("handleConfirmEvent 메서드의 포트 호출을 확인한다.")
     void checkThatConfirmPortIsInvokedInHandleConfirmEvent() {
         // given
-        ConfirmPaymentDto.Request request = new ConfirmPaymentDto.Request("paymentkey123", "orderId123", "10000");
+        ConfirmPaymentDto.Request request = ConfirmPaymentDto.Request.of("paymentkey123", "orderId123", 10000);
 
         // when
         paymentEventConsumerAdapter.handleConfirmEvent(request);
