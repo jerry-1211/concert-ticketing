@@ -25,7 +25,7 @@ public class PaymentCommandService implements PaymentEventConsumerPort {
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
         Payment payment = paymentFacade.create(request.getReservationId());
         Payment savedPayment = paymentRepository.save(payment);
-        return paymentQueryService.getDetailedPayment(savedPayment.getId());
+        return paymentQueryService.getDetailed(savedPayment.getId());
     }
 
 
@@ -35,7 +35,7 @@ public class PaymentCommandService implements PaymentEventConsumerPort {
         Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
-        return paymentQueryService.getDetailedPayment(payment.getId());
+        return paymentQueryService.getDetailed(payment.getId());
     }
 
 

@@ -51,7 +51,7 @@ class PaymentCommandServiceTest {
         given(paymentFacade.create(request.getReservationId())).willReturn(mockPayment);
         given(paymentRepository.save(mockPayment)).willReturn(mockPayment);
         given(mockPayment.getId()).willReturn(1L);
-        given(paymentQueryService.getDetailedPayment(mockPayment.getId())).willReturn(response);
+        given(paymentQueryService.getDetailed(mockPayment.getId())).willReturn(response);
 
 
         // when
@@ -60,7 +60,7 @@ class PaymentCommandServiceTest {
         // then
         verify(paymentFacade, times(1)).create(request.getReservationId());
         verify(paymentRepository, times(1)).save(mockPayment);
-        verify(paymentQueryService, times(1)).getDetailedPayment(mockPayment.getId());
+        verify(paymentQueryService, times(1)).getDetailed(mockPayment.getId());
     }
 
 
@@ -72,7 +72,7 @@ class PaymentCommandServiceTest {
         CreatePaymentDto.Response response = CreatePaymentDto.Response.builder().paymentId(1L).build();
 
         given(paymentRepository.findByOrderId(request.getOrderId())).willReturn(Optional.of(mockPayment));
-        given(paymentQueryService.getDetailedPayment(mockPayment.getId())).willReturn(response);
+        given(paymentQueryService.getDetailed(mockPayment.getId())).willReturn(response);
 
 
         // when
@@ -81,7 +81,7 @@ class PaymentCommandServiceTest {
         // then
         verify(paymentFacade, times(1)).confirm(request);
         verify(paymentRepository, times(1)).findByOrderId(request.getOrderId());
-        verify(paymentQueryService, times(1)).getDetailedPayment(mockPayment.getId());
+        verify(paymentQueryService, times(1)).getDetailed(mockPayment.getId());
     }
 
     @Test
