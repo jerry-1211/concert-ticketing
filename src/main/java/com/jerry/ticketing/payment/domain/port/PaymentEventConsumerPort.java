@@ -5,8 +5,8 @@ import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 
 public interface PaymentEventConsumerPort {
 
-    void handleConfirmEvent(ConfirmPaymentDto.Request request);
-
     void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data);
+
+    void handleConfirmEvent(ConfirmPaymentDto.Request request);
 
 }

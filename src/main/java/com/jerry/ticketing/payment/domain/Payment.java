@@ -81,7 +81,8 @@ public class Payment {
         this.paymentKey = paymentKey;
     }
 
-    public void complete(WebhookPaymentDto.Request.PaymentData data, OffsetDateTime dateTime) {
+    public void complete(WebhookPaymentDto.Request.PaymentData data) {
+        OffsetDateTime dateTime = OffsetDateTime.now();
         this.lastTransactionKey = data.getLastTransactionKey();
         this.orderName = data.getOrderName();
         this.method = data.getMethod();

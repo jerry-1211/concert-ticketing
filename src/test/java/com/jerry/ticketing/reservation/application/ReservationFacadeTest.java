@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class ReservationCreateTest {
+class ReservationFacadeTest {
 
     @Mock
     private Member mockMember;
@@ -31,7 +31,7 @@ class ReservationCreateTest {
     private JwtTokenProvider jwtTokenProvider;
 
     @InjectMocks
-    private ReservationCreate reservationCreate;
+    private ReservationFacade reservationFacade;
 
 
     @Test
@@ -54,7 +54,7 @@ class ReservationCreateTest {
                 request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
 
         // when
-        Reservation reservation = reservationCreate.create(request);
+        Reservation reservation = reservationFacade.create(request);
 
         // then
         assertThat(reservation)

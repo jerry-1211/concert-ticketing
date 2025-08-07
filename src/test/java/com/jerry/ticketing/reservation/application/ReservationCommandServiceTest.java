@@ -38,7 +38,7 @@ class ReservationCommandServiceTest {
     private ReservationQueryService reservationQueryService;
 
     @Mock
-    private ReservationCreate reservationCreate;
+    private ReservationFacade reservationFacade;
 
     @Mock
     private OrderIdGenerator orderIdGenerator;
@@ -63,7 +63,7 @@ class ReservationCommandServiceTest {
                 "token-123", 1L, "orderName-123", dateTime, 10_000, 3
         );
 
-        given(reservationCreate.create(request)).willReturn(reservation);
+        given(reservationFacade.create(request)).willReturn(reservation);
         given(reservationRepository.save(reservation)).willReturn(reservation);
 
         CreateReservationDto.Response from = CreateReservationDto.Response.from(reservation);
@@ -73,7 +73,7 @@ class ReservationCommandServiceTest {
         CreateReservationDto.Response response = reservationCommandService.create(request);
 
         // then
-        verify(reservationCreate, times(1)).create(request);
+        verify(reservationFacade, times(1)).create(request);
         verify(reservationRepository, times(1)).save(reservation);
 
         assertThat(response)

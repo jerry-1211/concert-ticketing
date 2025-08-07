@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class ReservationCreate {
+public class ReservationFacade {
 
     private final MemberQueryService memberQueryService;
     private final JwtTokenProvider jwtTokenProvider;

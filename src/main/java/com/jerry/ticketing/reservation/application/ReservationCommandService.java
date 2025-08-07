@@ -24,12 +24,12 @@ public class ReservationCommandService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationQueryService reservationQueryService;
-    private final ReservationCreate reservationCreate;
+    private final ReservationFacade reservationFacade;
     private final OrderIdGenerator orderIdGenerator;
 
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
-        Reservation reservation = reservationCreate.create(request);
+        Reservation reservation = reservationFacade.create(request);
         reservationRepository.save(reservation);
         return CreateReservationDto.Response.from(reservation);
     }
