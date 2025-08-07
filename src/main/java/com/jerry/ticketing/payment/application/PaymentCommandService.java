@@ -6,62 +6,53 @@ import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
 import com.jerry.ticketing.payment.application.dto.web.WebhookPaymentDto;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.PaymentErrorCode;
-import com.jerry.ticketing.payment.domain.port.PaymentMessagePublisherPort;
 import com.jerry.ticketing.payment.domain.port.PaymentEventConsumerPort;
-import com.jerry.ticketing.payment.infrastructure.external.TossPaymentClient;
 import com.jerry.ticketing.payment.domain.port.PaymentRepository;
-import com.jerry.ticketing.reservation.application.ReservationCommandService;
-import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.OffsetDateTime;
 
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class PaymentCommandService implements PaymentEventConsumerPort {
 
     private final PaymentRepository paymentRepository;
-    private final PaymentMessagePublisherPort paymentMessagePublisherPort;
-
     private final PaymentQueryService paymentQueryService;
-    private final ReservationCommandService reservationCommandService;
-
-    private final TossPaymentClient tossPaymentClient;
+    private final PaymentFacade paymentFacade;
 
     @Transactional
     public CreatePaymentDto.Response createPayment(CreatePaymentDto.Request request) {
-        OffsetDateTime dateTime = OffsetDateTime.now();
-        ReservationDto reservation = reservationCommandService.updateOrderId(request.getReservationId());
-        Payment savedPayment = paymentRepository.save(Payment.createTossPayment(reservation.getReservationId(), reservation.getOrderId(), dateTime));
-
+        Payment payment = paymentFacade.create(request.getReservationId());
+        Payment savedPayment = paymentRepository.save(payment);
         return paymentQueryService.getDetailedPayment(savedPayment.getId());
     }
 
 
     @Transactional
     public CreatePaymentDto.Response confirmPayment(ConfirmPaymentDto.Request request) {
-        tossPaymentClient.confirmPayment(request);
-        paymentMessagePublisherPort.publishConfirmEvent(request);
-
+        paymentFacade.confirm(request);
         Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         return paymentQueryService.getDetailedPayment(payment.getId());
     }
 
-    /**
-     * Webhook 처리 후 업데이트
-     */
+
     @Transactional
     public void updatePaymentOnCompleted(WebhookPaymentDto.Request.PaymentData data) {
-        paymentMessagePublisherPort.publishWebhookEvent(data);
+        paymentFacade.update(data);
     }
 
+
+    @Override
+    @Transactional
+    public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
+        Payment payment = paymentRepository.findByOrderId(data.getOrderId())
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
+
+        payment.complete(data);
+    }
 
     @Override
     @Transactional
@@ -70,15 +61,5 @@ public class PaymentCommandService implements PaymentEventConsumerPort {
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.updateConfirm(request.getPaymentKey());
-    }
-
-    @Override
-    @Transactional
-    public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
-        OffsetDateTime dateTime = OffsetDateTime.now();
-        Payment payment = paymentRepository.findByOrderId(data.getOrderId())
-                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
-
-        payment.complete(data, dateTime);
     }
 }
