@@ -7,8 +7,8 @@ spring:
     ansi:
       enabled: always
 
-  #  profiles:
-  #    active: test
+  profiles:
+    active: test
 
   # Database Configuration
   datasource:
