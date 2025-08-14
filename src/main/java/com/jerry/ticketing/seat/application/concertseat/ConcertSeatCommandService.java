@@ -3,11 +3,11 @@ package com.jerry.ticketing.seat.application.concertseat;
 
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
-import com.jerry.ticketing.global.infrastructure.redis.ConcertSeatCacheService;
 import com.jerry.ticketing.seat.application.section.SectionCommandService;
 import com.jerry.ticketing.seat.application.section.SectionQueryService;
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.Section;
+import com.jerry.ticketing.seat.domain.port.ConcertSeatCache;
 import com.jerry.ticketing.seat.domain.vo.ConcertSeats;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
 import com.jerry.ticketing.seat.application.concertseat.web.BlockConcertSeatDto;
@@ -29,15 +29,14 @@ public class ConcertSeatCommandService {
     private final ConcertSeatRepository concertSeatRepository;
     private final SectionCommandService sectionCommandService;
     private final SectionQueryService sectionQueryService;
-    private final ConcertSeatCacheService concertSeatCacheService;
+    private final ConcertSeatCache concertSeatCache;
     private final ConcertSeatTransactionService concertSeatTransactionService;
 
 
     public List<ConcertSeat> occupy(BlockConcertSeatDto.Request request) {
-
-        if (concertSeatCacheService.AllConcertSeatsNotCached(request.getConcertId(), request.getConcertSeatIds())) {
+        if (concertSeatCache.areAllConcertSeatsNotCached(request.getConcertId(), request.getSeatIds())) {
             ConcertSeats concertSeats = concertSeatTransactionService.occupy(request);
-            concertSeatCacheService.saveToCache(concertSeats.item());
+            concertSeatCache.cacheConcertSeatOccupancies(concertSeats.item());
             return concertSeats.item();
         } else {
             throw new BusinessException(SeatErrorCode.SEAT_ALREADY_BLOCKED);

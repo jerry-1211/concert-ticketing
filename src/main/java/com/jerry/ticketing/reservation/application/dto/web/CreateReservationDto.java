@@ -18,7 +18,7 @@ public class CreateReservationDto {
         private int totalAmount;
         private int quantity;
 
-        public Request(String token, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
+        private Request(String token, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
             this.token = token;
             this.concertId = concertId;
             this.orderName = orderName;
@@ -26,6 +26,11 @@ public class CreateReservationDto {
             this.totalAmount = totalAmount;
             this.quantity = quantity;
         }
+
+        public static Request of(String token, Long concertId, String orderName, OffsetDateTime expireAt, int totalAmount, int quantity) {
+            return new Request(token, concertId, orderName, expireAt, totalAmount, quantity);
+        }
+
     }
 
 

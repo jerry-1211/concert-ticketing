@@ -4,10 +4,10 @@ services:
   # Application
   app:
     container_name: ticketing-app-container
-    image: eclipse-temurin:17-jdk-jammy
-    platform: linux/amd64
     working_dir: /app
-    command: java -XX:TieredStopAtLevel=1 -XX:NativeMemoryTracking=summary -jar ticketing.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - ./build/libs:/app
@@ -25,10 +25,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 8G
           cpus: '4.0'
         reservations:
-          memory: 8G
+          memory: 4G
           cpus: '2.0'
 
   # Database
@@ -46,6 +46,15 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
       retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '4.0'
+        reservations:
+          memory: 2G
+          cpus: '2.0'
+
 
   # Message Queue
   rabbitmq:

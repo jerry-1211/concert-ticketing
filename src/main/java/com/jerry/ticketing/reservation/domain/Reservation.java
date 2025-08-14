@@ -60,7 +60,7 @@ public class Reservation {
     private String orderName;
 
 
-    public Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt, OffsetDateTime expiresAt, int totalAmount, int quantity) {
+    private Reservation(Long memberId, Long concertId, String orderName, OffsetDateTime createdAt, OffsetDateTime expiresAt, int totalAmount, int quantity) {
         this.memberId = memberId;
         this.concertId = concertId;
         this.orderName = orderName;

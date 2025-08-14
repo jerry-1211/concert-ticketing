@@ -4,6 +4,7 @@ package com.jerry.ticketing.member.application;
 import com.jerry.ticketing.global.auth.oauth.userinfo.GoogleUserInfo;
 import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.MemberErrorCode;
+import com.jerry.ticketing.member.application.dto.UpdateProfile;
 import com.jerry.ticketing.member.application.dto.domain.MemberDto;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
@@ -27,6 +28,7 @@ public class MemberQueryService {
                 .orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND)));
     }
 
+
     @Transactional
     public <T> T getMemberByEmail(String email, Function<Member, T> mapper) {
         return mapper.apply(
@@ -35,21 +37,33 @@ public class MemberQueryService {
         );
     }
 
+
     @Transactional
-    public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo) {
-        OffsetDateTime dateTime = OffsetDateTime.now();
+    public MemberDto updateGoogleInfo(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime) {
 
         return memberRepository.findByProviderAndProviderId(Provider.GOOGLE, googleUserInfo.getId())
-                .map(existingMember -> {
-                    existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
-                    return MemberDto.from(existingMember);
-                }).orElseGet(() -> {
-                            Member newMember = Member.ofGoogle(googleUserInfo.getName(),
-                                    googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
-                            return MemberDto.from(memberRepository.save(newMember));
-                        }
-                );
+                .map(existingMember -> updateExistingGoogleMember(googleUserInfo, dateTime, existingMember)
+                ).orElseGet(() -> createNewGoogleMember(googleUserInfo, dateTime));
     }
 
+
+    @Transactional
+    public Member updateProfile(String email, UpdateProfile request) {
+        Member member = getMemberByEmail(email, Function.identity());
+        member.updateProfile(request);
+        return member;
+    }
+
+
+    private static MemberDto updateExistingGoogleMember(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime, Member existingMember) {
+        existingMember.updateGoogleInfo(googleUserInfo.getName(), googleUserInfo.getPicture(), dateTime);
+        return MemberDto.from(existingMember);
+    }
+
+    private MemberDto createNewGoogleMember(GoogleUserInfo googleUserInfo, OffsetDateTime dateTime) {
+        Member newMember = Member.ofGoogle(
+                googleUserInfo.getName(), googleUserInfo.getEmail(), googleUserInfo.getId(), googleUserInfo.getPicture(), dateTime);
+        return MemberDto.from(memberRepository.save(newMember));
+    }
 
 }

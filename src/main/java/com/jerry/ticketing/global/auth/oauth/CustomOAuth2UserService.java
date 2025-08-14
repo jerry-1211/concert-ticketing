@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 
@@ -36,6 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 
     private MemberDto saveOrUpdate(GoogleUserInfo googleUserInfo) {
-        return memberQueryService.updateGoogleInfo(googleUserInfo);
+        OffsetDateTime dateTime = OffsetDateTime.now();
+        return memberQueryService.updateGoogleInfo(googleUserInfo, dateTime);
     }
 }

@@ -46,7 +46,6 @@ async function reservationConcertSeat(result, selectedSeats, concertId) {
 
 
 async function processPayment(result) {
-    console.log("processPayment 호출 완료 ! ");
 
     try {
         const orderName = result.orderName;

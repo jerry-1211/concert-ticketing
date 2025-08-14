@@ -57,7 +57,7 @@ class MemberTest {
 
         String updateName = "jerry";
         String updatePhoneNumber = "010-111-1111";
-        UpdateProfile.Request request = UpdateProfile.Request.of(updateName, updatePhoneNumber);
+        UpdateProfile request = UpdateProfile.of(updateName, updatePhoneNumber);
 
         // when
         member.updateProfile(request);
@@ -77,11 +77,11 @@ class MemberTest {
 
         String updateName = "jerry";
         String updatePhoneNumber = "010-111-1111";
-        UpdateProfile.Request request = UpdateProfile.Request.of(updateName, updatePhoneNumber);
+        UpdateProfile request = UpdateProfile.of(updateName, updatePhoneNumber);
         member.updateProfile(request);
 
         // when
-        member.updateProfile(UpdateProfile.Request.of(null, null));
+        member.updateProfile(UpdateProfile.of(null, null));
 
 
         // then

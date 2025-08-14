@@ -28,7 +28,7 @@ public class ConcertSeatQueryService {
 
     @Transactional(readOnly = true)
     public List<DetailedConcertSeatDto> getDetailedConcertSeat(Long concertId, String zone, String row) {
-        ConcertSeats concertSeats = new ConcertSeats(concertSeatRepository.findByJoinConditions(concertId, zone, row));
+        ConcertSeats concertSeats = ConcertSeats.from(concertSeatRepository.findByJoinConditions(concertId, zone, row));
 
         List<Long> seatIds = concertSeats.getSeatIds();
         List<Long> sectionIds = concertSeats.getSectionIds();

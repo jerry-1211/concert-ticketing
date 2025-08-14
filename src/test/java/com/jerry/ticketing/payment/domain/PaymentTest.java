@@ -55,17 +55,16 @@ class PaymentTest {
         String orderName = "orderName123";
         String method = "method123";
         int totalAmount = 1_000;
-        OffsetDateTime paymentDate = now.plusHours(1);
 
         WebhookPaymentDto.Request.PaymentData paymentData = WebhookPaymentDto.Request.PaymentData.of(lastTransactionKey, orderName, method, totalAmount);
 
         // when
-        payment.complete(paymentData, paymentDate);
+        payment.complete(paymentData);
 
         // then
         assertThat(payment)
-                .extracting("lastTransactionKey", "orderName", "method", "totalAmount", "paymentDate")
-                .containsExactlyInAnyOrder(lastTransactionKey, orderName, method, totalAmount, paymentDate);
+                .extracting("lastTransactionKey", "orderName", "method", "totalAmount")
+                .containsExactlyInAnyOrder(lastTransactionKey, orderName, method, totalAmount);
     }
 
 }

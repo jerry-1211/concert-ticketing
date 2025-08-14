@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Builder
-public class ReservationListDto {
+public class MyReservationListDto {
 
     private String title;
     private OffsetDateTime dateTime;
@@ -24,8 +24,8 @@ public class ReservationListDto {
     private OffsetDateTime createdAt;
 
 
-    public static ReservationListDto from(Reservation reservation, Concert concert) {
-        return ReservationListDto.builder()
+    public static MyReservationListDto from(Reservation reservation, Concert concert) {
+        return MyReservationListDto.builder()
                 .title(concert.getTitle())
                 .dateTime(concert.getDateTime())
                 .venue(concert.getVenue())

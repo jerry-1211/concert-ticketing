@@ -1,13 +1,6 @@
 package com.jerry.ticketing.reservation.application;
 
 
-import com.jerry.ticketing.concert.application.ConcertQueryService;
-import com.jerry.ticketing.concert.domain.Concert;
-import com.jerry.ticketing.global.auth.jwt.JwtTokenProvider;
-import com.jerry.ticketing.member.application.MemberQueryService;
-import com.jerry.ticketing.member.domain.Member;
-import com.jerry.ticketing.payment.application.dto.web.CreatePaymentDto;
-import com.jerry.ticketing.payment.util.PaymentOrderIdGenerator;
 import com.jerry.ticketing.reservation.application.dto.domain.ReservationDto;
 import com.jerry.ticketing.reservation.domain.Reservation;
 import com.jerry.ticketing.reservation.application.dto.web.CreateReservationDto;
@@ -15,12 +8,13 @@ import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.ReservationErrorCode;
 import com.jerry.ticketing.reservation.domain.enums.ReservationStatus;
 import com.jerry.ticketing.reservation.domain.port.ReservationRepository;
+import com.jerry.ticketing.reservation.domain.vo.Reservations;
+import com.jerry.ticketing.reservation.util.OrderIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.function.Function;
 
 
@@ -30,26 +24,14 @@ public class ReservationCommandService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationQueryService reservationQueryService;
-    private final MemberQueryService memberQueryService;
-    private final ConcertQueryService concertQueryService;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final ReservationFacade reservationFacade;
+    private final OrderIdGenerator orderIdGenerator;
 
     @Transactional
     public CreateReservationDto.Response create(CreateReservationDto.Request request) {
-        OffsetDateTime dateTime = OffsetDateTime.now();
-
-        String userEmail = jwtTokenProvider.getUserEmailFromToken(request.getToken());
-        Member member = memberQueryService.getMemberByEmail(userEmail, Function.identity());
-        Concert concert = concertQueryService.getConcertById(request.getConcertId(), Function.identity());
-
-        Reservation reservation = Reservation.of(
-                member.getId(), concert.getId(),
-                request.getOrderName(), dateTime, request.getExpireAt(), request.getTotalAmount(), request.getQuantity());
-
+        Reservation reservation = reservationFacade.create(request);
         reservationRepository.save(reservation);
-
         return CreateReservationDto.Response.from(reservation);
-
     }
 
 
@@ -57,7 +39,6 @@ public class ReservationCommandService {
     public void confirm(String orderId) {
         Reservation reservation = reservationRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
-
         reservation.confirmReservation();
     }
 
@@ -65,15 +46,17 @@ public class ReservationCommandService {
     @Transactional
     public void releaseExpiredReservations() {
         OffsetDateTime now = OffsetDateTime.now();
-        List<Reservation> reservations = reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING);
-
-        reservations.forEach(Reservation::cancelReservation);
+        Reservations reservations = Reservations.from(
+                reservationRepository.findByExpiresAtBeforeAndStatus(now, ReservationStatus.PENDING)
+        );
+        reservations.cancel();
     }
 
+
     @Transactional
-    public ReservationDto updateOrderId(CreatePaymentDto.Request request) {
-        Reservation reservation = reservationQueryService.getReservation(request.getReservationId(), Function.identity());
-        String orderId = PaymentOrderIdGenerator.generate(reservation.getId());
+    public ReservationDto updateOrderId(Long reservationId) {
+        Reservation reservation = reservationQueryService.getReservation(reservationId, Function.identity());
+        String orderId = orderIdGenerator.generate(reservationId);
         reservation.updateOrderId(orderId);
         return ReservationDto.from(reservation);
     }

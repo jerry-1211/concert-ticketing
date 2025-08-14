@@ -31,6 +31,11 @@ public class ConcertSeatRepositoryAdapter implements ConcertSeatRepository {
     }
 
     @Override
+    public List<ConcertSeat> findByConcertIdAndSeatIdIn(Long concertId, List<Long> seatIds) {
+        return jpaRepository.findByConcertIdAndSeatIdIn(concertId, seatIds);
+    }
+
+    @Override
     public List<ConcertSeat> findByIdIn(List<Long> ids) {
         return jpaRepository.findByIdIn(ids);
     }

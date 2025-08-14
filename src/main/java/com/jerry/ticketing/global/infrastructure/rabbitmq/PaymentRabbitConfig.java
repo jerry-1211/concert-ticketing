@@ -1,4 +1,4 @@
-package com.jerry.ticketing.rabbitmq;
+package com.jerry.ticketing.global.infrastructure.rabbitmq;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;

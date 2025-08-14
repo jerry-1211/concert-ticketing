@@ -6,18 +6,17 @@ import com.jerry.ticketing.global.exception.common.BusinessException;
 import com.jerry.ticketing.global.exception.SeatErrorCode;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 public class ConcertSeatBlockValidator {
 
-    public void validator(ConcertSeats concertSeatsBlock, List<Long> concertSeatIds) {
-        checkAllSeatsExist(concertSeatsBlock, concertSeatIds);
+    public void validator(ConcertSeats concertSeatsBlock, int seatCount) {
+        checkAllSeatsExist(concertSeatsBlock, seatCount);
         checkAlreadyBlocked(concertSeatsBlock);
     }
 
-    private void checkAllSeatsExist(ConcertSeats concertSeatsBlock, List<Long> concertSeatIds) {
-        if (concertSeatsBlock.isNotSame(concertSeatIds)) {
+    private void checkAllSeatsExist(ConcertSeats concertSeatsBlock, int seatCount) {
+        if (concertSeatsBlock.isNotSame(concertSeatsBlock, seatCount)) {
             throw new BusinessException(SeatErrorCode.SEAT_NOT_FOUND);
         }
     }

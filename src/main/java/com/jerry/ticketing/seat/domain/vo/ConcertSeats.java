@@ -1,16 +1,14 @@
 package com.jerry.ticketing.seat.domain.vo;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
+import lombok.RequiredArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ConcertSeats {
     private final List<ConcertSeat> concertSeats;
-
-    public ConcertSeats(List<ConcertSeat> concertSeats) {
-        this.concertSeats = concertSeats;
-    }
 
     public List<ConcertSeat> item() {
         return this.concertSeats;
@@ -30,8 +28,8 @@ public class ConcertSeats {
         this.concertSeats.forEach(ConcertSeat::release);
     }
 
-    public boolean isNotSame(List<Long> ConcertSeatIds) {
-        return this.concertSeats.size() != ConcertSeatIds.size();
+    public boolean isNotSame(ConcertSeats concertSeats, int seatCount) {
+        return this.concertSeats.size() != seatCount;
     }
 
     public List<Long> getSeatIds() {

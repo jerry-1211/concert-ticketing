@@ -71,13 +71,13 @@ class ConcertSeatRepositoryAdapterTest {
                 );
     }
 
-
     @Test
     @DisplayName("콘서드 좌석 id들로 콘서트 좌석들을 찾을 수 있다.")
     void findConcertSeatByIn() {
         // given
         long concertId1 = 1L;
         long concertId2 = 2L;
+
         ConcertSeat concertSeat1 = ConcertSeat.of(concertId1, 1L, 1L, 1_000);
         ConcertSeat concertSeat2 = ConcertSeat.of(concertId1, 2L, 2L, 1_000);
         ConcertSeat concertSeat3 = ConcertSeat.of(concertId2, 1L, 3L, 1_000);
@@ -86,6 +86,33 @@ class ConcertSeatRepositoryAdapterTest {
         // when
         List<ConcertSeat> foundConcertSeats = concertSeatRepository.findByIdIn(
                 List.of(concertSeat1.getId(), concertSeat2.getId()));
+
+        // then
+        assertThat(foundConcertSeats).hasSize(2)
+                .extracting("concertId", "seatId", "sectionId", "amount", "status")
+                .containsExactlyInAnyOrder(
+                        tuple(1L, 1L, 1L, 1_000, ConcertSeatStatus.AVAILABLE),
+                        tuple(1L, 2L, 2L, 1_000, ConcertSeatStatus.AVAILABLE));
+
+    }
+
+    @Test
+    @DisplayName("콘서트 id와 고유 좌석 id들로 콘서트 좌석들을 찾을 수 있다.")
+    void findConcertSeatConcertIdAndSeatIdIn() {
+        // given
+        long concertId1 = 1L;
+
+        long seatId1 = 1L;
+        long seatId2 = 2L;
+
+        ConcertSeat concertSeat1 = ConcertSeat.of(concertId1, 1L, seatId1, 1_000);
+        ConcertSeat concertSeat2 = ConcertSeat.of(concertId1, 2L, seatId2, 1_000);
+        ConcertSeat concertSeat3 = ConcertSeat.of(2L, 1L, 3L, 1_000);
+        concertSeatRepository.saveAll(List.of(concertSeat1, concertSeat2, concertSeat3));
+
+        // when
+        List<ConcertSeat> foundConcertSeats = concertSeatRepository.findByConcertIdAndSeatIdIn(
+                concertId1, List.of(seatId1, seatId2));
 
         // then
         assertThat(foundConcertSeats).hasSize(2)

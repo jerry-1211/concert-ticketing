@@ -1,7 +1,6 @@
 package com.jerry.ticketing.member.application.dto;
 
 
-import com.jerry.ticketing.member.domain.Address;
 import com.jerry.ticketing.member.domain.Member;
 import com.jerry.ticketing.member.domain.enums.Provider;
 import lombok.Builder;
