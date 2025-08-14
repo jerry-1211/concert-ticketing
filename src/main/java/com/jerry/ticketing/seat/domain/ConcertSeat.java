@@ -10,6 +10,9 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = {
+        @Index(name = "idx_concert_seat_primary", columnList = "concert_id,seat_id")
+})
 public class ConcertSeat {
 
     public static final int BLOCKING_TIMEOUT_MINUTES = 15;

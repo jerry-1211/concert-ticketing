@@ -47,19 +47,19 @@ public class PaymentCommandService implements PaymentEventConsumerPort {
 
     @Override
     @Transactional
-    public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
-        Payment payment = paymentRepository.findByOrderId(data.getOrderId())
-                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
-
-        payment.complete(data);
-    }
-
-    @Override
-    @Transactional
     public void handleConfirmEvent(ConfirmPaymentDto.Request request) {
         Payment payment = paymentRepository.findByOrderId(request.getOrderId())
                 .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
 
         payment.updateConfirm(request.getPaymentKey());
+    }
+
+    @Override
+    @Transactional
+    public void handleWebhookEvent(WebhookPaymentDto.Request.PaymentData data) {
+        Payment payment = paymentRepository.findByOrderId(data.getOrderId())
+                .orElseThrow(() -> new BusinessException(PaymentErrorCode.PAYMENT_NOT_FOUND));
+
+        payment.complete(data);
     }
 }
