@@ -1,0 +1,54 @@
+@startuml 예약_플로우
+!theme plain
+autonumber "<b>[00]"
+
+title 예약과 결제 연동 흐름 (가독성 개선안)
+
+actor User as "사용자"
+
+box "Application Server" #LightCyan
+    participant Controller
+    participant ReservationService
+    participant PaymentService
+    participant WebhookService
+end box
+
+database DB
+participant PaymentGateway as "외부 결제 시스템"
+
+== 1. 좌석 임시 예약 ==
+User -> Controller: 좌석 예약 요청
+Controller -> ReservationService: createReservation(request)
+ReservationService -> DB: 예약 정보 생성 (상태: PENDING)
+DB --> ReservationService: 생성된 Reservation 객체 (reservationId 포함)
+ReservationService --> Controller: 임시 예약 ID(reservationId) 반환
+Controller --> User: **임시 예약 ID 응답**
+
+... 사용자가 '결제하기' 버튼 클릭 ...
+
+== 2. 결제 준비 및 주문 ID 발급 ==
+User -> Controller: 결제 생성 요청 (with reservationId)
+Controller -> PaymentService: create(reservationId)
+
+note right of PaymentService
+  - 예약 정보에 주문 ID(orderId)를 발급/업데이트
+end note
+PaymentService -> ReservationService: **주문 ID 발급 및 할당 요청**
+PaymentService --> Controller: 결제 정보(orderId) 반환
+Controller --> User: **결제창 호출용 정보 응답**
+
+... 사용자는 응답받은 정보로 외부 결제 시스템에서 결제 진행 ...
+
+== 3. 결제 완료 및 예약 확정 (웹훅 기반) ==
+PaymentGateway -> Controller: **결제 완료 웹훅** 수신
+Controller -> WebhookService: 웹훅 처리 요청
+
+note right of WebhookService
+  웹훅 상태가 "DONE"일 경우에만
+  예약 확정 로직을 실행
+end note
+
+WebhookService -> ReservationService: **예약 확정(confirm) 요청**
+ReservationService -> DB: **예약 상태 'CONFIRMED'로 업데이트**
+
+@enduml

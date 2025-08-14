@@ -1,0 +1,38 @@
+@startuml
+!theme plain
+autonumber "<b>[00]"
+
+title 결제 생성과 확정에서 동시성 문제 발생
+
+actor User as "사용자"
+
+box "Application Server" #LightCyan
+    participant Controller
+    participant Service
+    participant Client as "Toss API Client"
+    participant Publisher
+end box
+
+participant TOSS as "Toss Payments API"
+database DB
+
+
+
+== 1. 결제 승인 ==
+User -> Controller: 결제 승인 요청 (POST /api/payment/toss/confirm)
+Controller -> Service: confirmPayment(request)
+Service -> Client:  Toss에 최종 결제 승인 요청   **[S2S]**
+Service -> DB: **결제 승인**
+
+
+note left of DB: **"결제 승인"과 "결제 확정"에서 동시성 문제 발생**
+
+
+== 2. 결제 확정 ==
+
+
+TOSS -> Controller: 웹훅 수신 (POST /api/webhook/payment)
+Controller -> Service: 웹훅 처리 요청
+Service -> DB: **결제 확정**
+
+@enduml

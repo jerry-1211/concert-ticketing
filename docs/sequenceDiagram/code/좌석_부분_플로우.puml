@@ -1,0 +1,40 @@
+@startuml
+!theme plain
+autonumber "<b>[00]"
+
+title 좌석 선점 동시성 문제
+
+actor User as "사용자"
+
+box "Application Server" #LightCyan
+    participant Controller
+    participant BlockingService
+    participant TransactionService
+end box
+
+box "Cache (Redis)" #LightYellow
+    participant Cache
+end box
+
+database Database as "DB"
+
+
+User -> Controller: 좌석 선점 요청
+Controller -> BlockingService: occupy(request)
+
+BlockingService -> Cache: 선점하려는 좌석 정보 확인
+Cache --> BlockingService: **좌석 정보 없음 (선점 가능)**
+note left of Cache: **이 부분에서 동시성 문제 발생**
+
+
+BlockingService -> TransactionService: occupy(request)
+TransactionService -> Database: **좌석 검증 및 'BLOCKED' 상태로 UPDATE**
+
+
+TransactionService --> BlockingService: 선점된 좌석 정보 반환
+
+BlockingService -> Cache: **선점된 좌석 정보 캐싱**
+BlockingService --> Controller: 성공 응답
+Controller --> User: **성공 응답 (200 OK)**
+
+@enduml
