@@ -2,7 +2,9 @@ package com.jerry.ticketing.seat.infrastructure.repository.concertseat;
 
 import com.jerry.ticketing.seat.domain.ConcertSeat;
 import com.jerry.ticketing.seat.domain.enums.ConcertSeatStatus;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,6 +16,7 @@ public interface ConcertSeatJpaRepository extends JpaRepository<ConcertSeat, Lon
 
     List<ConcertSeat> findByConcertId(Long id);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<ConcertSeat> findByConcertIdAndSeatIdIn(Long concertIds, List<Long> seatIds);
 
     List<ConcertSeat> findByExpireAtBeforeAndStatus(OffsetDateTime expireTime, ConcertSeatStatus status);
