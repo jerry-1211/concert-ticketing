@@ -10,15 +10,14 @@
 
 | 번호 | 섹션 |
 |:---:|:---|
-| **1** | [프로젝트 개요](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) |
-| **2** | [주요 기능](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5) |
-| **3** | [트러블 슈팅](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85) |
-| **4** | [시스템 아키텍처](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98) |
-| **5** | [프로젝트 플로우](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
-| **6** | [프로젝트 구조](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
-| **7** | [프로젝트 상태 및 로드맵](https://www.google.com/search?q=%23-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%81%ED%83%9C-%EB%B0%8F-%EB%A1%9C%EB%93%9C%EB%A7%B5) |
-| **8** | [실행 방법](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
-| **9** | [실제 서비스](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
+| **1** | [프로젝트 개요](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-개요) |
+| **2** | [주요 기능](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#주요-기능) |
+| **3** | [트러블 슈팅](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#트러블-슈팅) |
+| **4** | [시스템 아키텍처](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#시스템-아키텍처) |
+| **5** | [프로젝트 플로우](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-플로우) |
+| **6** | [프로젝트 구조](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-구조) |
+| **7** | [실행 방법](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#실행-방법) |
+| **8** | [실제 서비스](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#실제-서비스) |
 
 <br>
 
@@ -46,17 +45,17 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 
 | Category | Topic | Detailed Wiki Link |
 | :--- | :--- | :--- |
-| **Memory** | **대규모 메모리 누수** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/1.-%EB%8C%80%EB%9F%89%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98)** |
-| | └ Native Memory & FD 소켓 누수 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%901.-Native-Memory-&-FD-%EC%86%8C%EC%BC%93-%EB%88%84%EC%88%98-%EC%B6%94%EC%A0%81) |
-| | └ Execution (Interpreter, C1/C2, GraalVM) | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%902.--Execution-(Interpreter,-C1-C2-Complier,-GraalVM)) |
-| | └ Java 네이티브 메모리 튜닝 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%903.-%EC%9E%90%EB%B0%94-%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%8A%9C%EB%8B%9D) |
-| | └ JVM 튜닝 및 구현체 변경 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%904.-JVM-%ED%8A%9C%EB%8B%9D-%EB%B0%8F-JVM-%EA%B5%AC%ED%98%84%EC%B2%B4-%EB%B3%80%EA%B2%BD) |
-| | └ Code Level에서의 접근 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%905.-Code-Level-%EC%97%90%EC%84%9C-%EC%8B%9C%EB%8F%84) |
-| | └ `jemalloc` 프로파일링 & `strace` 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%906.-jemalloc-%ED%94%84%EB%A1%9C%ED%8C%8C%EC%9D%BC%EB%A7%81-&-strace-%EC%B6%94%EC%A0%81) |
-| | └ `async-profiler` 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/1%E2%80%907.-async%E2%80%90profiler-%EC%B6%94%EC%A0%81) |
-| **Concurrency** | **동시성 문제 (좌석 선점 및 결제)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/2.-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-(%EC%A2%8C%EC%84%9D-%EC%84%9C%EC%A0%90---%EA%B2%B0%EC%A0%9C-%EC%B2%98%EB%A6%AC))** |
-| **Performance**| **부하 테스트 병목 현상 (VU↑ RPS↓)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/3.-VU-%EC%A6%9D%EA%B0%80-%EC%8B%9C-RPS%EA%B0%80-%EA%B0%90%EC%86%8C%ED%95%98%EB%8A%94-%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%B3%91%EB%AA%A9-%ED%98%84%EC%83%81)** |
-| **Infra** | **CPU 부하 (DB 레플리케이션)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/4.-CPU-%EB%B6%80%ED%95%98-(DB-%EB%A0%88%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98))** |
+| **Memory** | **대규모 메모리 누수** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1.-%EB%8C%80%EB%9F%89%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98)** |
+| | └ Native Memory & FD 소켓 누수 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%901.-Native-Memory-&-FD-%EC%86%8C%EC%BC%93-%EB%88%84%EC%88%98-%EC%B6%94%EC%A0%81) |
+| | └ Execution (Interpreter, C1/C2, GraalVM) | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%902.--Execution-(Interpreter,-C1-C2-Complier,-GraalVM)) |
+| | └ Java 네이티브 메모리 튜닝 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%903.-Java-%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%8A%9C%EB%8B%9D) |
+| | └ JVM 튜닝 및 구현체 변경 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%904.-JVM-%ED%8A%9C%EB%8B%9D-%EB%B0%8F-JVM-%EA%B5%AC%ED%98%84%EC%B2%B4-%EB%B3%80%EA%B2%BD) |
+| | └ Code Level에서의 접근 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%905.-Code-Level-%EC%97%90%EC%84%9C-%EC%8B%9C%EB%8F%84) |
+| | └ `jemalloc` 프로파일링 & `strace` 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%906.-jemalloc-%ED%94%84%EB%A1%9C%ED%8C%8C%EC%9D%BC%EB%A7%81-&-strace-%EC%B6%94%EC%A0%81) |
+| | └ `async-profiler` 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%907.-async%E2%80%90profiler-%EC%B6%94%EC%A0%81) |
+| **Concurrency** | **동시성 문제 (좌석 선점 및 결제)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-2.-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-(%EC%A2%8C%EC%84%9D-%EC%84%A0%EC%A0%90--&--%EA%B2%B0%EC%A0%9C-%EC%B2%98%EB%A6%AC))** |
+| **Performance**| **부하 테스트 병목 현상 (VU↑ RPS↓)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-3.-VU-%EC%A6%9D%EA%B0%80-%EC%8B%9C-RPS%EA%B0%80-%EA%B0%90%EC%86%8C%ED%95%98%EB%8A%94-%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%B3%91%EB%AA%A9-%ED%98%84%EC%83%81)** |
+| **Infra** | **CPU 부하 (DB 레플리케이션)** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-4.-CPU-%EB%B6%80%ED%95%98-(DB-%EB%A0%88%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98))** |
 
 <br>
 
