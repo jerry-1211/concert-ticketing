@@ -11,7 +11,7 @@
 | 번호 | 섹션 |
 |:---:|:---|
 | **1** | [프로젝트 개요](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) |
-| **2** | [주요 기능]( https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) |
+| **2** | [주요 기능](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5) |
 | **3** | [트러블 슈팅](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85) |
 | **4** | [시스템 아키텍처](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98) |
 | **5** | [프로젝트 플로우](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
