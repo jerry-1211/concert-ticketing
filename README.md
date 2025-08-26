@@ -6,7 +6,7 @@
 
 <br>
 
-## 📋 목차
+## 목차
 
 | 번호 | 섹션 |
 |:---:|:---|
@@ -19,9 +19,6 @@
 | **7** | [프로젝트 상태 및 로드맵](https://www.google.com/search?q=%23-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%81%ED%83%9C-%EB%B0%8F-%EB%A1%9C%EB%93%9C%EB%A7%B5) |
 | **8** | [실행 방법](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
 | **9** | [실제 서비스](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
-
----
-
 
 <br>
 
@@ -208,30 +205,28 @@ Docker Compose를 사용하여 프로젝트의 모든 서비스를 한 번에 �
 ## 실제 서비스 
 
 
-1. **로그인**: Google 계정을 통해 로그인합니다.
-<img width="1002" height="487" alt="스크린샷 2025-08-26 오후 2 35 24" src="https://github.com/user-attachments/assets/41f6d44e-7605-4e92-b62b-e84e13096f1c" />
+### 1. **로그인**: Google 계정을 통해 로그인
+<img width="700" height="341" alt="스크린샷 2025-08-26 오후 2 35 24" src="https://github.com/user-attachments/assets/41f6d44e-7605-4e92-b62b-e84e13096f1c" />
 
+<br>
 
+### 2. **콘서트 선택**: 메인 화면에서 원하는 콘서트를 선택
+<img width="700" height="349" alt="스크린샷 2025-08-26 오후 2 49 40" src="https://github.com/user-attachments/assets/cc79c65b-6787-4961-8cf8-cde9b0ea1fd7" />
 
-2. **콘서트 선택**: 메인 화면에서 원하는 콘서트를 선택합니다.
-<img width="1146" height="499" alt="스크린샷 2025-08-26 오후 2 49 40" src="https://github.com/user-attachments/assets/cc79c65b-6787-4961-8cf8-cde9b0ea1fd7" />
+<br>
 
+### 3. **좌석 선택**: 좌석 배치도에서 원하는 구역(Zone)과 열(Row)을 선택한 후, 예약할 좌석을 클릭
+<img width="700" height="553" alt="스크린샷 2025-08-26 오후 2 50 18" src="https://github.com/user-attachments/assets/90cfa025-4077-4bb1-b9c6-b3cca2175b7c" />
+<img width="700" height="669" alt="스크린샷 2025-08-26 오후 2 52 30" src="https://github.com/user-attachments/assets/f516232d-41ad-4149-ac81-e40593212944" />
 
+<br>
 
-3. **좌석 선택**: 좌석 배치도에서 원하는 구역(Zone)과 열(Row)을 선택한 후, 예약할 좌석을 클릭합니다.
+### 4. **결제 진행**: 선택한 좌석 정보를 확인하고 '결제하기' 버튼을 눌러 Toss Payments를 통해 결제를 완료
+<img width="350" height="480" alt="스크린샷 2025-08-26 오후 2 52 49" src="https://github.com/user-attachments/assets/c7a38e0d-9b0e-4208-b243-c84c345fd390" />
+<img width="350" height="480" alt="스크린샷 2025-08-26 오후 2 53 17" src="https://github.com/user-attachments/assets/aed59e55-a16f-44f9-a023-f82ab02033aa" />
 
-<img width="1157" height="790" alt="스크린샷 2025-08-26 오후 2 50 18" src="https://github.com/user-attachments/assets/90cfa025-4077-4bb1-b9c6-b3cca2175b7c" />
+<br>
 
-<img width="1156" height="956" alt="스크린샷 2025-08-26 오후 2 52 30" src="https://github.com/user-attachments/assets/f516232d-41ad-4149-ac81-e40593212944" />
-
-
-
-4. **결제 진행**: 선택한 좌석 정보를 확인하고 '결제하기' 버튼을 눌러 Toss Payments를 통해 결제를 완료합니다.
-<img width="686" height="685" alt="스크린샷 2025-08-26 오후 2 52 49" src="https://github.com/user-attachments/assets/c7a38e0d-9b0e-4208-b243-c84c345fd390" />
-
-<img width="635" height="845" alt="스크린샷 2025-08-26 오후 2 53 17" src="https://github.com/user-attachments/assets/aed59e55-a16f-44f9-a023-f82ab02033aa" />
-
-
-5. **예약 확인**: 결제가 완료되면 '마이페이지'에서 예약 내역을 확인할 수 있습니다.
-<img width="1014" height="296" alt="스크린샷 2025-08-26 오후 2 53 54" src="https://github.com/user-attachments/assets/0cefab72-33a0-45cb-86ff-b5ae41ef179f" />
+### 5. **예약 확인**: 결제가 완료되면 '마이페이지'에서 예약 내역을 확인
+<img width="710" height="207" alt="스크린샷 2025-08-26 오후 2 53 54" src="https://github.com/user-attachments/assets/0cefab72-33a0-45cb-86ff-b5ae41ef179f" />
 
