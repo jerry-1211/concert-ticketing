@@ -10,14 +10,14 @@
 
 | 번호 | 섹션 |
 |:---:|:---|
-| **1** | [프로젝트 개요](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-개요) |
-| **2** | [주요 기능](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#주요-기능) |
-| **3** | [트러블 슈팅](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#트러블-슈팅) |
-| **4** | [시스템 아키텍처](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#시스템-아키텍처) |
-| **5** | [프로젝트 플로우](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-플로우) |
-| **6** | [프로젝트 구조](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#프로젝트-구조) |
-| **7** | [실행 방법](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#실행-방법) |
-| **8** | [실제 서비스](https://github.com/jerry-1211/concert-ticketing/edit/main/README.md#실제-서비스) |
+| **1** | [프로젝트 개요](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) |
+| **2** | [주요 기능]( https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) |
+| **3** | [트러블 슈팅](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85) |
+| **4** | [시스템 아키텍처](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98) |
+| **5** | [프로젝트 플로우](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
+| **6** | [프로젝트 구조](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0) |
+| **7** | [실행 방법](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0) |
+| **8** | [실제 서비스](https://github.com/jerry-1211/concert-ticketing?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0) |
 
 <br>
 
@@ -61,14 +61,15 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 
 ## 시스템 아키텍처
 
-- **언어**: Java 17
-- **프레임워크**: Spring Boot 3.4.5
-- **데이터베이스**: MySQL
-- **캐시**: Redis
-- **메시지 큐**: RabbitMQ
-- **인증**: Spring Security, OAuth 2.0, JWT
-- **컨테이너화**: Docker, Docker Compose
-- **부하 테스트**: k6, InfluxDB, Grafana
+| 카테고리 | 기술 | 설명 |
+|:---|:---|:---|
+| **Backend** | Java 17 + Spring Boot 3.4.5 | 메인 애플리케이션 서버 |
+| **Database** | MySQL | 관계형 데이터베이스 |
+| **Cache** | Redis | 인메모리 캐싱 시스템 |
+| **Messaging** | RabbitMQ | 비동기 메시지 처리 |
+| **Security** | Spring Security + OAuth 2.0 + JWT | 인증 및 인가 시스템 |
+| **Infrastructure** | Docker + Docker Compose | 컨테이너 기반 배포 |
+| **Monitoring** | k6 + InfluxDB + Grafana | 부하 테스트 및 모니터링 |
 
 <br>
 
@@ -124,108 +125,42 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 
 ## 실행 방법
 
-1. **프로젝트 클론**
+#### 1. **프로젝트 클론**
     
     ```
     git clone [https://github.com/jerry-1211/concert-ticketing.git](https://github.com/jerry-1211/concert-ticketing.git)
     cd concert-ticketing
     ```
     
-2. **환경 변수 설정**
-프로젝트 루트 디렉터리에 `.env` 파일을 생성하고 아래 예시를 참고하여 내용을 채워주세요.
+#### 2. **환경 변수 설정**
+프로젝트 루트 디렉터리에 `.env` 파일을 생성 후 아래에 필요한 변수들 채우기
     
     ```
     # MySQL 데이터베이스 설정
-    MYSQL_ROOT_PASSWORD=my-secure-password-123
-    MYSQL_DATABASE=myapp-database
-    SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/myapp-database
-    SPRING_DATASOURCE_PRIMARY_URL=jdbc:mysql://mysql-primary:3306/myapp-database
-    SPRING_DATASOURCE_REPLICA_1_URL=jdbc:mysql://mysql-replica:3306/myapp-database
-    SPRING_DATASOURCE_REPLICA_2_URL=jdbc:mysql://mysql-replica-sub:3306/myapp-database
-    SPRING_DATASOURCE_USERNAME=root
-    SPRING_DATASOURCE_PASSWORD=my-secure-password-123
-    
     # RabbitMQ 설정
-    RABBITMQ_USERNAME=admin
-    RABBITMQ_PASSWORD=rabbitmq-secure-123
-    
     # 포트 설정
-    SERVER_PORT=8080
-    MYSQL_PORT=3306
-    MYSQL_PRIMARY_PORT=3306
-    MYSQL_REPLICA_PORT=3307
-    MYSQL_REPLICA_SUB_PORT=3308
-    
-    NGROK_PORT=4040
-    CADVISOR_PORT=8090
-    REDIS_PORT=6379
-    RABBITMQ_PORT=5672
-    RABBITMQ_PORT_UI=15672
-    
-    # ngrok 설정
-    NGROK_AUTHTOKEN=2abcDef3XYZwpi7zpeuclTC47dG_4LR2u3PXRFtzuHk4VP9ik
-    NGROK_DOMAIN=myapp.ngrok.app
-    
-    # Toss Payment 설정 (테스트 환경)
-    TOSS_PAYMENTS_SECRET_KEY=test_sk_24xLea5zVAzwY1OOjGExrQAMYNwW
-    TOSS_SUCCESS_URL=https://myapp.ngrok.app/payment/success
-    TOSS_FAIL_URL=https://myapp.ngrok.app/payment/fail
-    TOSS_BASE_URL=https://api.tosspayments.com/v1/payments
-    
+    # ngrok 설정 (선택 사항)
+    # Toss Payment 설정 
     # Google OAuth2
-    GOOGLE_CLIENT_ID=123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com
-    GOOGLE_CLIENT_SECRET=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Yz
-    GOOGLE_REDIRECT_URI=https://myapp.ngrok.app/login/oauth2/code/google
-    GOOGLE_AUTHORIZATION_URI=https://accounts.google.com/o/oauth2/auth?prompt=select_account
-    
-    # 성공 리다이렉트
-    GOOGLE_AUTHORIZED_REDIRECT_URI=https://myapp.ngrok.app/member/oauth2/callback
-    
     # JWT 설정
-    JWT_SECRET=MyApp-JWT-Secret-Key-Random-String-4bad-9bdd-2b0d7b3dcb6d-secure-2024
-    JWT_EXPIRATION=86400000
-
+    
     ```
     
-3. **빌드 및 실행**
-Docker Compose를 사용하여 프로젝트의 모든 서비스를 한 번에 빌드하고 실행합니다.
+#### 3. **빌드 및 실행**
+Docker Compose를 사용하여 프로젝트의 모든 서비스를 한 번에 빌드하고 실행
     
     ```
     ./gradlew build 
     docker-compose -f docker-compose.dev.yml up --build
     ```
     
-4. **애플리케이션 접속**
-웹 브라우저에서 `http://localhost:8080`으로 접속하여 애플리케이션을 확인할 수 있습니다.
+#### 4. **애플리케이션 접속**
+웹 브라우저에서 `http://localhost:8080`으로 접속하여 애플리케이션을 확인 가능
+
 > ngork으로 설정한 url도 가능
 
 <br>
 
 ## 실제 서비스 
 
-
-### 1. **로그인**: Google 계정을 통해 로그인
-<img width="700" height="341" alt="스크린샷 2025-08-26 오후 2 35 24" src="https://github.com/user-attachments/assets/41f6d44e-7605-4e92-b62b-e84e13096f1c" />
-
-<br>
-
-### 2. **콘서트 선택**: 메인 화면에서 원하는 콘서트를 선택
-<img width="700" height="349" alt="스크린샷 2025-08-26 오후 2 49 40" src="https://github.com/user-attachments/assets/cc79c65b-6787-4961-8cf8-cde9b0ea1fd7" />
-
-<br>
-
-### 3. **좌석 선택**: 좌석 배치도에서 원하는 구역(Zone)과 열(Row)을 선택한 후, 예약할 좌석을 클릭
-<img width="700" height="553" alt="스크린샷 2025-08-26 오후 2 50 18" src="https://github.com/user-attachments/assets/90cfa025-4077-4bb1-b9c6-b3cca2175b7c" />
-<img width="700" height="669" alt="스크린샷 2025-08-26 오후 2 52 30" src="https://github.com/user-attachments/assets/f516232d-41ad-4149-ac81-e40593212944" />
-
-<br>
-
-### 4. **결제 진행**: 선택한 좌석 정보를 확인하고 '결제하기' 버튼을 눌러 Toss Payments를 통해 결제를 완료
-<img width="350" height="480" alt="스크린샷 2025-08-26 오후 2 52 49" src="https://github.com/user-attachments/assets/c7a38e0d-9b0e-4208-b243-c84c345fd390" />
-<img width="350" height="480" alt="스크린샷 2025-08-26 오후 2 53 17" src="https://github.com/user-attachments/assets/aed59e55-a16f-44f9-a023-f82ab02033aa" />
-
-<br>
-
-### 5. **예약 확인**: 결제가 완료되면 '마이페이지'에서 예약 내역을 확인
-<img width="710" height="207" alt="스크린샷 2025-08-26 오후 2 53 54" src="https://github.com/user-attachments/assets/0cefab72-33a0-45cb-86ff-b5ae41ef179f" />
-
+#### [Wiki 문서](https://github.com/jerry-1211/concert-ticketing/wiki/%5BPrototype%5D-%EC%8B%A4%EC%A0%9C-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%98%88%EC%8B%9C)에서 실제 프로젝트의 프로토타입을 확인 할 수 있습니다. 
