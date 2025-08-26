@@ -90,7 +90,7 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 <br>
 
 ## 프로젝트 구조
-``` yaml
+```
 ├── TicketingApplication.java
 ├── concert
 │   ├── api
@@ -133,11 +133,11 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 ## 실행 방법
 
 #### 1. **프로젝트 클론**
-    
-    ```
-    git clone [https://github.com/jerry-1211/concert-ticketing.git](https://github.com/jerry-1211/concert-ticketing.git)
-    cd concert-ticketing
-    ```
+
+```yaml
+git clone [https://github.com/jerry-1211/concert-ticketing.git](https://github.com/jerry-1211/concert-ticketing.git)
+cd concert-ticketing
+```
     
 #### 2. **환경 변수 설정**
 프로젝트 루트 디렉터리에 `.env` 파일을 생성 후 아래에 필요한 변수들 채우기
@@ -156,10 +156,10 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 #### 3. **빌드 및 실행**
 Docker Compose를 사용하여 프로젝트의 모든 서비스를 한 번에 빌드하고 실행
     
-    ```
-    ./gradlew build 
-    docker-compose -f docker-compose.dev.yml up --build
-    ```
+```yaml
+./gradlew build 
+docker-compose -f docker-compose.dev.yml up --build
+```
     
 #### 4. **애플리케이션 접속**
 웹 브라우저에서 `http://localhost:8080`으로 접속하여 애플리케이션을 확인 가능
