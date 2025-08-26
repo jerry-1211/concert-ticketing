@@ -77,17 +77,11 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 - **부하 테스트**: k6, InfluxDB, Grafana
 
 ## 프로젝트 핵심 로직
-
-### 좌석 선점 플로우
-<img width="1081" height="836" alt="image" src="https://github.com/user-attachments/assets/20e43134-be59-4723-aaf2-549887182e81" />
-
-
-### 예약 플로우
-<img width="1197" height="985" alt="image" src="https://github.com/user-attachments/assets/1c3ce2b8-0730-4da8-b828-ccd2059e41fb" />
-
-
-### 결제 플로우 
-<img width="1700" height="1301" alt="image" src="https://github.com/user-attachments/assets/eaac8bec-c0f1-49c5-8926-f80e8cf6bfab" />
+| 구분 | 주요 역할 
+| :--- | :--- |
+| **좌석 선점** | [관련 Wiki로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BFlow%5D-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%B5%EC%8B%AC-%EB%A1%9C%EC%A7%81-%ED%94%8C%EB%A1%9C%EC%9A%B0#%EC%A2%8C%EC%84%9D-%EC%84%A0%EC%A0%90-%ED%94%8C%EB%A1%9C%EC%9A%B0) |
+| **예약** | [관련 Wiki로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BFlow%5D-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%B5%EC%8B%AC-%EB%A1%9C%EC%A7%81-%ED%94%8C%EB%A1%9C%EC%9A%B0#%EC%98%88%EC%95%BD-%ED%94%8C%EB%A1%9C%EC%9A%B0) 
+| **결제** | [관련 Wiki로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BFlow%5D-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%B5%EC%8B%AC-%EB%A1%9C%EC%A7%81-%ED%94%8C%EB%A1%9C%EC%9A%B0#%EA%B2%B0%EC%A0%9C-%ED%94%8C%EB%A1%9C%EC%9A%B0) 
 
 
 ## 프로젝트 구조
