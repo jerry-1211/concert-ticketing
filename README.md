@@ -1,7 +1,7 @@
 # 🎟️ 콘서트 티켓팅 프로젝트 (Concert Ticketing)
 
 콘서트 티켓을 예약하는 시스템을 구현한 프로젝트로, 동시에 많은 예약 요청이 몰리는 상황을 시뮬레이션합니다.<br> 
-그리고 이 과정에서 발생하는 문제들을 찾아 해결하여 <u>안정적인 예매 시스템을 구축하는 것을 목표</u>로 합니다.
+그리고 이 과정에서 발생하는 **문제들을 찾아 해결하여 안정적인 예매 시스템을 구축하는 것을 목표**로 합니다.
 
 ## 목차
 
@@ -25,12 +25,12 @@
 
 ## 프로젝트 개요
 
-이 프로젝트는 <u>대규모 트래픽이 발생하는 콘서트 예매 시스템에서 발생할 수 있는 기술적 문제들을 해결하는 데 중점</u>을 둡니다.<br> 
+이 프로젝트는 **대규모 트래픽이 발생하는 콘서트 예매 시스템에서 발생할 수 있는 기술적 문제들을 해결하는 데 중점**을 둡니다.<br> 
 콘서트 티켓처럼 동시에 많은 예약 요청이 몰리는 상황을 시뮬레이션하고,<br> 
 이 과정에서 발생하는 문제들을 찾아 해결하여 안정적인 예매 시스템을 구축하는 것을 목표로 합니다.<br> 
 
 또한, **헥사고날 아키텍처**를 데이터 영역에 도입하여 외부 의존성을 낮추고,<br> 
-테스트 커버리지 50% 이상을 유지하며 객체지향 원칙에 따라 <u>**테스트하기 좋은 코드**</u>를 작성하는 것을 목표로 삼았습니다. <br> 
+테스트 커버리지 50% 이상을 유지하며 객체지향 원칙에 따라 **테스트하기 좋은 코드**를 작성하는 것을 목표로 삼았습니다. <br> 
 Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2를 활용한 개발 및 테스트 환경을 구축하여 안정성과 신뢰성을 확보했습니다.
 
 <br>
@@ -47,7 +47,7 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 
 | Category | Topic | Detailed Wiki Link |
 | :--- | :--- | :--- |
-| **Memory** | **대규모 메모리 누수** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1.-%EB%8C%80%EB%9F%89%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98)** |
+| **Memory** | **대량의 메모리 누수** | **[메인 문서로 이동](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1.-%EB%8C%80%EB%9F%89%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98)** |
 | | └ Native Memory & FD 소켓 누수 추적 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%901.-Native-Memory-&-FD-%EC%86%8C%EC%BC%93-%EB%88%84%EC%88%98-%EC%B6%94%EC%A0%81) |
 | | └ Execution (Interpreter, C1/C2, GraalVM) | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%902.--Execution-(Interpreter,-C1-C2-Complier,-GraalVM)) |
 | | └ Java 네이티브 메모리 튜닝 | [자세히 보기](https://github.com/jerry-1211/concert-ticketing/wiki/%5BTroubleshooting%5D-1%E2%80%903.-Java-%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%8A%9C%EB%8B%9D) |
