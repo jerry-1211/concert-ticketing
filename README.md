@@ -12,9 +12,10 @@
 | **3** | [트러블 슈팅](#트러블-슈팅) | 개발 중 발생한 문제점과 해결 과정 |
 | **4** | [시스템 아키텍처](#시스템-아키텍처) | 전체 시스템 구조 및 기술 스택 |
 | **5** | [프로젝트 플로우](#프로젝트-플로우) | 사용자 흐름 및 비즈니스 로직 |
-| **6** | [프로젝트 구조](#프로젝트-구조) | 코드 구조 |
-| **7** | [실행 방법](#실행-방법) | 로컬 환경 실행 가이드 |
-| **8** | [실제 서비스](#실제-서비스) | 프로토타입 데모  |
+| **6** | [프로젝트 구조](#ERD) | 코드 구조 |
+| **7** | [프로젝트 구조](#프로젝트-구조) | 코드 구조 |
+| **8** | [실행 방법](#실행-방법) | 로컬 환경 실행 가이드 |
+| **9** | [실제 서비스](#실제-서비스) | 프로토타입 데모  |
 
 <br>
 
@@ -62,8 +63,8 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 <br>
 
 ## 시스템 아키텍처
+<img width="800" height="400" alt="Slide 16_9 - 603" src="https://github.com/user-attachments/assets/8b45b2d4-d79d-43ca-9d3a-e3a748cc1d0c" />
 
-<img width="700" height="350" alt="Slide 16_9 - 585" src="https://github.com/user-attachments/assets/eeca8267-8fc7-40e3-bd06-b1118c1755d3" />
 
 <br>
 <br>
@@ -89,11 +90,14 @@ Spring Security (OAuth2, JWT)를 통한 인증 시스템과 Docker, ngrok, EC2�
 
 <br>
 
-## 프로젝트 구조
+## ERD
 <img width="1050" height="800" alt="스크린샷 2025-08-27 오전 9 08 47" src="https://github.com/user-attachments/assets/d5d9ed2d-3a7b-4307-afc9-40513342493a" />
 
 <br>
 <br>
+
+
+## 프로젝트 구조
 
 ```
 ├── TicketingApplication.java
